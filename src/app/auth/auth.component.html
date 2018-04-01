@@ -42,6 +42,14 @@
             <button type="submit" class="btn btn-success" [disabled]="!authForm.valid">{{ showRegistration ? 'Register' : 'Login' }}</button>
           </div>
         </div>
+        <div class="row mt-4">
+          <div class="col-md text-center">
+            <button type="button" class="btn google" (click)="loginWithGoogle()">
+              <span class="google-logo"></span>
+              <span class="google-text">Sign in with Google</span>
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   </div>

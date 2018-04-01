@@ -5,7 +5,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="mainNavigation" class="collapse navbar-collapse">
+    <div id="mainNavigation" class="collapse navbar-collapse" *ngIf="!authService.isCheckingForAuth()">
       <button type="button" class="btn btn-success ml-auto" *ngIf="!authService.isAuthenticated() && router.url != '/login'" routerLink="/login">Login</button>
       <div class="user-info ml-auto text-right" *ngIf="authService.isAuthenticated()">
         <span class="username" [innerText]="username"></span>

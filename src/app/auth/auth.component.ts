@@ -41,6 +41,10 @@ export class AuthComponent implements OnInit {
     this.formError.show = false;
   }
 
+  loginWithGoogle() {
+    this.authService.loginWithGoogle();
+  }
+
   submitAuthForm() {
     if (this.showRegistration) {
       if (this.authForm.value['password'] === this.authForm.value['passwordConfirm']) {
