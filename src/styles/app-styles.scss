@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+@import './bootstrap-overrides.scss';
+@import '~bootstrap/scss/bootstrap.scss';
+
+a {
+  cursor: pointer;
+}
+
+body {
+  background-color: $gray-100;
+}
+
+.btn {
+  font-size: 0.75rem;
+
+  &:not(.btn-link) {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+.alert {
+  padding-right: 3.5rem;
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.75rem 1.25rem;
+    color: inherit;
+    outline: 0;
+  }
+}

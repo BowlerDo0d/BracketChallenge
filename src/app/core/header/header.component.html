@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand-md navbar-light mb-3">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">Firefly</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavigation" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="mainNavigation" class="collapse navbar-collapse">
+      <button type="button" class="btn btn-success ml-auto" *ngIf="!authService.isAuthenticated() && router.url != '/login'" routerLink="/login">Login</button>
+      <div class="user-info ml-auto text-right" *ngIf="authService.isAuthenticated()">
+        <span class="username" [innerText]="username"></span>
+        <span class="logout"><a class="text-primary" (click)="logout()">Logout</a></span>
+      </div>
+    </div>
+  </div>
+</nav>
