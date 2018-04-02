@@ -6,7 +6,8 @@ import { ScoreboardComponent } from './core/scoreboard/scoreboard.component';
 
 const appRoutes: Routes = [
   { path: '', component: ScoreboardComponent },
-  { path: 'bracket', component: BracketComponent }
+  { path: 'bracket', component: BracketComponent },
+  { path: 'bracket/:id', component: BracketComponent }
 ];
 
 @NgModule({

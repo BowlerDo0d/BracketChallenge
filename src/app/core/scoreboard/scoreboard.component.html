@@ -4,7 +4,7 @@
       <h4>Scoreboard</h4>
     </div>
     <div class="col-md text-right">
-      <button type="button" class="btn btn-primary" routerLink="/bracket">Create Bracket</button>
+      <button type="button" class="btn btn-primary create-btn" routerLink="/bracket"><span class="fa fa-plus"></span>Create Bracket</button>
     </div>
   </div>
   <div class="row mt-4">
@@ -21,7 +21,7 @@
         <tbody>
           <tr *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;">
             <th scope="row" [innerText]="idx + 1"></th>
-            <td><a [innerText]="bracket.name" [routerLink]="['/bracket', idx]"></a></td>
+            <td><a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a></td>
             <td [innerText]="bracket.owner"></td>
             <td class="text-center" [innerText]="bracket.score"></td>
           </tr>
