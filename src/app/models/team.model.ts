@@ -1,4 +1,9 @@
 export class Team {
-    seed: 1;
-    name: '';
+    name: string;
+    seed: Number;
+
+    constructor() {
+        this.name = null;
+        this.seed = null;
+    }
 }
