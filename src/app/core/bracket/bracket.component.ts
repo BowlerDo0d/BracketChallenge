@@ -9,6 +9,9 @@ import { AuthService } from '../../auth/auth.service';
 import { Bracket } from '../../models/bracket.model';
 import { VIEW_MODES } from '../../constants/form.constants';
 
+// Test data
+import { BracketMock } from './bracket-mock';
+
 @Component({
   selector: 'app-bracket',
   templateUrl: './bracket.component.html',
@@ -29,11 +32,15 @@ export class BracketComponent implements OnInit {
       this.id = params['id'];
 
       if (this.id) {
-        this.db.object(`bracket/${this.id}`).snapshotChanges().take(1).subscribe(bracket => {
-          this.bracket = bracket.payload.val();
-          this.bracketForm.patchValue({
-            bracketName: this.bracket.name
-          });
+        // this.db.object(`bracket/${this.id}`).snapshotChanges().take(1).subscribe(bracket => {
+        //   this.bracket = bracket.payload.val();
+        //   this.bracketForm.patchValue({
+        //     bracketName: this.bracket.name
+        //   });
+        // });
+        this.bracket = BracketMock;
+        this.bracketForm.patchValue({
+          bracketName: this.bracket.name
         });
       } else {
         this.viewMode = VIEW_MODES.CREATE;
