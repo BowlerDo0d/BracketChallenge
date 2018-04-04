@@ -46,7 +46,11 @@ export class BracketComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/']);
+    if (this.isEditMode()) {
+      this.viewMode = VIEW_MODES.DETAIL;
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 
   editBracket() {
@@ -64,6 +68,7 @@ export class BracketComponent implements OnInit {
   submitBracket() {
     if (this.viewMode === VIEW_MODES.CREATE) {
       this.bracket = {
+        conferences: null,
         name: this.bracketForm.value['bracketName'],
         owner: this.authService.getUsername(),
         score: 0

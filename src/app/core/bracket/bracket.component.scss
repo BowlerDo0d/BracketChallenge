@@ -1,0 +1,84 @@
+@import '~bootstrap/scss/bootstrap-grid.scss';
+
+.bracket {
+  font-size: 0.75rem;
+
+  .bracket-round {
+    .bracket-group {
+      margin: 2rem 0;
+
+      .bracket-team {
+        text-align: center;
+        border-bottom: 1px solid black;
+      }
+    }
+
+    &.round-1 {
+      .bracket-team-bottom {
+        padding-top: 2.25rem;
+      }
+    }
+
+    &.round-2 {
+      .bracket-group {
+        margin: 3.75rem 0;
+
+        .bracket-team-bottom {
+          padding-top: 7.5rem;
+        }
+      }
+    }
+
+    &.round-3 {
+      .bracket-group {
+        margin: 8rem 0;
+
+        .bracket-team-bottom {
+          padding-top: 16.5rem;
+        }
+      }
+    }
+
+    &.round-4 {
+      .bracket-group {
+        margin: 17rem 0;
+      }
+    }
+  }
+
+  .bracket-left .bracket-team-bottom {
+    border-right: 1px solid black;
+  }
+
+  .bracket-right .bracket-team-bottom {
+    border-left: 1px solid black;
+  }
+}
+
+.bracket-name {
+  color: $blue;
+  border-bottom: 1px solid $gray-500;
+  border-radius: 0.25rem;
+}
+
+.float-center {
+  @include media-breakpoint-up(md) {
+    position: absolute;
+    top: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+  }
+}
+
+
+.error {
+  border-color: $red;
+  background-color: rgba($color: $red, $alpha: 0.01)
+}
+
+.success {
+  border-color: $green;
+  background-color: rgba($color: $green, $alpha: 0.025)
+}

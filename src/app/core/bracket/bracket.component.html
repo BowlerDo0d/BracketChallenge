@@ -1,21 +1,287 @@
 <div class="contain">
   <form [formGroup]="bracketForm" (ngSubmit)="submitBracket()">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="form-group" *ngIf="!isDetailMode()">
-          <label for="bracketName">Bracket Name</label>
-          <input type="text" id="bracketName" class="form-control" formControlName="bracketName" />
-        </div>
-        <span [innerText]="bracket?.name" *ngIf="isDetailMode()"></span>
+    <div class="row" *ngIf="isDetailMode()">
+      <div class="col-md">
+        <button type="button" class="btn btn-outline-secondary" routerLink="/"><span class="fa fa-reply pr-2"></span>Return to Scoreboard</button>
       </div>
-      <div class="col-md text-right" *ngIf="isDetailMode()">
-        <button type="button" class="btn btn-light" (click)="editBracket()">Edit Bracket</button>
+      <div class="col-md text-right">
+        <button type="button" class="btn btn-outline-primary" (click)="editBracket()"><span class="fa fa-pencil-square-o pr-2"></span>Edit Bracket</button>
       </div>
     </div>
+
     <div class="row" *ngIf="!isDetailMode()">
+      <div class="col-md">
+        <button type="button" class="btn btn-outline-secondary" (click)="cancel()">Cancel</button>
+      </div>
       <div class="col-md text-right">
-        <button type="button" class="btn btn-light" (click)="cancel()">Cancel</button>
-        <button type="submit" class="btn btn-success" [disabled]="!bracketForm.valid">{{ isEditMode() ? 'Save' : 'Create' }}</button>
+        <button type="submit" class="btn btn-success" [disabled]="!bracketForm.valid">Save</button>
+      </div>
+    </div>
+
+    <div class="row mt-4 justify-content-center">
+      <div class="col-md-6 text-center">
+        <div class="form-group mt-3" *ngIf="!isDetailMode()">
+          <input type="text" placeholder="Bracket Name" id="bracketName" class="form-control text-center" [ngClass]="{ error: !bracketForm.controls['bracketName'].valid, success: bracketForm.controls['bracketName'].valid }" formControlName="bracketName" />
+        </div>
+        <h5 class="bracket-name" [innerText]="bracket?.name" *ngIf="isDetailMode()"></h5>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md text-center">
+        <div class="float-center">
+          <p>Stanley Cup Champions</p>
+          <p>Eastern</p>
+        </div>
+      </div>
+    </div>
+    <div class="row bracket">
+      <div class="col-md bracket-left">
+        <div class="row">
+          <!-- Round 1 -->
+          <div class="col-sm bracket-round round-1">
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 1
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 8
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 4
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 5
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 3
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 6
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 2
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 7
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Round 2 -->
+          <div class="col-sm bracket-round round-2">
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 1
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 4
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 3
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 2
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Round 3 -->
+          <div class="col-sm bracket-round round-3">
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 1
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 2
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Round 4 -->
+          <div class="col-sm bracket-round round-4">
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team">
+                    Western
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md bracket-right">
+        <div class="row">
+          <!-- Round 4 -->
+          <div class="col-sm bracket-round round-4">
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team">
+                    Eastern
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Round 3 -->
+          <div class="col-sm bracket-round round-3">
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 1
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 2
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Round 2 -->
+          <div class="col-sm bracket-round round-2">
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 1
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 4
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 3
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 2
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Round 1 -->
+          <div class="col-sm bracket-round round-1">
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 1
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 8
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 4
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 5
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 3
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 6
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm bracket-group">
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-top">
+                    Team 2
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm bracket-team bracket-team-bottom">
+                    Team 7
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </form>
