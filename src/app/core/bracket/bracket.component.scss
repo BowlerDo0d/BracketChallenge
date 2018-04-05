@@ -7,19 +7,21 @@
     .bracket-group {
       margin: 2rem 0;
 
-      .bracket-team {
-        text-align: center;
+      .bracket-team-top,
+      .bracket-team-bottom {
+        position: relative;
         border-bottom: 1px solid black;
 
-        &.bracket-team-bottom {
-          min-height: 3.5rem;
+        .bracket-team {
+          position: absolute;
+          text-align: center;
         }
       }
     }
 
     &.round-1 {
       .bracket-team-bottom {
-        padding-top: 2.25rem;
+        height: 3.5rem;
       }
     }
 
@@ -28,7 +30,7 @@
         margin: 3.75rem 0;
 
         .bracket-team-bottom {
-          padding-top: 7.5rem;
+          height: 7.6rem;
         }
       }
     }
@@ -38,14 +40,14 @@
         margin: 8rem 0;
 
         .bracket-team-bottom {
-          padding-top: 16.5rem;
+          height: 15rem;
         }
       }
     }
 
     &.round-4 {
       .bracket-group {
-        margin: 17rem 0;
+        margin: 15.5rem 0;
       }
     }
   }
@@ -63,6 +65,7 @@
   color: $blue;
   border-bottom: 1px solid $gray-500;
   border-radius: 0.25rem;
+  padding-bottom: 0.25rem
 }
 
 .float-center {
