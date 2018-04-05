@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/take';
 
 import { AuthService } from '../../auth/auth.service';
 import { Bracket } from '../../models/bracket.model';
+import { BracketNameValidator } from './bracket-name-validator';
 import { VIEW_MODES } from '../../constants/form.constants';
 
 // Test data
@@ -48,7 +48,7 @@ export class BracketComponent implements OnInit {
     });
 
     this.bracketForm = new FormGroup({
-      bracketName: new FormControl(null, Validators.required)
+      bracketName: new FormControl(null, [Validators.required, BracketNameValidator.checkBracketName])
     });
   }
 
@@ -62,6 +62,10 @@ export class BracketComponent implements OnInit {
 
   editBracket() {
     this.viewMode = VIEW_MODES.EDIT;
+  }
+
+  isBracketNameTaken() {
+    return this.bracketForm.get('bracketName').errors && this.bracketForm.get('bracketName').errors.bracket_name_exists;
   }
 
   isDetailMode() {

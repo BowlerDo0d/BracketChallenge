@@ -21,7 +21,13 @@
     <div class="row mt-4 justify-content-center">
       <div class="col-md-6 text-center">
         <div class="form-group mt-3" *ngIf="!isDetailMode()">
-          <input type="text" placeholder="Bracket Name" id="bracketName" class="form-control text-center" [ngClass]="{ error: !bracketForm.controls['bracketName'].valid, success: bracketForm.controls['bracketName'].valid }" formControlName="bracketName" />
+          <input type="text"
+                 id="bracketName"
+                 class="form-control text-center"
+                 [ngClass]="{ error: !bracketForm.controls['bracketName'].valid, success: bracketForm.controls['bracketName'].valid }"
+                 placeholder="Bracket Name"
+                 formControlName="bracketName" />
+          <span class="text-danger small" [hidden]="!isBracketNameTaken()">Bracket name already exists -- choose another name</span>
         </div>
         <h5 class="bracket-name" [innerText]="bracket?.name" *ngIf="isDetailMode()"></h5>
       </div>
