@@ -5,49 +5,64 @@
 
   .bracket-round {
     .bracket-group {
-      margin: 2rem 0;
-
-      .bracket-team-top,
-      .bracket-team-bottom {
+      .bracket-team {
         position: relative;
+        height: 3.5rem;
         border-bottom: 1px solid black;
 
-        .bracket-team {
+        .bracket-team-name {
           position: absolute;
           text-align: center;
-        }
-      }
-    }
+          padding-right: 0.5rem;
+          top: 2.25rem;
+          left: 0;
+          right: 0;
+          margin-left: auto;
+          margin-right: auto;
 
-    &.round-1 {
-      .bracket-team-bottom {
-        height: 3.5rem;
+          @include media-breakpoint-only(md) {
+            font-size: 0.5rem;
+            top: 2.5rem;
+          }
+        }
       }
     }
 
     &.round-2 {
       .bracket-group {
-        margin: 3.75rem 0;
+        margin: 1.75rem 0;
 
-        .bracket-team-bottom {
-          height: 7.6rem;
+        .bracket-team {
+          &.bracket-team-bottom {
+            padding-top: 7rem;
+
+            .bracket-team-name {
+              top: 5.75rem;
+            }
+          }
         }
       }
     }
 
     &.round-3 {
       .bracket-group {
-        margin: 8rem 0;
+        margin: 5.5rem 0;
 
-        .bracket-team-bottom {
-          height: 15rem;
+        .bracket-team {
+          &.bracket-team-bottom {
+            padding-top: 14rem;
+
+            .bracket-team-name {
+              top: 12.75rem;
+            }
+          }
         }
       }
     }
 
     &.round-4 {
       .bracket-group {
-        margin: 15.5rem 0;
+        margin: 12.5rem 0;
       }
     }
   }
