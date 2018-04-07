@@ -4,7 +4,7 @@
   font-size: 0.75rem;
 
   .bracket-round {
-    .bracket-group {
+    .bracket-matchup {
       .bracket-team {
         position: relative;
         height: 3.5rem;
@@ -29,7 +29,7 @@
     }
 
     &.round-2 {
-      .bracket-group {
+      .bracket-matchup {
         margin: 1.75rem 0;
 
         .bracket-team {
@@ -45,7 +45,7 @@
     }
 
     &.round-3 {
-      .bracket-group {
+      .bracket-matchup {
         margin: 5.5rem 0;
 
         .bracket-team {
@@ -61,7 +61,7 @@
     }
 
     &.round-4 {
-      .bracket-group {
+      .bracket-matchup {
         margin: 12.5rem 0;
       }
     }

@@ -1,104 +1,170 @@
 export const BracketMock = {
-    name: 'My Mock Bracket',
-    owner: 'Me',
-    score: 5,
+    name: null,
+    owner: null,
+    score: 0,
+    winner: null,
     conferences: [{
-        name: 'Western Conference',
+        name: null,
         divisions: [{
-            name: 'Pacific Division',
-            matchups: [{
-                id: 1,
-                topSeed: {
-                    seed: 1,
-                    name: 'Team 1'
-                },
-                bottomSeed: {
-                    seed: 8,
-                    name: 'Team 8'
-                }
-            }, {
-                id: 2,
-                topSeed: {
-                    seed: 4,
-                    name: 'Team 4'
-                },
-                bottomSeed: {
-                    seed: 5,
-                    name: 'Team 5'
-                }
-            }]
-        }, {
-            name: 'Central Division',
-            matchups: [{
-                id: 3,
-                topSeed: {
-                    seed: 3,
-                    name: 'Team 3'
-                },
-                bottomSeed: {
-                    seed: 6,
-                    name: 'Team 6'
-                }
-            }, {
-                id: 4,
-                topSeed: {
-                    seed: 2,
-                    name: 'Team 2'
-                },
-                bottomSeed: {
-                    seed: 7,
-                    name: 'Team 7'
-                }
-            }]
-        }]
-    }, {
-        name: 'Eastern Conference',
-        divisions: [{
-            name: 'Atlantic Division',
-            matchups: [{
-                id: 1,
-                topSeed: {
-                    seed: 1,
-                    name: 'Team 1'
-                },
-                bottomSeed: {
-                    seed: 8,
-                    name: 'Team 8'
-                }
-            }, {
-                id: 2,
-                topSeed: {
-                    seed: 4,
-                    name: 'Team 4'
-                },
-                bottomSeed: {
-                    seed: 5,
-                    name: 'Team 5'
-                }
-            }]
-        }, {
-            name: 'Metropolitan Division',
-            matchups: [{
-                id: 3,
-                topSeed: {
-                    seed: 3,
-                    name: 'Team 3'
-                },
-                bottomSeed: {
-                    seed: 6,
-                    name: 'Team 6'
-                }
-            }, {
-                id: 4,
-                topSeed: {
-                    seed: 2,
-                    name: 'Team 2'
-                },
-                bottomSeed: {
-                    seed: 7,
-                    name: 'Team 7'
-                }
-            }]
-        }]
+            name: null,
+            rounds: [{
+                name: null,
+                matchups: null
+            }],
+            winner: null
+        }],
+        winner: null
     }]
 };
+
+// export const BracketMock = {
+//     name: 'My Mock Bracket',
+//     owner: 'Me',
+//     score: 5,
+//     winner: null,
+//     conferences: [{
+//         name: 'Western Conference',
+//         divisions: [{
+//             name: 'Pacific Division',
+//             rounds: [{
+//                 name: 'Round 1',
+//                 matchups: [{
+//                     id: 1,
+//                     topSeed: {
+//                         seed: 1,
+//                         name: 'Team 1'
+//                     },
+//                     bottomSeed: {
+//                         seed: 8,
+//                         name: 'Team 8'
+//                     }
+//                 }, {
+//                     id: 2,
+//                     topSeed: {
+//                         seed: 4,
+//                         name: 'Team 4'
+//                     },
+//                     bottomSeed: {
+//                         seed: 5,
+//                         name: 'Team 5'
+//                     }
+//                 }]
+//             }, {
+//                 name: 'Quarterfinals',
+//                 matchups: [{
+//                     id: 3,
+//                     topSeed: null,
+//                     bottomSeed: null
+//                 }]
+//             }],
+//             winner: null
+//         }, {
+//             name: 'Central Division',
+//             rounds: [{
+//                 name: 'Round 1',
+//                 matchups: [{
+//                     id: 1,
+//                     topSeed: {
+//                         seed: 3,
+//                         name: 'Team 3'
+//                     },
+//                     bottomSeed: {
+//                         seed: 6,
+//                         name: 'Team 6'
+//                     }
+//                 }, {
+//                     id: 2,
+//                     topSeed: {
+//                         seed: 2,
+//                         name: 'Team 2'
+//                     },
+//                     bottomSeed: {
+//                         seed: 7,
+//                         name: 'Team 7'
+//                     }
+//                 }]
+//             }, {
+//                 name: 'Quarterfinals',
+//                 matchups: [{
+//                     id: 3,
+//                     topSeed: null,
+//                     bottomSeed: null
+//                 }]
+//             }],
+//             winner: null
+//         }],
+//         winner: null
+//     }, {
+//         name: 'Eastern Conference',
+//         divisions: [{
+//             name: 'Atlantic Division',
+//             rounds: [{
+//                 name: 'Round 1',
+//                 matchups: [{
+//                     id: 1,
+//                     topSeed: {
+//                         seed: 1,
+//                         name: 'Team 1'
+//                     },
+//                     bottomSeed: {
+//                         seed: 8,
+//                         name: 'Team 8'
+//                     }
+//                 }, {
+//                     id: 2,
+//                     topSeed: {
+//                         seed: 4,
+//                         name: 'Team 4'
+//                     },
+//                     bottomSeed: {
+//                         seed: 5,
+//                         name: 'Team 5'
+//                     }
+//                 }]
+//             }, {
+//                 name: 'Quarterfinals',
+//                 matchups: [{
+//                     id: 3,
+//                     topSeed: null,
+//                     bottomSeed: null
+//                 }]
+//             }],
+//             winner: null
+//         }, {
+//             name: 'Metropolitan Division',
+//             rounds: [{
+//                 name: 'Round 1',
+//                 matchups: [{
+//                     id: 1,
+//                     topSeed: {
+//                         seed: 3,
+//                         name: 'Team 3'
+//                     },
+//                     bottomSeed: {
+//                         seed: 6,
+//                         name: 'Team 6'
+//                     }
+//                 }, {
+//                     id: 2,
+//                     topSeed: {
+//                         seed: 2,
+//                         name: 'Team 2'
+//                     },
+//                     bottomSeed: {
+//                         seed: 7,
+//                         name: 'Team 7'
+//                     }
+//                 }]
+//             }, {
+//                 name: 'Quarterfinals',
+//                 matchups: [{
+//                     id: 3,
+//                     topSeed: null,
+//                     bottomSeed: null
+//                 }]
+//             }],
+//             winner: null
+//         }],
+//         winner: null
+//     }]
+// };

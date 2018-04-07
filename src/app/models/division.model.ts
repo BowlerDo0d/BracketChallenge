@@ -1,11 +1,14 @@
-import { Matchup } from './matchup.model';
+import { Round } from './round.model';
+import { Team } from './team.model';
 
 export class Division {
-    matchups: Array<Matchup>;
+    rounds: Array<Round>;
     name: string;
+    winner: Team;
 
     constructor() {
-        this.matchups = new Array();
+        this.rounds = new Array();
         this.name = null;
+        this.winner = new Team();
     }
 }

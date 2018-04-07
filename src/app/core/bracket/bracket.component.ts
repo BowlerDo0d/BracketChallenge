@@ -82,7 +82,8 @@ export class BracketComponent implements OnInit {
         conferences: null,
         name: this.bracketForm.value['bracketName'],
         owner: this.authService.getUsername(),
-        score: 0
+        score: 0,
+        winner: null
       };
 
       this.db.list('bracket').push(this.bracket).then(() => this.router.navigate(['/']));
