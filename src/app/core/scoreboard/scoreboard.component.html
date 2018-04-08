@@ -4,7 +4,8 @@
       <h4>Scoreboard</h4>
     </div>
     <div class="col-md text-right">
-      <button type="button" class="btn btn-primary create-btn" routerLink="/bracket"><span class="fa fa-plus"></span>Create Bracket</button>
+      <button type="button" class="btn btn-primary create-btn" routerLink="/bracket" [disabled]="!isAuthenticated()"><span class="fa fa-plus pr-2"></span>Create Bracket</button>
+      <span class="loginMsg" *ngIf="!isAuthenticated()">Login to create a bracket</span>
     </div>
   </div>
   <div class="row mt-4">

@@ -25,6 +25,7 @@ export class BracketComponent implements OnInit, OnDestroy {
   key: string;
   bracket: Bracket;
   bracketForm: FormGroup;
+  canEdit: boolean;
   navigationSubscription: Subscription;
   viewMode: string;
 
@@ -43,6 +44,7 @@ export class BracketComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.key = params['key'];
+      this.canEdit = false;
       this.viewMode = location.pathname.indexOf('/edit') !== -1 ? VIEW_MODES.EDIT : VIEW_MODES.DETAIL;
 
       this.bracketForm = new FormGroup({
@@ -53,6 +55,7 @@ export class BracketComponent implements OnInit, OnDestroy {
         // Load bracket data
         if (this.key === 'mock') {
           this.bracket = BracketMock;
+          this.canEdit = true;
         } else {
           this.db.object(`bracket/${this.key}`).snapshotChanges().take(1).subscribe(data => {
             const bracket = data.payload.val();
@@ -60,6 +63,13 @@ export class BracketComponent implements OnInit, OnDestroy {
             if (bracket) {
               // Load bracket
               this.bracket = BracketMapper(bracket);
+
+              if (this.bracket.owner === this.authService.getUsername()) {
+                this.canEdit = true;
+              } else if (this.isEditMode()) {
+                this.router.navigate(['bracket', this.key]);
+              }
+
               this.bracketForm.patchValue({
                 bracketName: this.bracket.name
               });
@@ -86,6 +96,8 @@ export class BracketComponent implements OnInit, OnDestroy {
   cancel() {
     if (this.isEditMode()) {
       this.router.navigate(['bracket', this.key]);
+    } else {
+      this.router.navigate(['/']);
     }
   }
 
