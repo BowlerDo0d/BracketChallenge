@@ -49,23 +49,17 @@ export class AuthComponent implements OnInit {
     if (this.showRegistration) {
       if (this.authForm.value['password'] === this.authForm.value['passwordConfirm']) {
         this.authService.registerUser(this.authForm.value['username'], this.authForm.value['password']).catch((error) => {
-          this.formError.set({
-            message: error.message,
-            show: true
-          });
+          this.formError.message = error.message;
+          this.formError.show = true;
         });
       } else {
-        this.formError.set({
-          message: 'Passwords do not match',
-          show: true
-        });
+        this.formError.message = 'Passwords do not match';
+        this.formError.show = true;
       }
     } else {
       this.authService.login(this.authForm.value['username'], this.authForm.value['password']).catch((error) => {
-        this.formError.set({
-          message: error.message,
-          show: true
-        });
+        this.formError.message = error.message;
+        this.formError.show = true;
       });
     }
   }

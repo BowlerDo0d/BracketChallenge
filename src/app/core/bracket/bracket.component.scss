@@ -20,6 +20,10 @@
           margin-left: auto;
           margin-right: auto;
 
+          &.edit-mode {
+            top: 1.85rem;
+          }
+
           @include media-breakpoint-only(md) {
             font-size: 0.5rem;
             top: 2.5rem;
@@ -38,6 +42,10 @@
 
             .bracket-team-name {
               top: 5.75rem;
+
+              &.edit-mode {
+                top: 5.35rem;
+              }
             }
           }
         }
@@ -54,6 +62,10 @@
 
             .bracket-team-name {
               top: 12.75rem;
+
+              &.edit-mode {
+                top: 12.35rem;
+              }
             }
           }
         }

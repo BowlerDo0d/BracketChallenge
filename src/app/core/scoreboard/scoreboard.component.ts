@@ -13,7 +13,7 @@ export class ScoreboardComponent implements OnInit {
   constructor(private db: AngularFireDatabase) {}
 
   ngOnInit() {
-    this.brackets$ = this.db.list('/bracket', ref => ref.orderByChild('score')).snapshotChanges().map(changes => {
+    this.brackets$ = this.db.list('scoreboard', ref => ref.orderByChild('score')).snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
   }

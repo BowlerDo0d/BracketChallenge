@@ -7,12 +7,14 @@ import { ScoreboardComponent } from './core/scoreboard/scoreboard.component';
 const appRoutes: Routes = [
   { path: '', component: ScoreboardComponent },
   { path: 'bracket', component: BracketComponent },
-  { path: 'bracket/:id', component: BracketComponent }
+  { path: 'bracket/:key', component: BracketComponent, children: [
+    { path: 'edit', component: BracketComponent }
+  ], runGuardsAndResolvers: 'always' }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes, { onSameUrlNavigation: 'reload' })
   ],
   exports: [
     RouterModule

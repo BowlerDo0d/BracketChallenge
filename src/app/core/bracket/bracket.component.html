@@ -20,7 +20,7 @@
 
     <div class="row mt-4 justify-content-center">
       <div class="col-md-6 text-center">
-        <div class="form-group mt-3" *ngIf="!isDetailMode()">
+        <div class="form-group" *ngIf="!isDetailMode()">
           <input type="text"
                  id="bracketName"
                  class="form-control text-center"
@@ -33,221 +33,262 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md text-center">
-        <div class="float-center">
-          <p>Stanley Cup Champions</p>
-          <p></p>
-        </div>
-      </div>
-    </div>
-    <div class="row bracket">
-      <div class="col-md bracket-left">
-        <div class="row">
-          <!-- Round 1 -->
-          <div class="col-sm bracket-round round-1">
-            <div class="row" *ngFor="let matchup of bracket.conferences[0].divisions[0].rounds[0].matchups">
-              <div class="col-sm bracket-matchup">
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-top">
-                    <span class="bracket-team-name">
-                      {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
-                    </span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-bottom">
-                    <span class="bracket-team-name">
-                      {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row" *ngFor="let matchup of bracket.conferences[0].divisions[1].rounds[0].matchups">
-              <div class="col-sm bracket-matchup">
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-top">
-                    <span class="bracket-team-name">
-                      {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
-                    </span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-bottom">
-                    <span class="bracket-team-name">
-                      {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Round 2 -->
-          <div class="col-sm bracket-round round-2">
-            <div class="row">
-              <div class="col-sm bracket-matchup">
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-top">
-                    <span class="bracket-team-name"></span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-bottom">
-                    <span class="bracket-team-name"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm bracket-matchup">
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-top">
-                    <span class="bracket-team-name"></span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-bottom">
-                    <span class="bracket-team-name"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Round 3 -->
-          <div class="col-sm bracket-round round-3">
-            <div class="row">
-              <div class="col-sm bracket-matchup">
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-top">
-                    <span class="bracket-team-name"></span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-bottom">
-                    <span class="bracket-team-name"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Round 4 -->
-          <div class="col-sm bracket-round round-4">
-            <div class="row">
-              <div class="col-sm bracket-matchup">
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-top">
-                    <span class="bracket-team-name"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <div *ngIf="bracket">
+      <div class="row">
+        <div class="col-md text-center">
+          <div class="float-center">
+            <p>Stanley Cup Champions</p>
+            <p *ngIf="bracket.winner.name">
+              {{ bracket.winner.seed }} - {{ bracket.winner.name }}
+            </p>
           </div>
         </div>
       </div>
-      <div class="col-md-1"></div>
-      <div class="col-md bracket-right">
-        <div class="row">
-          <!-- Round 4 -->
-          <div class="col-sm bracket-round round-4">
-            <div class="row">
-              <div class="col-sm bracket-matchup">
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-top">
-                    <span class="bracket-team-name"></span>
+
+      <div class="row bracket">
+        <div class="col-md bracket-left">
+          <div class="row">
+
+            <div class="col-sm bracket-round round-1">
+              <div *ngFor="let division of bracket.conferences[0].divisions; let divisionIndex = index;">
+                <div class="row" *ngFor="let matchup of division.rounds[0].matchups">
+                  <div class="col-sm bracket-matchup">
+                    <div class="row">
+                      <div class="col-sm bracket-team bracket-team-top">
+                        <span class="bracket-team-name" *ngIf="isDetailMode()">
+                          {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                        </span>
+                        <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode()">
+                          <button type="button" class="btn btn-link" (click)="pickTeam(0, divisionIndex, matchup.id, true)">
+                            {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm bracket-team bracket-team-bottom">
+                        <span class="bracket-team-name" *ngIf="isDetailMode()">
+                          {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                        </span>
+                        <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode()">
+                          <button type="button" class="btn btn-link" (click)="pickTeam(0, divisionIndex, matchup.id)">
+                            {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                          </button>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <!-- Round 3 -->
-          <div class="col-sm bracket-round round-3">
-            <div class="row">
-              <div class="col-sm bracket-matchup">
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-top">
-                    <span class="bracket-team-name"></span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-bottom">
-                    <span class="bracket-team-name"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Round 2 -->
-          <div class="col-sm bracket-round round-2">
-            <div class="row">
-              <div class="col-sm bracket-matchup">
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-top">
-                    <span class="bracket-team-name"></span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-bottom">
-                    <span class="bracket-team-name"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm bracket-matchup">
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-top">
-                    <span class="bracket-team-name"></span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-bottom">
-                    <span class="bracket-team-name"></span>
+
+            <div class="col-sm bracket-round round-2">
+              <div *ngFor="let division of bracket.conferences[0].divisions; let divisionIndex = index;">
+                <div class="row" *ngFor="let matchup of division.rounds[1].matchups">
+                  <div class="col-sm bracket-matchup">
+                    <div class="row">
+                      <div class="col-sm bracket-team bracket-team-top">
+                        <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.topSeed.name">
+                          {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                        </span>
+                        <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && matchup.topSeed.name">
+                          <button type="button" class="btn btn-link" (click)="pickTeam(0, divisionIndex, matchup.id, true)">
+                            {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm bracket-team bracket-team-bottom">
+                        <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.bottomSeed.name">
+                          {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                        </span>
+                        <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && matchup.bottomSeed.name">
+                          <button type="button" class="btn btn-link" (click)="pickTeam(0, divisionIndex, matchup.id)">
+                            {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                          </button>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <!-- Round 1 -->
-          <div class="col-sm bracket-round round-1">
-            <div class="row" *ngFor="let matchup of bracket.conferences[1].divisions[0].rounds[0].matchups">
-              <div class="col-sm bracket-matchup">
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-top">
-                    <span class="bracket-team-name">
-                      {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
-                    </span>
+
+            <div class="col-sm bracket-round round-3">
+              <div class="row">
+                <div class="col-sm bracket-matchup">
+                  <div class="row">
+                    <div class="col-sm bracket-team bracket-team-top">
+                      <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[0].divisions[0].winner.name">
+                        {{ bracket.conferences[0].divisions[0].winner.seed }} - {{ bracket.conferences[0].divisions[0].winner.name }}
+                      </span>
+                      <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[0].divisions[0].winner.name">
+                        <button type="button" class="btn btn-link" (click)="pickTeam(0, null, 4, true)">
+                          {{ bracket.conferences[0].divisions[0].winner.seed }} - {{ bracket.conferences[0].divisions[0].winner.name }}
+                        </button>
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-bottom">
-                    <span class="bracket-team-name">
-                      {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
-                    </span>
+                  <div class="row">
+                    <div class="col-sm bracket-team bracket-team-bottom">
+                      <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[0].divisions[1].winner.name">
+                        {{ bracket.conferences[0].divisions[1].winner.seed }} - {{ bracket.conferences[0].divisions[1].winner.name }}
+                      </span>
+                      <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[0].divisions[1].winner.name">
+                        <button type="button" class="btn btn-link" (click)="pickTeam(0, null, 4)">
+                          {{ bracket.conferences[0].divisions[1].winner.seed }} - {{ bracket.conferences[0].divisions[1].winner.name }}
+                        </button>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row" *ngFor="let matchup of bracket.conferences[1].divisions[1].rounds[0].matchups">
-              <div class="col-sm bracket-matchup">
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-top">
-                    <span class="bracket-team-name">
-                      {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
-                    </span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm bracket-team bracket-team-bottom">
-                    <span class="bracket-team-name">
-                      {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
-                    </span>
+
+            <div class="col-sm bracket-round round-4">
+              <div class="row">
+                <div class="col-sm bracket-matchup">
+                  <div class="row">
+                    <div class="col-sm bracket-team bracket-team-top">
+                      <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[0].winner.name">
+                        {{ bracket.conferences[0].winner.seed }} - {{ bracket.conferences[0].winner.name }}
+                      </span>
+                      <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[0].winner.name">
+                        <button type="button" class="btn btn-link" (click)="pickTeam(null, null, null, true)">
+                          {{ bracket.conferences[0].winner.seed }} - {{ bracket.conferences[0].winner.name }}
+                        </button>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <div class="col-md-1"></div>
+        <div class="col-md bracket-right">
+          <div class="row">
+
+            <div class="col-sm bracket-round round-4">
+              <div class="row">
+                <div class="col-sm bracket-matchup">
+                  <div class="row">
+                    <div class="col-sm bracket-team bracket-team-top">
+                      <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[1].winner.name">
+                        {{ bracket.conferences[1].winner.seed }} - {{ bracket.conferences[1].winner.name }}
+                      </span>
+                      <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[1].winner.name">
+                        <button type="button" class="btn btn-link" (click)="pickTeam()">
+                          {{ bracket.conferences[1].winner.seed }} - {{ bracket.conferences[1].winner.name }}
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm bracket-round round-3">
+              <div class="row">
+                <div class="col-sm bracket-matchup">
+                  <div class="row">
+                    <div class="col-sm bracket-team bracket-team-top">
+                      <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[1].divisions[0].winner.name">
+                        {{ bracket.conferences[1].divisions[0].winner.seed }} - {{ bracket.conferences[1].divisions[0].winner.name }}
+                      </span>
+                      <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[1].divisions[0].winner.name">
+                        <button type="button" class="btn btn-link" (click)="pickTeam(1, null, 4, true)">
+                          {{ bracket.conferences[1].divisions[0].winner.seed }} - {{ bracket.conferences[1].divisions[0].winner.name }}
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm bracket-team bracket-team-bottom">
+                      <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[1].divisions[1].winner.name">
+                        {{ bracket.conferences[1].divisions[1].winner.seed }} - {{ bracket.conferences[1].divisions[1].winner.name }}
+                      </span>
+                      <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[1].divisions[1].winner.name">
+                        <button type="button" class="btn btn-link" (click)="pickTeam(1, null, 4)">
+                          {{ bracket.conferences[1].divisions[1].winner.seed }} - {{ bracket.conferences[1].divisions[1].winner.name }}
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm bracket-round round-2">
+              <div *ngFor="let division of bracket.conferences[1].divisions; let divisionIndex = index;">
+                <div class="row" *ngFor="let matchup of division.rounds[1].matchups">
+                  <div class="col-sm bracket-matchup">
+                    <div class="row">
+                      <div class="col-sm bracket-team bracket-team-top">
+                        <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.topSeed.name">
+                          {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                        </span>
+                        <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && matchup.topSeed.name">
+                          <button type="button" class="btn btn-link" (click)="pickTeam(1, divisionIndex, matchup.id, true)">
+                            {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm bracket-team bracket-team-bottom">
+                        <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.bottomSeed.name">
+                          {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                        </span>
+                        <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && matchup.bottomSeed.name">
+                          <button type="button" class="btn btn-link" (click)="pickTeam(1, divisionIndex, matchup.id)">
+                            {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm bracket-round round-1">
+              <div *ngFor="let division of bracket.conferences[1].divisions; let divisionIndex = index;">
+                <div class="row" *ngFor="let matchup of division.rounds[0].matchups">
+                  <div class="col-sm bracket-matchup">
+                    <div class="row">
+                      <div class="col-sm bracket-team bracket-team-top">
+                        <span class="bracket-team-name" *ngIf="isDetailMode()">
+                          {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                        </span>
+                        <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode()">
+                          <button type="button" class="btn btn-link" (click)="pickTeam(1, divisionIndex, matchup.id, true)">
+                            {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm bracket-team bracket-team-bottom">
+                        <span class="bracket-team-name" *ngIf="isDetailMode()">
+                          {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                        </span>
+                        <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode()">
+                          <button type="button" class="btn btn-link" (click)="pickTeam(1, divisionIndex, matchup.id)">
+                            {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
   </form>

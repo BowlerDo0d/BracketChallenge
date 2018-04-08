@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('firefly App', () => {
+describe('Bracket Challenge App', () => {
   let page: AppPage;
 
   beforeEach(() => {

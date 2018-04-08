@@ -1,17 +1,48 @@
 export class FormError {
-  icon: string;
-  message: string;
-  show: boolean;
-  type: string;
+  private _icon: string;
+  private _message: string;
+  private _show: boolean;
+  private _type: string;
 
-  constructor() {
-    this.icon = 'fa-exclamation-triangle';
-    this.message = 'Oh snap!';
-    this.show = false;
-    this.type = 'alert-danger';
+  constructor(icon: string = 'fa-exclamation-triangle',
+    message: string = 'Oh snap!',
+    show: boolean = false,
+    type: string = 'alert-danger') {
+    this._icon = icon;
+    this._message = message;
+    this._show = show;
+    this._type = type;
   }
 
-  set(props) {
-    Object.assign(this, props);
+  get icon(): string {
+    return this._icon;
+  }
+
+  get message(): string {
+    return this._message;
+  }
+
+  get show(): boolean {
+    return this._show;
+  }
+
+  get type(): string {
+    return this._type;
+  }
+
+  set icon(icon: string) {
+    this._icon = icon;
+  }
+
+  set message(message: string) {
+    this._message = message;
+  }
+
+  set show(show: boolean) {
+    this._show = show;
+  }
+
+  set type(type: string) {
+    this._type = type;
   }
 }
