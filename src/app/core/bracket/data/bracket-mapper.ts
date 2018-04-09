@@ -8,6 +8,14 @@ import { Team } from '../../../models/team.model';
 export const BracketMapper = (bracketData): Bracket => {
   const bracket = new Bracket();
 
+  if (bracketData._games) {
+    bracket.games = bracketData._games;
+  }
+
+  if (bracketData._goals) {
+    bracket.goals = bracketData._goals;
+  }
+
   if (bracketData._name) {
     bracket.name = bracketData._name;
   }
@@ -29,6 +37,10 @@ export const BracketMapper = (bracketData): Bracket => {
     bracketData._conferences.forEach((conference) => {
       const conf = new Conference(conference._name);
 
+      if (conference._games) {
+        conf.games = conference._games;
+      }
+
       if (conference._divisions.length) {
         conference._divisions.forEach((division) => {
           const div = new Division(division._name);
@@ -40,6 +52,10 @@ export const BracketMapper = (bracketData): Bracket => {
               if (round._matchups.length) {
                 round._matchups.forEach((matchup) => {
                   const match = new Matchup(matchup._id);
+
+                  if (matchup._games) {
+                    match.games = matchup._games;
+                  }
 
                   if (matchup._topSeed) {
                     match.topSeed.seed = matchup._topSeed._seed;

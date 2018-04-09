@@ -48,7 +48,23 @@ export class BracketComponent implements OnInit, OnDestroy {
       this.viewMode = location.pathname.indexOf('/edit') !== -1 ? VIEW_MODES.EDIT : VIEW_MODES.DETAIL;
 
       this.bracketForm = new FormGroup({
-        bracketName: new FormControl(null, [Validators.required, BracketNameValidator.checkBracketName])
+        bracketName: new FormControl(null, [Validators.required, BracketNameValidator.checkBracketName]),
+        numberOfGames001: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGames002: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGames003: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGames004: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGames011: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGames012: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGames013: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGames101: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGames102: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGames103: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGames104: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGames111: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGames112: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGames113: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGamesFinal: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+        numberOfGoalsFinal: new FormControl(null, [Validators.pattern(/\d+/), Validators.min(7)])
       });
 
       if (this.key) {
@@ -71,7 +87,23 @@ export class BracketComponent implements OnInit, OnDestroy {
               }
 
               this.bracketForm.patchValue({
-                bracketName: this.bracket.name
+                bracketName: this.bracket.name,
+                numberOfGames001: this.bracket.conferences[0].divisions[0].rounds[0].matchups[0].games,
+                numberOfGames002: this.bracket.conferences[0].divisions[0].rounds[0].matchups[1].games,
+                numberOfGames003: this.bracket.conferences[0].divisions[0].rounds[1].matchups[0].games,
+                numberOfGames004: this.bracket.conferences[0].games,
+                numberOfGames011: this.bracket.conferences[0].divisions[1].rounds[0].matchups[0].games,
+                numberOfGames012: this.bracket.conferences[0].divisions[1].rounds[0].matchups[1].games,
+                numberOfGames013: this.bracket.conferences[0].divisions[1].rounds[1].matchups[0].games,
+                numberOfGames101: this.bracket.conferences[1].divisions[0].rounds[0].matchups[0].games,
+                numberOfGames102: this.bracket.conferences[1].divisions[0].rounds[0].matchups[1].games,
+                numberOfGames103: this.bracket.conferences[1].divisions[0].rounds[1].matchups[0].games,
+                numberOfGames104: this.bracket.conferences[1].games,
+                numberOfGames111: this.bracket.conferences[1].divisions[1].rounds[0].matchups[0].games,
+                numberOfGames112: this.bracket.conferences[1].divisions[1].rounds[0].matchups[1].games,
+                numberOfGames113: this.bracket.conferences[1].divisions[1].rounds[1].matchups[0].games,
+                numberOfGamesFinal: this.bracket.games,
+                numberOfGoalsFinal: this.bracket.goals
               });
             } else {
               this.router.navigate(['/']);
@@ -272,6 +304,22 @@ export class BracketComponent implements OnInit, OnDestroy {
       };
 
     this.bracket.name = this.bracketForm.value['bracketName'];
+    this.bracket.conferences[0].divisions[0].rounds[0].matchups[0].games = this.bracketForm.value['numberOfGames001'];
+    this.bracket.conferences[0].divisions[0].rounds[0].matchups[1].games = this.bracketForm.value['numberOfGames002'];
+    this.bracket.conferences[0].divisions[0].rounds[1].matchups[0].games = this.bracketForm.value['numberOfGames003'];
+    this.bracket.conferences[0].games = this.bracketForm.value['numberOfGames004'];
+    this.bracket.conferences[0].divisions[1].rounds[0].matchups[0].games = this.bracketForm.value['numberOfGames011'];
+    this.bracket.conferences[0].divisions[1].rounds[0].matchups[1].games = this.bracketForm.value['numberOfGames012'];
+    this.bracket.conferences[0].divisions[1].rounds[1].matchups[0].games = this.bracketForm.value['numberOfGames013'];
+    this.bracket.conferences[1].divisions[0].rounds[0].matchups[0].games = this.bracketForm.value['numberOfGames101'];
+    this.bracket.conferences[1].divisions[0].rounds[0].matchups[1].games = this.bracketForm.value['numberOfGames102'];
+    this.bracket.conferences[1].divisions[0].rounds[1].matchups[0].games = this.bracketForm.value['numberOfGames103'];
+    this.bracket.conferences[1].games = this.bracketForm.value['numberOfGames104'];
+    this.bracket.conferences[1].divisions[1].rounds[0].matchups[0].games = this.bracketForm.value['numberOfGames111'];
+    this.bracket.conferences[1].divisions[1].rounds[0].matchups[1].games = this.bracketForm.value['numberOfGames112'];
+    this.bracket.conferences[1].divisions[1].rounds[1].matchups[0].games = this.bracketForm.value['numberOfGames113'];
+    this.bracket.games = this.bracketForm.value['numberOfGamesFinal'];
+    this.bracket.goals = this.bracketForm.value['numberOfGoalsFinal'];
 
     if (this.viewMode === VIEW_MODES.CREATE) {
       this.db.list('bracket').push(this.bracket)
@@ -281,7 +329,7 @@ export class BracketComponent implements OnInit, OnDestroy {
         }, error => console.log(error));
     } else if (this.viewMode === VIEW_MODES.EDIT) {
       this.db.object(`bracket/${this.key}`).update(this.bracket)
-        .then(() => this.viewMode = VIEW_MODES.DETAIL)
+        .then(() => this.router.navigate([`/bracket/${this.key}`]))
         .catch(error => console.log(error));
     }
   }

@@ -1,19 +1,19 @@
-<div class="contain">
+<div class="container-fluid">
   <form [formGroup]="bracketForm" (ngSubmit)="submitBracket()">
     <div class="row" *ngIf="isDetailMode()">
-      <div class="col-md">
+      <div class="col-6">
         <button type="button" class="btn btn-outline-secondary" routerLink="/"><span class="fa fa-reply pr-2"></span>Return to Scoreboard</button>
       </div>
-      <div class="col-md text-right" *ngIf="canEdit">
+      <div class="col-6 text-right" *ngIf="canEdit">
         <button type="button" class="btn btn-outline-primary" (click)="editBracket()"><span class="fa fa-pencil-square-o pr-2"></span>Edit Bracket</button>
       </div>
     </div>
 
     <div class="row" *ngIf="!isDetailMode()">
-      <div class="col-md">
+      <div class="col-6">
         <button type="button" class="btn btn-outline-secondary" (click)="cancel()">Cancel</button>
       </div>
-      <div class="col-md text-right">
+      <div class="col-6 text-right">
         <button type="submit" class="btn btn-success" [disabled]="!bracketForm.valid">Save</button>
       </div>
     </div>
@@ -35,26 +35,65 @@
 
     <div *ngIf="bracket">
       <div class="row">
+        <div class="col-md"></div>
         <div class="col-md text-center">
-          <div class="float-center">
+          <div class="champions">
             <p>Stanley Cup Champions</p>
             <p *ngIf="bracket.winner.name">
               {{ bracket.winner.seed }} - {{ bracket.winner.name }}
             </p>
+            <span *ngIf="!isDetailMode()">
+              <span class="final-input">
+                <label for="numberOfGamesFinal" class="final-games">Games:</label>
+                <input type="text"
+                  id="numberOfGamesFinal"
+                  class="form-control text-center predictor final-games"
+                  [ngClass]="{ error: !bracketForm.controls['numberOfGamesFinal'].valid, success: bracketForm.controls['numberOfGamesFinal'].valid }"
+                  placeholder="Games"
+                  formControlName="numberOfGamesFinal" />
+              </span>
+              <span class="final-input">
+                <label for="numberOfGoalsFinal" class="final-goals">Goals:</label>
+                <input type="text"
+                  id="numberOfGoalsFinal"
+                  class="form-control text-center predictor final-goals"
+                  [ngClass]="{ error: !bracketForm.controls['numberOfGoalsFinal'].valid, success: bracketForm.controls['numberOfGoalsFinal'].valid }"
+                  placeholder="Goals"
+                  formControlName="numberOfGoalsFinal" />
+              </span>
+            </span>
+            <span *ngIf="isDetailMode()">
+              <span class="predictor final-games detail-mode">
+                <span>Games:</span>
+                <span [innerText]="bracket.games"></span>
+              </span>
+              <span class="predictor final-goals detail-mode">
+                <span>Goals:</span>
+                <span [innerText]="bracket.goals"></span>
+              </span>
+            </span>
           </div>
         </div>
+        <div class="col-md"></div>
       </div>
 
       <div class="row bracket">
-        <div class="col-md bracket-left">
+        <div class="col-12 col-md bracket-left">
+
+          <div class="row conference-name d-block d-md-none mt-5">
+            <div class="col text-center">
+              {{ bracket.conferences[0].name }}
+            </div>
+          </div>
+
           <div class="row">
 
-            <div class="col-sm bracket-round round-1">
+            <div class="col bracket-round round-1">
               <div *ngFor="let division of bracket.conferences[0].divisions; let divisionIndex = index;">
                 <div class="row" *ngFor="let matchup of division.rounds[0].matchups">
-                  <div class="col-sm bracket-matchup">
+                  <div class="col bracket-matchup">
                     <div class="row">
-                      <div class="col-sm bracket-team bracket-team-top">
+                      <div class="col bracket-team bracket-team-top">
                         <span class="bracket-team-name" *ngIf="isDetailMode()">
                           {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
                         </span>
@@ -66,7 +105,17 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-sm bracket-team bracket-team-bottom">
+                      <div class="col bracket-team bracket-team-bottom">
+                        <input type="text"
+                          id="{{ 'numberOfGames0' + divisionIndex + matchup.id }}"
+                          class="form-control text-center predictor"
+                          *ngIf="!isDetailMode()"
+                          [ngClass]="{ error: !bracketForm.controls['numberOfGames0' + divisionIndex + matchup.id].valid, success: bracketForm.controls['numberOfGames0' + divisionIndex + matchup.id].valid }"
+                          placeholder="Games"
+                          formControlName="{{ 'numberOfGames0' + divisionIndex + matchup.id }}" />
+                        <span class="predictor detail-mode" *ngIf="isDetailMode()">
+                          Games: {{ matchup.games }}
+                        </span>
                         <span class="bracket-team-name" *ngIf="isDetailMode()">
                           {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
                         </span>
@@ -82,12 +131,12 @@
               </div>
             </div>
 
-            <div class="col-sm bracket-round round-2">
+            <div class="col bracket-round round-2">
               <div *ngFor="let division of bracket.conferences[0].divisions; let divisionIndex = index;">
                 <div class="row" *ngFor="let matchup of division.rounds[1].matchups">
-                  <div class="col-sm bracket-matchup">
+                  <div class="col bracket-matchup">
                     <div class="row">
-                      <div class="col-sm bracket-team bracket-team-top">
+                      <div class="col bracket-team bracket-team-top">
                         <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.topSeed.name">
                           {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
                         </span>
@@ -99,7 +148,17 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-sm bracket-team bracket-team-bottom">
+                      <div class="col bracket-team bracket-team-bottom">
+                        <input type="text"
+                          id="{{ 'numberOfGames0' + divisionIndex + matchup.id }}"
+                          class="form-control text-center predictor"
+                          *ngIf="!isDetailMode()"
+                          [ngClass]="{ error: !bracketForm.controls['numberOfGames0' + divisionIndex + matchup.id].valid, success: bracketForm.controls['numberOfGames0' + divisionIndex + matchup.id].valid }"
+                          placeholder="Games"
+                          formControlName="{{ 'numberOfGames0' + divisionIndex + matchup.id }}" />
+                        <span class="predictor detail-mode" *ngIf="isDetailMode()">
+                          Games: {{ matchup.games }}
+                        </span>
                         <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.bottomSeed.name">
                           {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
                         </span>
@@ -115,11 +174,11 @@
               </div>
             </div>
 
-            <div class="col-sm bracket-round round-3">
+            <div class="col bracket-round round-3">
               <div class="row">
-                <div class="col-sm bracket-matchup">
+                <div class="col bracket-matchup">
                   <div class="row">
-                    <div class="col-sm bracket-team bracket-team-top">
+                    <div class="col bracket-team bracket-team-top">
                       <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[0].divisions[0].winner.name">
                         {{ bracket.conferences[0].divisions[0].winner.seed }} - {{ bracket.conferences[0].divisions[0].winner.name }}
                       </span>
@@ -131,7 +190,17 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-sm bracket-team bracket-team-bottom">
+                    <div class="col bracket-team bracket-team-bottom">
+                      <input type="text"
+                        id="numberOfGames004"
+                        class="form-control text-center predictor"
+                        *ngIf="!isDetailMode()"
+                        [ngClass]="{ error: !bracketForm.controls['numberOfGames004'].valid, success: bracketForm.controls['numberOfGames004'].valid }"
+                        placeholder="Games"
+                        formControlName="numberOfGames004" />
+                      <span class="predictor detail-mode" *ngIf="isDetailMode()">
+                        Games: {{ bracket.conferences[0].games }}
+                      </span>
                       <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[0].divisions[1].winner.name">
                         {{ bracket.conferences[0].divisions[1].winner.seed }} - {{ bracket.conferences[0].divisions[1].winner.name }}
                       </span>
@@ -146,11 +215,11 @@
               </div>
             </div>
 
-            <div class="col-sm bracket-round round-4">
+            <div class="col bracket-round round-4">
               <div class="row">
-                <div class="col-sm bracket-matchup">
+                <div class="col bracket-matchup">
                   <div class="row">
-                    <div class="col-sm bracket-team bracket-team-top">
+                    <div class="col bracket-team bracket-team-top">
                       <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[0].winner.name">
                         {{ bracket.conferences[0].winner.seed }} - {{ bracket.conferences[0].winner.name }}
                       </span>
@@ -166,15 +235,22 @@
             </div>
           </div>
         </div>
-        <div class="col-md-1"></div>
-        <div class="col-md bracket-right">
+        <div class="col-md-1 d-md-block d-sm-none"></div>
+        <div class="col-12 col-md bracket-right">
+
+          <div class="row conference-name d-block d-md-none mt-5">
+            <div class="col text-center">
+              {{ bracket.conferences[1].name }}
+            </div>
+          </div>
+
           <div class="row">
 
-            <div class="col-sm bracket-round round-4">
+            <div class="col bracket-round round-4">
               <div class="row">
-                <div class="col-sm bracket-matchup">
+                <div class="col bracket-matchup">
                   <div class="row">
-                    <div class="col-sm bracket-team bracket-team-top">
+                    <div class="col bracket-team bracket-team-top">
                       <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[1].winner.name">
                         {{ bracket.conferences[1].winner.seed }} - {{ bracket.conferences[1].winner.name }}
                       </span>
@@ -189,11 +265,11 @@
               </div>
             </div>
 
-            <div class="col-sm bracket-round round-3">
+            <div class="col bracket-round round-3">
               <div class="row">
-                <div class="col-sm bracket-matchup">
+                <div class="col bracket-matchup">
                   <div class="row">
-                    <div class="col-sm bracket-team bracket-team-top">
+                    <div class="col bracket-team bracket-team-top">
                       <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[1].divisions[0].winner.name">
                         {{ bracket.conferences[1].divisions[0].winner.seed }} - {{ bracket.conferences[1].divisions[0].winner.name }}
                       </span>
@@ -205,7 +281,17 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-sm bracket-team bracket-team-bottom">
+                    <div class="col bracket-team bracket-team-bottom">
+                      <input type="text"
+                        id="numberOfGames104"
+                        class="form-control text-center predictor"
+                        *ngIf="!isDetailMode()"
+                        [ngClass]="{ error: !bracketForm.controls['numberOfGames104'].valid, success: bracketForm.controls['numberOfGames104'].valid }"
+                        placeholder="Games"
+                        formControlName="numberOfGames104" />
+                      <span class="predictor detail-mode" *ngIf="isDetailMode()">
+                        Games: {{ bracket.conferences[1].games }}
+                      </span>
                       <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[1].divisions[1].winner.name">
                         {{ bracket.conferences[1].divisions[1].winner.seed }} - {{ bracket.conferences[1].divisions[1].winner.name }}
                       </span>
@@ -220,12 +306,12 @@
               </div>
             </div>
 
-            <div class="col-sm bracket-round round-2">
+            <div class="col bracket-round round-2">
               <div *ngFor="let division of bracket.conferences[1].divisions; let divisionIndex = index;">
                 <div class="row" *ngFor="let matchup of division.rounds[1].matchups">
-                  <div class="col-sm bracket-matchup">
+                  <div class="col bracket-matchup">
                     <div class="row">
-                      <div class="col-sm bracket-team bracket-team-top">
+                      <div class="col bracket-team bracket-team-top">
                         <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.topSeed.name">
                           {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
                         </span>
@@ -237,7 +323,17 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-sm bracket-team bracket-team-bottom">
+                      <div class="col bracket-team bracket-team-bottom">
+                        <input type="text"
+                          id="{{ 'numberOfGames1' + divisionIndex + matchup.id }}"
+                          class="form-control text-center predictor"
+                          *ngIf="!isDetailMode()"
+                          [ngClass]="{ error: !bracketForm.controls['numberOfGames1' + divisionIndex + matchup.id].valid, success: bracketForm.controls['numberOfGames1' + divisionIndex + matchup.id].valid }"
+                          placeholder="Games"
+                          formControlName="{{ 'numberOfGames1' + divisionIndex + matchup.id }}" />
+                        <span class="predictor detail-mode" *ngIf="isDetailMode()">
+                          Games: {{ matchup.games }}
+                        </span>
                         <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.bottomSeed.name">
                           {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
                         </span>
@@ -253,12 +349,12 @@
               </div>
             </div>
 
-            <div class="col-sm bracket-round round-1">
+            <div class="col bracket-round round-1">
               <div *ngFor="let division of bracket.conferences[1].divisions; let divisionIndex = index;">
                 <div class="row" *ngFor="let matchup of division.rounds[0].matchups">
-                  <div class="col-sm bracket-matchup">
+                  <div class="col bracket-matchup">
                     <div class="row">
-                      <div class="col-sm bracket-team bracket-team-top">
+                      <div class="col bracket-team bracket-team-top">
                         <span class="bracket-team-name" *ngIf="isDetailMode()">
                           {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
                         </span>
@@ -270,7 +366,17 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-sm bracket-team bracket-team-bottom">
+                      <div class="col bracket-team bracket-team-bottom">
+                        <input type="text"
+                          id="{{ 'numberOfGames1' + divisionIndex + matchup.id }}"
+                          class="form-control text-center predictor"
+                          *ngIf="!isDetailMode()"
+                          [ngClass]="{ error: !bracketForm.controls['numberOfGames1' + divisionIndex + matchup.id].valid, success: bracketForm.controls['numberOfGames1' + divisionIndex + matchup.id].valid }"
+                          placeholder="Games"
+                          formControlName="{{ 'numberOfGames1' + divisionIndex + matchup.id }}" />
+                        <span class="predictor detail-mode" *ngIf="isDetailMode()">
+                          Games: {{ matchup.games }}
+                        </span>
                         <span class="bracket-team-name" *ngIf="isDetailMode()">
                           {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
                         </span>

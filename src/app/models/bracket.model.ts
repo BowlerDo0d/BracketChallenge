@@ -6,6 +6,8 @@ import { Matchup } from './matchup.model';
 
 export class Bracket {
   private _conferences: Array<Conference>;
+  private _games: number;
+  private _goals: number;
   private _name: string;
   private _owner: string;
   private _score: number;
@@ -14,9 +16,13 @@ export class Bracket {
   constructor(name: string = null,
     owner: string = null,
     conferences: Array<Conference> = new Array(),
+    games: number = null,
+    goals: number = null,
     score: number = null,
     winner: Team = new Team()) {
     this._conferences = conferences;
+    this._games = games;
+    this._goals = goals;
     this._name = name;
     this._owner = owner;
     this._score = 0;
@@ -25,6 +31,14 @@ export class Bracket {
 
   get conferences(): Array<Conference> {
     return this._conferences;
+  }
+
+  get games(): number {
+    return this._games;
+  }
+
+  get goals(): number {
+    return this._goals;
   }
 
   get name(): string {
@@ -45,6 +59,14 @@ export class Bracket {
 
   set conferences(conferences: Array<Conference>) {
     this._conferences = conferences;
+  }
+
+  set games(games: number) {
+    this._games = games;
+  }
+
+  set goals(goals: number) {
+    this._goals = goals;
   }
 
   set name(name: string) {
