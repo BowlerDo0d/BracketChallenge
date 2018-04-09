@@ -1,7 +1,15 @@
+@import '~bootstrap/scss/bootstrap-grid.scss';
+
 .loginMsg {
   display: block;
   font-size: 0.5rem;
   font-style: italic;
   color: gray;
   margin-right: 1.25rem;
+}
+
+.container {
+  @include media-breakpoint-down(sm) {
+    font-size: 0.75rem;
+  }
 }

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light mb-3">
+<nav class="navbar navbar-expand navbar-dark bg-dark mb-3">
   <div class="container">
     <a class="navbar-brand" routerLink="/">2018 Bracket Challenge</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavigation" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,7 +9,7 @@
       <button type="button" class="btn btn-success ml-auto" *ngIf="!isAuthenticated() && router.url != '/login'" routerLink="/login">Login</button>
       <div class="user-info ml-auto text-right" *ngIf="isAuthenticated()">
         <span class="username" [innerText]="username"></span>
-        <span class="logout"><a class="text-primary" (click)="logout()">Logout</a></span>
+        <button type="button" class="btn btn-link btn-sm px-0" (click)="logout()">Logout</button>
       </div>
     </div>
   </div>

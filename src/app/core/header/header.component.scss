@@ -1,15 +1,14 @@
 nav {
-  background-color: white;
-
   .user-info {
+    color: white;
     font-size: 0.75rem;
 
     .username {
       display: block;
     }
 
-    .logout {
-      font-size: 0.65rem;
+    button {
+     color: cornflowerblue;
     }
   }
 }
