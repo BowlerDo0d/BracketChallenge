@@ -2,10 +2,18 @@
   <form [formGroup]="bracketForm" (ngSubmit)="submitBracket()">
     <div class="row" *ngIf="isDetailMode()">
       <div class="col-6">
-        <button type="button" class="btn btn-outline-secondary" routerLink="/"><span class="fa fa-reply pr-2"></span>Return to Scoreboard</button>
+        <button type="button" class="btn btn-outline-secondary" routerLink="/">
+          <span class="fa fa-reply pr-2"></span>
+          <span class="d-inline-block d-sm-none">Return</span>
+          <span class="d-none d-sm-inline-block">Return to Scoreboard</span>
+        </button>
       </div>
       <div class="col-6 text-right" *ngIf="canEdit">
-        <button type="button" class="btn btn-outline-primary" (click)="editBracket()"><span class="fa fa-pencil-square-o pr-2"></span>Edit Bracket</button>
+        <button type="button" class="btn btn-outline-primary" (click)="editBracket()">
+          <span class="fa fa-pencil-square-o pr-2"></span>
+          <span class="d-inline-block d-sm-none">Edit</span>
+          <span class="d-none d-sm-inline-block">Edit Bracket</span>
+        </button>
       </div>
     </div>
 

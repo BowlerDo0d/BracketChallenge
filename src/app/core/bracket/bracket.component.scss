@@ -36,13 +36,24 @@ $border-color: $gray-500;
             font-size: 0.5rem;
             top: 2.5rem;
           }
+
+          @include media-breakpoint-only(xs) {
+            font-size: 0.6rem;
+            top: 2.1rem !important;
+
+            button {
+              font-size: 0.6rem;
+            }
+          }
         }
       }
     }
 
     &.round-1 {
-      .bracket-team-name {
-        padding-right: 0.5rem;
+      @include media-breakpoint-up(sm) {
+        .bracket-team-name {
+          padding-right: 0.5rem;
+        }
       }
     }
 
