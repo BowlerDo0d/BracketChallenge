@@ -21,7 +21,6 @@ $border-color: $gray-500;
         .bracket-team-name {
           position: absolute;
           text-align: center;
-          padding-right: 0.5rem;
           top: 2.25rem;
           left: 0;
           right: 0;
@@ -38,6 +37,12 @@ $border-color: $gray-500;
             top: 2.5rem;
           }
         }
+      }
+    }
+
+    &.round-1 {
+      .bracket-team-name {
+        padding-right: 0.5rem;
       }
     }
 

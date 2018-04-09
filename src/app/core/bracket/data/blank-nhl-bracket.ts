@@ -9,19 +9,19 @@ export const BlankNHLBracket: Bracket = new Bracket(
   null,
   null,
   [new Conference('Western Conference', [
-    new Division('Pacific Division', [
+    new Division('Central Division', [
       new Round('Round 1', [
-        new Matchup(1, new Team(1, 'Team 1'), new Team(8, 'Team 8')),
-        new Matchup(2, new Team(4, 'Team 4'), new Team(5, 'Team 5'))
+        new Matchup(1, new Team(1, 'Nashville'), new Team(4, 'Colorado')),
+        new Matchup(2, new Team(2, 'Winnipeg'), new Team(3, 'Minnesota'))
       ]),
       new Round('Quarterfinals', [
         new Matchup(3, new Team(), new Team())
       ])
     ]),
-    new Division('Central Division', [
+    new Division('Pacific Division', [
       new Round('Round 1', [
-        new Matchup(1, new Team(3, 'Team 3'), new Team(6, 'Team 6')),
-        new Matchup(2, new Team(2, 'Team 2'), new Team(7, 'Team 7'))
+        new Matchup(1, new Team(1, 'Vegas'), new Team(4, 'Los Angeles')),
+        new Matchup(2, new Team(2, 'Anaheim'), new Team(3, 'San Jose'))
       ]),
       new Round('Quarterfinals', [
         new Matchup(3, new Team(), new Team())
@@ -31,8 +31,8 @@ export const BlankNHLBracket: Bracket = new Bracket(
   new Conference('Eastern Conference', [
     new Division('Atlantic Division', [
       new Round('Round 1', [
-        new Matchup(1, new Team(1, 'Team 1'), new Team(8, 'Team 8')),
-        new Matchup(2, new Team(4, 'Team 4'), new Team(5, 'Team 5'))
+        new Matchup(1, new Team(1, 'Tampa Bay'), new Team(4, 'New Jersey')),
+        new Matchup(2, new Team(2, 'Boston'), new Team(3, 'Toronto'))
       ]),
       new Round('Quarterfinals', [
         new Matchup(3, new Team(), new Team())
@@ -40,8 +40,8 @@ export const BlankNHLBracket: Bracket = new Bracket(
     ]),
     new Division('Metropolitan Division', [
       new Round('Round 1', [
-        new Matchup(1, new Team(3, 'Team 3'), new Team(6, 'Team 6')),
-        new Matchup(2, new Team(2, 'Team 2'), new Team(7, 'Team 7'))
+        new Matchup(1, new Team(1, 'Washington'), new Team(4, 'Columbus')),
+        new Matchup(2, new Team(2, 'Pittsburgh'), new Team(3, 'Philadelphia'))
       ]),
       new Round('Quarterfinals', [
         new Matchup(3, new Team(), new Team())

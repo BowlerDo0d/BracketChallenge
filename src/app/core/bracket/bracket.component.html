@@ -39,9 +39,7 @@
         <div class="col-md text-center">
           <div class="champions">
             <p>Stanley Cup Champions</p>
-            <p *ngIf="bracket.winner.name">
-              {{ bracket.winner.seed }} - {{ bracket.winner.name }}
-            </p>
+            <p *ngIf="bracket.winner.name" [innerText]="bracket.winner.name"></p>
             <span *ngIf="!isDetailMode()">
               <span class="final-input">
                 <label for="numberOfGamesFinal" class="final-games">Games:</label>
@@ -138,11 +136,11 @@
                     <div class="row">
                       <div class="col bracket-team bracket-team-top">
                         <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.topSeed.name">
-                          {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                          {{ matchup.topSeed.name }}
                         </span>
                         <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && matchup.topSeed.name">
                           <button type="button" class="btn btn-link" (click)="pickTeam(0, divisionIndex, matchup.id, true)">
-                            {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                            {{ matchup.topSeed.name }}
                           </button>
                         </span>
                       </div>
@@ -160,11 +158,11 @@
                           Games: {{ matchup.games }}
                         </span>
                         <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.bottomSeed.name">
-                          {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                          {{ matchup.bottomSeed.name }}
                         </span>
                         <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && matchup.bottomSeed.name">
                           <button type="button" class="btn btn-link" (click)="pickTeam(0, divisionIndex, matchup.id)">
-                            {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                            {{ matchup.bottomSeed.name }}
                           </button>
                         </span>
                       </div>
@@ -180,11 +178,11 @@
                   <div class="row">
                     <div class="col bracket-team bracket-team-top">
                       <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[0].divisions[0].winner.name">
-                        {{ bracket.conferences[0].divisions[0].winner.seed }} - {{ bracket.conferences[0].divisions[0].winner.name }}
+                        {{ bracket.conferences[0].divisions[0].winner.name }}
                       </span>
                       <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[0].divisions[0].winner.name">
                         <button type="button" class="btn btn-link" (click)="pickTeam(0, null, 4, true)">
-                          {{ bracket.conferences[0].divisions[0].winner.seed }} - {{ bracket.conferences[0].divisions[0].winner.name }}
+                          {{ bracket.conferences[0].divisions[0].winner.name }}
                         </button>
                       </span>
                     </div>
@@ -202,11 +200,11 @@
                         Games: {{ bracket.conferences[0].games }}
                       </span>
                       <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[0].divisions[1].winner.name">
-                        {{ bracket.conferences[0].divisions[1].winner.seed }} - {{ bracket.conferences[0].divisions[1].winner.name }}
+                        {{ bracket.conferences[0].divisions[1].winner.name }}
                       </span>
                       <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[0].divisions[1].winner.name">
                         <button type="button" class="btn btn-link" (click)="pickTeam(0, null, 4)">
-                          {{ bracket.conferences[0].divisions[1].winner.seed }} - {{ bracket.conferences[0].divisions[1].winner.name }}
+                          {{ bracket.conferences[0].divisions[1].winner.name }}
                         </button>
                       </span>
                     </div>
@@ -221,11 +219,11 @@
                   <div class="row">
                     <div class="col bracket-team bracket-team-top">
                       <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[0].winner.name">
-                        {{ bracket.conferences[0].winner.seed }} - {{ bracket.conferences[0].winner.name }}
+                        {{ bracket.conferences[0].winner.name }}
                       </span>
                       <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[0].winner.name">
                         <button type="button" class="btn btn-link" (click)="pickTeam(null, null, null, true)">
-                          {{ bracket.conferences[0].winner.seed }} - {{ bracket.conferences[0].winner.name }}
+                          {{ bracket.conferences[0].winner.name }}
                         </button>
                       </span>
                     </div>
@@ -252,11 +250,11 @@
                   <div class="row">
                     <div class="col bracket-team bracket-team-top">
                       <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[1].winner.name">
-                        {{ bracket.conferences[1].winner.seed }} - {{ bracket.conferences[1].winner.name }}
+                        {{ bracket.conferences[1].winner.name }}
                       </span>
                       <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[1].winner.name">
                         <button type="button" class="btn btn-link" (click)="pickTeam()">
-                          {{ bracket.conferences[1].winner.seed }} - {{ bracket.conferences[1].winner.name }}
+                          {{ bracket.conferences[1].winner.name }}
                         </button>
                       </span>
                     </div>
@@ -271,11 +269,11 @@
                   <div class="row">
                     <div class="col bracket-team bracket-team-top">
                       <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[1].divisions[0].winner.name">
-                        {{ bracket.conferences[1].divisions[0].winner.seed }} - {{ bracket.conferences[1].divisions[0].winner.name }}
+                        {{ bracket.conferences[1].divisions[0].winner.name }}
                       </span>
                       <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[1].divisions[0].winner.name">
                         <button type="button" class="btn btn-link" (click)="pickTeam(1, null, 4, true)">
-                          {{ bracket.conferences[1].divisions[0].winner.seed }} - {{ bracket.conferences[1].divisions[0].winner.name }}
+                          {{ bracket.conferences[1].divisions[0].winner.name }}
                         </button>
                       </span>
                     </div>
@@ -293,11 +291,11 @@
                         Games: {{ bracket.conferences[1].games }}
                       </span>
                       <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[1].divisions[1].winner.name">
-                        {{ bracket.conferences[1].divisions[1].winner.seed }} - {{ bracket.conferences[1].divisions[1].winner.name }}
+                        {{ bracket.conferences[1].divisions[1].winner.name }}
                       </span>
                       <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[1].divisions[1].winner.name">
                         <button type="button" class="btn btn-link" (click)="pickTeam(1, null, 4)">
-                          {{ bracket.conferences[1].divisions[1].winner.seed }} - {{ bracket.conferences[1].divisions[1].winner.name }}
+                          {{ bracket.conferences[1].divisions[1].winner.name }}
                         </button>
                       </span>
                     </div>
@@ -313,11 +311,11 @@
                     <div class="row">
                       <div class="col bracket-team bracket-team-top">
                         <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.topSeed.name">
-                          {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                          {{ matchup.topSeed.name }}
                         </span>
                         <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && matchup.topSeed.name">
                           <button type="button" class="btn btn-link" (click)="pickTeam(1, divisionIndex, matchup.id, true)">
-                            {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                            {{ matchup.topSeed.name }}
                           </button>
                         </span>
                       </div>
@@ -335,11 +333,11 @@
                           Games: {{ matchup.games }}
                         </span>
                         <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.bottomSeed.name">
-                          {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                          {{ matchup.bottomSeed.name }}
                         </span>
                         <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && matchup.bottomSeed.name">
                           <button type="button" class="btn btn-link" (click)="pickTeam(1, divisionIndex, matchup.id)">
-                            {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                            {{ matchup.bottomSeed.name }}
                           </button>
                         </span>
                       </div>
