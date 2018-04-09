@@ -39,7 +39,6 @@ $border-color: $gray-500;
 
           @include media-breakpoint-only(xs) {
             font-size: 0.6rem;
-            top: 2.1rem !important;
 
             button {
               font-size: 0.6rem;
