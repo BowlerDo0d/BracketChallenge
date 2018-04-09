@@ -354,11 +354,11 @@
                     <div class="row">
                       <div class="col bracket-team bracket-team-top">
                         <span class="bracket-team-name" *ngIf="isDetailMode()">
-                          {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                          {{ matchup.topSeed.name }} - {{ matchup.topSeed.seed }}
                         </span>
                         <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode()">
                           <button type="button" class="btn btn-link" (click)="pickTeam(1, divisionIndex, matchup.id, true)">
-                            {{ matchup.topSeed.seed }} - {{ matchup.topSeed.name }}
+                            {{ matchup.topSeed.name }} - {{ matchup.topSeed.seed }}
                           </button>
                         </span>
                       </div>
@@ -376,11 +376,11 @@
                           Games: {{ matchup.games }}
                         </span>
                         <span class="bracket-team-name" *ngIf="isDetailMode()">
-                          {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                          {{ matchup.bottomSeed.name }} - {{ matchup.bottomSeed.seed }}
                         </span>
                         <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode()">
                           <button type="button" class="btn btn-link" (click)="pickTeam(1, divisionIndex, matchup.id)">
-                            {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
+                            {{ matchup.bottomSeed.name }} - {{ matchup.bottomSeed.seed }}
                           </button>
                         </span>
                       </div>
