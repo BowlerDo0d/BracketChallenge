@@ -47,7 +47,9 @@
         <div class="col-md text-center">
           <div class="champions">
             <p>Stanley Cup Champions</p>
-            <p *ngIf="bracket.winner.name" [innerText]="bracket.winner.name"></p>
+            <p [ngClass]="{ error : !bracket.winner.name }">
+              <span *ngIf="bracket.winner.name" [innerText]="bracket.winner.name"></span>
+            </p>
             <span *ngIf="!isDetailMode()">
               <span class="final-input">
                 <label for="numberOfGamesFinal" class="final-games">Games:</label>

@@ -12,19 +12,19 @@
     <div class="col">
       <table class="table">
         <thead class="thead-light">
-          <tr>
-            <th scope="col">Pos</th>
-            <th scope="col">Bracket Name</th>
-            <th scope="col">Owner</th>
-            <th scope="col" class="text-center">Score</th>
+          <tr class="d-flex">
+            <th scope="col" class="col-1">#</th>
+            <th scope="col" class="col-5">Bracket Name</th>
+            <th scope="col" class="col-4">Owner</th>
+            <th scope="col" class="col-2 text-center">Score</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;">
-            <th scope="row" [innerText]="idx + 1"></th>
-            <td><a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a></td>
-            <td [innerText]="bracket.owner"></td>
-            <td class="text-center" [innerText]="bracket.score"></td>
+          <tr class="d-flex" *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;">
+            <th class="col-1" scope="row" [innerText]="idx + 1"></th>
+            <td class="col-5"><a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a></td>
+            <td class="col-4 text-truncate" [innerText]="bracket.owner.name"></td>
+            <td class="col-2 text-center" [innerText]="bracket.score"></td>
           </tr>
         </tbody>
       </table>

@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { Location } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
@@ -70,7 +71,7 @@ export class BracketComponent implements OnInit, OnDestroy {
       if (this.key) {
         // Load bracket data
         if (this.key === 'mock') {
-          this.bracket = BracketMock;
+          this.bracket = _.cloneDeep(BracketMock);
           this.canEdit = true;
         } else {
           this.db.object(`bracket/${this.key}`).snapshotChanges().take(1).subscribe(data => {
@@ -113,7 +114,7 @@ export class BracketComponent implements OnInit, OnDestroy {
       } else {
         // Create mode
         this.viewMode = VIEW_MODES.CREATE;
-        this.bracket = BlankNHLBracket;
+        this.bracket = _.cloneDeep(BlankNHLBracket);
         this.bracket.owner = this.authService.getUsername();
       }
     });
@@ -299,7 +300,10 @@ export class BracketComponent implements OnInit, OnDestroy {
   submitBracket() {
     const scoreboard = {
         name: this.bracketForm.value['bracketName'],
-        owner: this.bracket.owner,
+        owner: {
+          email: this.bracket.owner,
+          name: this.bracket.owner.substr(0, this.bracket.owner.indexOf('@'))
+        },
         score: this.bracket.score,
       };
 
@@ -329,8 +333,10 @@ export class BracketComponent implements OnInit, OnDestroy {
         }, error => console.log(error));
     } else if (this.viewMode === VIEW_MODES.EDIT) {
       this.db.object(`bracket/${this.key}`).update(this.bracket)
-        .then(() => this.router.navigate([`/bracket/${this.key}`]))
-        .catch(error => console.log(error));
+        .then(() => {
+          this.db.object(`scoreboard/${this.key}`).update(scoreboard)
+            .then(() => this.router.navigate([`/bracket/${this.key}`]));
+        }).catch(error => console.log(error));
     }
   }
 }
