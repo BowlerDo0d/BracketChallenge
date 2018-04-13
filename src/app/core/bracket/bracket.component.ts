@@ -11,6 +11,7 @@ import { AuthService } from '../../auth/auth.service';
 import { Bracket } from '../../models/bracket.model';
 import { BracketMapper } from './data/bracket-mapper';
 import { BracketNameValidator } from './bracket-name-validator';
+import { BracketChecker } from './bracket-checker';
 import { VIEW_MODES } from '../../constants/form.constants';
 
 // Bracket data
@@ -35,12 +36,12 @@ export class BracketComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private location: Location) {
-      this.navigationSubscription = this.router.events.subscribe((evt: any) => {
-        if (evt instanceof NavigationEnd) {
-          this.ngOnInit();
-        }
-      });
-    }
+    this.navigationSubscription = this.router.events.subscribe((evt: any) => {
+      if (evt instanceof NavigationEnd) {
+        this.ngOnInit();
+      }
+    });
+  }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
@@ -74,6 +75,13 @@ export class BracketComponent implements OnInit, OnDestroy {
           this.bracket = _.cloneDeep(BracketMock);
           this.canEdit = true;
         } else {
+          if (this.key === 'master') {
+            // Master bracket key
+            this.key = '-LA-gCwWEEZxe5jUmj39';
+          } else if (this.key === 'dummy') {
+            this.key = '-LA-iP4kxzQ65R1x2ad6';
+          }
+
           this.db.object(`bracket/${this.key}`).snapshotChanges().take(1).subscribe(data => {
             const bracket = data.payload.val();
 
@@ -299,13 +307,16 @@ export class BracketComponent implements OnInit, OnDestroy {
 
   submitBracket() {
     const scoreboard = {
+        isComplete: false,
+        isTiebreakerComplete: false,
         name: this.bracketForm.value['bracketName'],
         owner: {
           email: this.bracket.owner,
           name: this.bracket.owner.substr(0, this.bracket.owner.indexOf('@'))
         },
-        score: this.bracket.score,
-      };
+        score: this.bracket.score
+      },
+      updateScoreboard = this.key === '-LA-gCwWEEZxe5jUmj39' || this.key === '-LA-iP4kxzQ65R1x2ad6' ? false : true;
 
     this.bracket.name = this.bracketForm.value['bracketName'];
     this.bracket.conferences[0].divisions[0].rounds[0].matchups[0].games = this.bracketForm.value['numberOfGames001'];
@@ -325,6 +336,9 @@ export class BracketComponent implements OnInit, OnDestroy {
     this.bracket.games = this.bracketForm.value['numberOfGamesFinal'];
     this.bracket.goals = this.bracketForm.value['numberOfGoalsFinal'];
 
+    scoreboard.isComplete = BracketChecker.isBracketComplete(this.bracket, false);
+    scoreboard.isTiebreakerComplete = BracketChecker.isBracketComplete(this.bracket);
+
     if (this.viewMode === VIEW_MODES.CREATE) {
       this.db.list('bracket').push(this.bracket)
         .then((response) => {
@@ -334,8 +348,12 @@ export class BracketComponent implements OnInit, OnDestroy {
     } else if (this.viewMode === VIEW_MODES.EDIT) {
       this.db.object(`bracket/${this.key}`).update(this.bracket)
         .then(() => {
-          this.db.object(`scoreboard/${this.key}`).update(scoreboard)
-            .then(() => this.router.navigate([`/bracket/${this.key}`]));
+          if (updateScoreboard) {
+            this.db.object(`scoreboard/${this.key}`).update(scoreboard)
+              .then(() => this.router.navigate([`/bracket/${this.key}`]));
+          } else {
+            this.router.navigate([`/bracket/${this.key}`]);
+          }
         }).catch(error => console.log(error));
     }
   }

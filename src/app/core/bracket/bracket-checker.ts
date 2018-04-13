@@ -1,7 +1,8 @@
 import * as _ from 'lodash';
-import { Bracket } from "../../../models/bracket.model";
+import { Bracket } from '../../models/bracket.model';
 
-export const isBracketComplete = (bracket: Bracket, includeTiebreakers: boolean = true): boolean => {
+export const BracketChecker = {
+  isBracketComplete: (bracket: Bracket, includeTiebreakers: boolean = true): boolean => {
     const picks = !!(
         _.get(bracket, 'winner.name') &&
         _.get(bracket.conferences[0], 'winner.name') &&
@@ -40,3 +41,4 @@ export const isBracketComplete = (bracket: Bracket, includeTiebreakers: boolean 
 
     return picks && (includeTiebreakers ? tiebreakers : true);
   }
+};
