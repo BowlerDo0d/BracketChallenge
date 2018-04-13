@@ -1,33 +1,32 @@
-<div class="container mt-3">
-  <div class="row">
-    <div class="col">
-      <h4>Scoreboard</h4>
-    </div>
-    <div class="col text-right">
-      <button type="button" class="btn btn-primary create-btn" routerLink="/bracket" [disabled]="!isAuthenticated()"><span class="fa fa-plus pr-2"></span>Create Bracket</button>
-      <span class="loginMsg" *ngIf="!isAuthenticated()">Login to create a bracket</span>
-    </div>
+<div class="row mt-3">
+  <div class="col">
+    <h4>Scoreboard</h4>
   </div>
-  <div class="row mt-4">
-    <div class="col">
-      <table class="table">
-        <thead class="thead-light">
-          <tr class="d-flex">
-            <th scope="col" class="col-1">#</th>
-            <th scope="col" class="col-5">Bracket Name</th>
-            <th scope="col" class="col-4">Owner</th>
-            <th scope="col" class="col-2 text-center">Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="d-flex" *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;">
-            <th class="col-1" scope="row" [innerText]="idx + 1"></th>
-            <td class="col-5"><a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a></td>
-            <td class="col-4 text-truncate" [innerText]="bracket.owner.name"></td>
-            <td class="col-2 text-center" [innerText]="bracket.score"></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="col text-right">
+    <button type="button" class="btn btn-primary create-btn" routerLink="/bracket" [disabled]="!isAuthenticated()"><span class="fa fa-plus pr-2"></span>Create Bracket</button>
+    <span class="loginMsg" *ngIf="!isAuthenticated()">Login to create a bracket</span>
+  </div>
+</div>
+<div class="row no-gutters mt-4">
+  <div class="col">
+    <table class="table">
+      <thead class="thead-light">
+        <tr class="d-flex">
+          <th scope="col" class="col-1">#</th>
+          <th scope="col" class="col-5">Bracket Name</th>
+          <th scope="col" class="col-4">Owner</th>
+          <th scope="col" class="col-2 text-center">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="d-flex" *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;">
+          <th class="col-1" scope="row" [innerText]="idx + 1"></th>
+          <td class="col-5 text-truncate d-none d-md-flex"><a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a></td>
+          <td class="col-5 text-truncate d-flex d-md-none"><a [innerText]="bracket.truncatedName" [routerLink]="['/bracket', bracket.key]"></a></td>
+          <td class="col-4 text-truncate" [innerText]="bracket.owner.name"></td>
+          <td class="col-2 text-center" [innerText]="bracket.score"></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

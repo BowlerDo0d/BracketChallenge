@@ -16,7 +16,13 @@ export class ScoreboardComponent implements OnInit {
 
   ngOnInit() {
     this.brackets$ = this.db.list('scoreboard', ref => ref.orderByChild('score')).snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+      return changes.map(c => {
+        const bracket = c.payload.val(),
+          max = 13,
+          truncatedName = bracket.name.length > max ? `${bracket.name.substr(0, max)}...` : bracket.name;
+
+        return { key: c.payload.key, truncatedName, ...bracket };
+      });
     });
   }
 

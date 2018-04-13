@@ -1,9 +1,6 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark mb-3">
   <div class="container">
     <a class="navbar-brand" routerLink="/">2018 Bracket Challenge</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavigation" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
     <div id="mainNavigation" class="collapse navbar-collapse" *ngIf="!isCheckingForAuth()">
       <button type="button" class="btn btn-success ml-auto" *ngIf="!isAuthenticated() && router.url != '/login'" routerLink="/login">Login</button>
