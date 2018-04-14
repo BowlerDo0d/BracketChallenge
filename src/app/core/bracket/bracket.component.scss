@@ -32,6 +32,14 @@ $border-color: $gray-500;
             top: 1.85rem;
           }
 
+          &.text-danger {
+            text-decoration: line-through;
+          }
+
+          &.win-override {
+            top: 3.75rem;
+          }
+
           @include media-breakpoint-only(md) {
             font-size: 0.5rem;
             top: 2.5rem;
@@ -74,6 +82,10 @@ $border-color: $gray-500;
               &.edit-mode {
                 top: 5.35rem;
               }
+
+              &.win-override {
+                top: 7.25rem;
+              }
             }
           }
         }
@@ -97,6 +109,10 @@ $border-color: $gray-500;
 
               &.edit-mode {
                 top: 12.35rem;
+              }
+
+              &.win-override {
+                top: 14.25rem;
               }
             }
           }
@@ -138,6 +154,14 @@ $border-color: $gray-500;
       border: 1px solid rgba($red, 0.75);
       border-radius: 0.25rem;
     }
+
+    .text-danger {
+      text-decoration: line-through;
+    }
+  }
+
+  .win-override {
+    margin: -1rem 0 0;
   }
 
   label {
