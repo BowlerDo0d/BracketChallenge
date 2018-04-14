@@ -123,9 +123,14 @@ export class BracketComponent implements OnInit, OnDestroy {
         }
       } else {
         // Create mode
-        this.viewMode = VIEW_MODES.CREATE;
-        this.bracket = _.cloneDeep(BlankNHLBracket);
-        this.bracket.owner = this.authService.getUsername();
+
+        if (this.pastDeadline) {
+          this.router.navigate(['/']);
+        } else {
+          this.viewMode = VIEW_MODES.CREATE;
+          this.bracket = _.cloneDeep(BlankNHLBracket);
+          this.bracket.owner = this.authService.getUsername();
+        }
       }
     });
   }

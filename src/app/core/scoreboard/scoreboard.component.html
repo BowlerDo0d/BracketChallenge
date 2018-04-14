@@ -2,7 +2,7 @@
   <div class="col">
     <h4>Scoreboard</h4>
   </div>
-  <div class="col text-right">
+  <div class="col text-right" *ngIf="!pastDeadline">
     <button type="button" class="btn btn-primary create-btn" routerLink="/bracket" [disabled]="!isAuthenticated()"><span class="fa fa-plus pr-2"></span>Create Bracket</button>
     <span class="loginMsg" *ngIf="!isAuthenticated()">Login to create a bracket</span>
   </div>

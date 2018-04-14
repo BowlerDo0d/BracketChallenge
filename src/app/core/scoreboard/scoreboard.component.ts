@@ -11,8 +11,11 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class ScoreboardComponent implements OnInit {
   brackets$: Observable<any>;
+  pastDeadline: boolean;
 
-  constructor(private authService: AuthService, private db: AngularFireDatabase) {}
+  constructor(private authService: AuthService, private db: AngularFireDatabase) {
+    this.pastDeadline = true;
+  }
 
   ngOnInit() {
     this.brackets$ = this.db.list('scoreboard', ref => ref.orderByChild('score')).snapshotChanges().map(changes => {
