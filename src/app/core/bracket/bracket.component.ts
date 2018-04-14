@@ -29,6 +29,7 @@ export class BracketComponent implements OnInit, OnDestroy {
   bracketForm: FormGroup;
   canEdit: boolean;
   navigationSubscription: Subscription;
+  pastDeadline: boolean;
   viewMode: string;
 
   constructor(private authService: AuthService,
@@ -47,6 +48,7 @@ export class BracketComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((params: Params) => {
       this.key = params['key'];
       this.canEdit = false;
+      this.pastDeadline = true;
       this.viewMode = location.pathname.indexOf('/edit') !== -1 ? VIEW_MODES.EDIT : VIEW_MODES.DETAIL;
 
       this.bracketForm = new FormGroup({
@@ -89,7 +91,7 @@ export class BracketComponent implements OnInit, OnDestroy {
               // Load bracket
               this.bracket = BracketMapper(bracket);
 
-              if (this.bracket.owner === this.authService.getUsername()) {
+              if (!this.pastDeadline && this.bracket.owner === this.authService.getUsername()) {
                 this.canEdit = true;
               } else if (this.isEditMode()) {
                 this.router.navigate(['bracket', this.key]);
