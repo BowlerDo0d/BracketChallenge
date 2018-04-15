@@ -34,6 +34,6 @@ export class ScoreboardComponent implements OnInit {
   }
 
   allowAccess() {
-    return this.authService.getUsername() === 'smahony39@gmail.com';
+    return this.authService.getUsername() === 'pfeifert@gmail.com';
   }
 }
