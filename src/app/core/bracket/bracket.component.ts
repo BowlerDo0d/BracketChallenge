@@ -91,7 +91,7 @@ export class BracketComponent implements OnInit, OnDestroy {
               // Load bracket
               this.bracket = BracketMapper(bracket);
 
-              if ((this.authService.getUsername() === 'pfeifert@gmail.com' || !this.pastDeadline) && this.bracket.owner === this.authService.getUsername()) {
+              if (!this.pastDeadline && this.bracket.owner === this.authService.getUsername()) {
                 this.canEdit = true;
               } else if (this.isEditMode()) {
                 this.router.navigate(['bracket', this.key]);
@@ -123,7 +123,7 @@ export class BracketComponent implements OnInit, OnDestroy {
         }
       } else {
         // Create mode
-        if (this.authService.getUsername() !== 'pfeifert@gmail.com' && this.pastDeadline) {
+        if (this.pastDeadline) {
           this.router.navigate(['/']);
         } else {
           this.viewMode = VIEW_MODES.CREATE;
