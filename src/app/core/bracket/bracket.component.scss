@@ -249,3 +249,8 @@ $border-color: $gray-500;
   border-color: $green;
   background-color: rgba($color: $green, $alpha: 0.025)
 }
+
+.toggle-buttons {
+  position: relative;
+  top: -3rem;
+}

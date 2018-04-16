@@ -34,6 +34,7 @@ export class BracketComponent implements OnInit, OnDestroy {
   key: string;
   masterBracket: Bracket;
   navigationSubscription: Subscription;
+  showResults = false;
   viewMode: string;
 
   constructor(private authService: AuthService,
@@ -189,7 +190,7 @@ export class BracketComponent implements OnInit, OnDestroy {
   isMasterMatch(conference: number = -1, division: number = -1, round: number = -1, matchup: number = -1, isTopSeed: boolean = true) {
     let isMatch = false;
 
-    if (this.key !== this.KEYS.MASTER && this.isDetailMode() && this.masterBracket) {
+    if (this.showResults && this.key !== this.KEYS.MASTER && this.isDetailMode() && this.masterBracket) {
       if (conference === -1) {
         // Check overall winner
         if (this.bracket.winner.name ===
@@ -224,7 +225,7 @@ export class BracketComponent implements OnInit, OnDestroy {
       }
     }
 
-    return isMatch;
+    return this.showResults ? isMatch : true;
   }
 
   getClassMatchingMaster(conference: number = -1, division: number = -1, round: number = -1, matchup: number = -1, isTopSeed: boolean = true) {
@@ -232,7 +233,7 @@ export class BracketComponent implements OnInit, OnDestroy {
       successClass = 'text-success';
     let cssClass: string = null;
 
-    if (this.key !== this.KEYS.MASTER && this.isDetailMode() && this.masterBracket) {
+    if (this.showResults && this.key !== this.KEYS.MASTER && this.isDetailMode() && this.masterBracket) {
       if (conference === -1) {
         // Check overall winner
         if (_.get(this.masterBracket, 'winner.name') !== null) {
@@ -243,13 +244,41 @@ export class BracketComponent implements OnInit, OnDestroy {
             cssClass = errorClass;
           }
         } else {
-          _.some(this.masterBracket.conferences, (conf, idx) => {
-            if (cssClass) {
-              return true;
-            }
-            cssClass = this.getClassMatchingMaster(idx);
+          // Check everything....
+          _.some(this.bracket.conferences, (conf, confIdx) => {
+            return _.some(this.bracket.conferences[confIdx].divisions, (div, divIdx) => {
+              // Check division winner
+              if (_.get(this.masterBracket, `conferences[${confIdx}].divisions[${divIdx}].winner.name`) !== null) {
+                if (this.bracket.winner.name ===
+                    this.bracket.conferences[confIdx].divisions[divIdx].winner.name &&
+                    this.bracket.conferences[confIdx].divisions[divIdx].winner.name !==
+                    _.get(this.masterBracket, `conferences[${confIdx}].divisions[${divIdx}].winner.name`)) {
+                  cssClass = errorClass;
+                  return true;
+                }
+              }
+              // Check matchup top seed
+              if (_.get(this.masterBracket, `conferences[${confIdx}].divisions[${divIdx}].rounds[1].matchups[0].topSeed.name`) !== null) {
+                if (this.bracket.winner.name ===
+                    this.bracket.conferences[confIdx].divisions[divIdx].rounds[1].matchups[0].topSeed.name &&
+                    this.bracket.conferences[confIdx].divisions[divIdx].rounds[1].matchups[0].topSeed.name !==
+                    _.get(this.masterBracket, `conferences[${confIdx}].divisions[${divIdx}].rounds[1].matchups[0].topSeed.name`)) {
+                  cssClass = errorClass;
+                  return true;
+                }
+              }
+              // Check bottom seed
+              if (_.get(this.masterBracket, `conferences[${confIdx}].divisions[${divIdx}].rounds[1].matchups[0].bottomSeed.name`) !== null) {
+                if (this.bracket.winner.name ===
+                    this.bracket.conferences[confIdx].divisions[divIdx].rounds[1].matchups[0].bottomSeed.name &&
+                    this.bracket.conferences[confIdx].divisions[divIdx].rounds[1].matchups[0].bottomSeed.name !==
+                    _.get(this.masterBracket, `conferences[${confIdx}].divisions[${divIdx}].rounds[1].matchups[0].bottomSeed.name`)) {
+                  cssClass = errorClass;
+                  return true;
+                }
+              }
+            });
           });
-          cssClass = cssClass === successClass ? null : cssClass;
         }
       } else if (division === -1) {
         // Check conference winners
@@ -261,13 +290,39 @@ export class BracketComponent implements OnInit, OnDestroy {
             cssClass = errorClass;
           }
         } else {
-          _.some(this.masterBracket.conferences[conference].divisions, (div, idx) => {
-            if (cssClass) {
-              return true;
+          // Check division winners and matchup winners under same conference
+          _.some(this.bracket.conferences[conference].divisions, (div, idx) => {
+            // Check division winner
+            if (_.get(this.masterBracket, `conferences[${conference}].divisions[${idx}].winner.name`) !== null) {
+              if (this.bracket.conferences[conference].winner.name ===
+                  this.bracket.conferences[conference].divisions[idx].winner.name &&
+                  this.bracket.conferences[conference].divisions[idx].winner.name !==
+                  _.get(this.masterBracket, `conferences[${conference}].divisions[${idx}].winner.name`)) {
+                cssClass = errorClass;
+                return true;
+              }
             }
-            cssClass = this.getClassMatchingMaster(conference, idx);
+            // Check matchup top seed
+            if (_.get(this.masterBracket, `conferences[${conference}].divisions[${idx}].rounds[1].matchups[0].topSeed.name`) !== null) {
+              if (this.bracket.conferences[conference].winner.name ===
+                  this.bracket.conferences[conference].divisions[idx].rounds[1].matchups[0].topSeed.name &&
+                  this.bracket.conferences[conference].divisions[idx].rounds[1].matchups[0].topSeed.name !==
+                  _.get(this.masterBracket, `conferences[${conference}].divisions[${idx}].rounds[1].matchups[0].topSeed.name`)) {
+                cssClass = errorClass;
+                return true;
+              }
+            }
+            // Check bottom seed
+            if (_.get(this.masterBracket, `conferences[${conference}].divisions[${idx}].rounds[1].matchups[0].bottomSeed.name`) !== null) {
+              if (this.bracket.conferences[conference].winner.name ===
+                  this.bracket.conferences[conference].divisions[idx].rounds[1].matchups[0].bottomSeed.name &&
+                  this.bracket.conferences[conference].divisions[idx].rounds[1].matchups[0].bottomSeed.name !==
+                  _.get(this.masterBracket, `conferences[${conference}].divisions[${idx}].rounds[1].matchups[0].bottomSeed.name`)) {
+                cssClass = errorClass;
+                return true;
+              }
+            }
           });
-          cssClass = cssClass === successClass ? null : cssClass;
         }
       } else if (round === -1) {
         // Check division winners
@@ -279,13 +334,25 @@ export class BracketComponent implements OnInit, OnDestroy {
             cssClass = errorClass;
           }
         } else {
-          _.some([true, false], (topSeed) => {
-            if (cssClass) {
-              return true;
+          // Check matchups in division
+          // Check top seed
+          if (_.get(this.masterBracket, `conferences[${conference}].divisions[${division}].rounds[1].matchups[0].topSeed.name`) !== null) {
+            if (this.bracket.conferences[conference].divisions[division].winner.name ===
+                this.bracket.conferences[conference].divisions[division].rounds[1].matchups[0].topSeed.name &&
+                this.bracket.conferences[conference].divisions[division].rounds[1].matchups[0].topSeed.name !==
+                _.get(this.masterBracket, `conferences[${conference}].divisions[${division}].rounds[1].matchups[0].topSeed.name`)) {
+              cssClass = errorClass;
             }
-            cssClass = this.getClassMatchingMaster(conference, division, 1, 0, topSeed);
-          });
-          cssClass = cssClass === successClass ? null : cssClass;
+          }
+          // Check bottom seed
+          if (!cssClass && _.get(this.masterBracket, `conferences[${conference}].divisions[${division}].rounds[1].matchups[0].bottomSeed.name`) !== null) {
+            if (this.bracket.conferences[conference].divisions[division].winner.name ===
+                this.bracket.conferences[conference].divisions[division].rounds[1].matchups[0].bottomSeed.name &&
+                this.bracket.conferences[conference].divisions[division].rounds[1].matchups[0].bottomSeed.name !==
+                _.get(this.masterBracket, `conferences[${conference}].divisions[${division}].rounds[1].matchups[0].bottomSeed.name`)) {
+              cssClass = errorClass;
+            }
+          }
         }
       } else {
         // Check round 2 winners
@@ -494,5 +561,9 @@ export class BracketComponent implements OnInit, OnDestroy {
           }
         }).catch(error => console.log(error));
     }
+  }
+
+  toggleResults(toggleStatus: boolean) {
+    this.showResults = toggleStatus;
   }
 }

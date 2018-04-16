@@ -471,6 +471,12 @@
         </div>
 
       </div>
+
+      <div class="row toggle-buttons">
+        <div class="col text-center">
+          <app-toggle-switch title="Show Results" [isChecked]="showResults" (onToggle)="toggleResults($event)"></app-toggle-switch>
+        </div>
+      </div>
     </div>
   </form>
 </div>
