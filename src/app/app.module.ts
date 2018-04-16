@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { AdminModule } from './admin/admin.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
@@ -24,6 +25,7 @@ import { CoreModule } from './core/core.module';
     NgbModule.forRoot(),
     AppRoutingModule,
     AuthModule,
+    AdminModule,
     CoreModule
   ],
   providers: [AngularFireDatabase],
