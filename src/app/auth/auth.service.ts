@@ -53,6 +53,7 @@ export class AuthService {
     this.afAuth.auth.signOut();
     this.user = null;
     this.userChanged.next(null);
+    this.router.navigate(['/']);
   }
 
   registerUser(email: string, password: string) {
