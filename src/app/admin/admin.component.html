@@ -1,59 +1,66 @@
 <div class="container">
 
-  <div class="row mb-3" *ngIf="showCupFinals()">
-    <div class="col text-center">
-      <h4 class="text-danger mb-3">Stanley Cup Finals</h4>
+  <form [formGroup]="adminForm" (ngSubmit)="saveScores()">
 
-      <div class="row mb-3 justify-content-center matchup">
-        <div class="col-5 col-md-3">
-          <span class="text-secondary text-nowrap" [innerText]="masterBracket?.conferences[0].winner.name"></span>
-          <input type="number" class="form-control form-control-sm" />
-        </div>
-        <div class="col-5 col-md-3">
-          <span class="text-secondary text-nowrap" [innerText]="masterBracket?.conferences[1].winner.name"></span>
-          <input type="number" class="form-control form-control-sm" />
-        </div>
-      </div>
-      <div class="row mb-3 matchup">
-        <div class="col">
-          <span class="text-secondary text-nowrap">Total Goals</span>
-          <input type="number" class="form-control form-control-sm" />
-        </div>
+    <div class="row">
+      <div class="col text-right">
+        <button type="submit" class="btn btn-success" [disabled]="!adminForm.valid">Save</button>
       </div>
     </div>
-  </div>
 
-  <div class="row mb-5" *ngFor="let conference of masterBracket?.conferences; let confIdx = index;">
-    <div class="col text-center">
-      <h4 class="text-danger" [innerText]="conference.name"></h4>
+    <div class="row mb-3" *ngIf="showCupFinals()">
+      <div class="col text-center">
+        <h4 class="text-danger mb-3">Stanley Cup Finals</h4>
 
-      <div class="row mb-3" *ngIf="showConferenceFinals(confIdx)">
-        <div class="col">
-          <h6 class="text-secondary">Conference Finals</h6>
-
-          <div class="row mb-3 justify-content-center matchup">
-            <div class="col-5 col-md-3">
-              <span class="text-secondary text-nowrap" [innerText]="conference.divisions[0].winner.name"></span>
-              <input type="number" class="form-control form-control-sm" />
-            </div>
-            <div class="col-5 col-md-3">
-              <span class="text-secondary text-nowrap" [innerText]="conference.divisions[1].winner.name"></span>
-              <input type="number" class="form-control form-control-sm" />
-            </div>
+        <div class="row mb-3 justify-content-center matchup">
+          <div class="col-5 col-md-3">
+            <span class="text-secondary text-nowrap" [innerText]="masterBracket?.conferences[0].winner.name"></span>
+            <input type="number" class="form-control form-control-sm" />
+          </div>
+          <div class="col-5 col-md-3">
+            <span class="text-secondary text-nowrap" [innerText]="masterBracket?.conferences[1].winner.name"></span>
+            <input type="number" class="form-control form-control-sm" />
+          </div>
+        </div>
+        <div class="row mb-3 matchup">
+          <div class="col">
+            <span class="text-secondary text-nowrap">Total Goals</span>
+            <input type="number" class="form-control form-control-sm" />
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="row mb-3" *ngFor="let division of conference.divisions; let divIdx = index;">
-        <div class="col">
-          <h5 class="text-primary" [innerText]="division.name"></h5>
+    <div class="row mb-5" *ngFor="let conference of masterBracket?.conferences; let confIdx = index;">
+      <div class="col text-center">
+        <h4 class="text-danger" [innerText]="conference.name"></h4>
 
-          <ng-container *ngFor="let round of division.rounds | reverse; let roundIdx = index;">
-            <div class="row mb-3" *ngIf="showRound(confIdx, divIdx, roundIdx)">
+        <div class="row mb-3" *ngIf="showConferenceFinals(confIdx)">
+          <div class="col">
+            <h6 class="text-secondary">Conference Finals</h6>
+
+            <div class="row mb-3 justify-content-center matchup">
+              <div class="col-5 col-md-3">
+                <span class="text-secondary text-nowrap" [innerText]="conference.divisions[0].winner.name"></span>
+                <input type="number" class="form-control form-control-sm" />
+              </div>
+              <div class="col-5 col-md-3">
+                <span class="text-secondary text-nowrap" [innerText]="conference.divisions[1].winner.name"></span>
+                <input type="number" class="form-control form-control-sm" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3" *ngFor="let division of conference.divisions; let divIdx = index;">
+          <div class="col">
+            <h5 class="text-primary" [innerText]="division.name"></h5>
+
+            <div class="row mb-3" *ngIf="showQuarterfinals(confIdx, divIdx)">
               <div class="col">
-                <h6 class="text-secondary" [innerText]="round.name"></h6>
+                <h6 class="text-secondary" [innerText]="division.rounds[1].name"></h6>
 
-                <div class="row mb-3 justify-content-center matchup" *ngFor="let matchup of round.matchups">
+                <div class="row mb-3 justify-content-center matchup" *ngFor="let matchup of division.rounds[1].matchups">
                   <div class="col-5 col-md-3">
                     <span class="text-secondary text-nowrap" [innerText]="matchup.topSeed.name"></span>
                     <input type="number" class="form-control form-control-sm" />
@@ -66,11 +73,36 @@
 
               </div>
             </div>
-          </ng-container>
 
+            <div class="row mb-3">
+              <div class="col">
+                <h6 class="text-secondary" [innerText]="division.rounds[0].name"></h6>
+
+                <div class="row mb-3 justify-content-center matchup" *ngFor="let matchup of division.rounds[0].matchups; let matchIdx = index;">
+                  <div class="col-5 col-md-3">
+                    <span class="text-secondary text-nowrap" [innerText]="matchup.topSeed.name"></span>
+                    <input type="number"
+                      class="form-control form-control-sm"
+                      formControlName="{{'topSeed' + confIdx + divIdx + '0' + matchIdx}}"
+                      [ngClass]="{ 'is-invalid' : !adminForm.controls['topSeed' + confIdx + divIdx + '0' + matchIdx].valid }" />
+                  </div>
+                  <div class="col-5 col-md-3">
+                    <span class="text-secondary text-nowrap" [innerText]="matchup.bottomSeed.name"></span>
+                    <input type="number"
+                      class="form-control form-control-sm"
+                      formControlName="{{'bottomSeed' + confIdx + divIdx + '0' + matchIdx}}"
+                      [ngClass]="{ 'is-invalid' : !adminForm.controls['bottomSeed' + confIdx + divIdx + '0' + matchIdx].valid }" />
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
         </div>
-      </div>
 
+      </div>
     </div>
-  </div>
+
+  </form>
 </div>
