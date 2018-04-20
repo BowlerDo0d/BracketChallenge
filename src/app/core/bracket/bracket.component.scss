@@ -263,7 +263,7 @@ $border-color: $gray-500;
   border-radius: 0.25rem;
 
   @include media-breakpoint-down(sm) {
-    padding: 0.7rem 0 0.7rem 1.5rem;
+    padding: 0;
     border: none;
   }
 }
