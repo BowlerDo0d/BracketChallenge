@@ -7,7 +7,7 @@ $border-color: $gray-500;
 
   .conference-name {
     font-size: initial;
-    color: $gray-700;
+    color: $danger;
     border-bottom: 1px solid $border-color;
   }
 
@@ -30,6 +30,14 @@ $border-color: $gray-500;
 
           &.edit-mode {
             top: 1.85rem;
+          }
+
+          &.text-danger {
+            text-decoration: line-through;
+          }
+
+          &.win-override {
+            top: 3.75rem;
           }
 
           @include media-breakpoint-only(md) {
@@ -74,6 +82,10 @@ $border-color: $gray-500;
               &.edit-mode {
                 top: 5.35rem;
               }
+
+              &.win-override {
+                top: 7.25rem;
+              }
             }
           }
         }
@@ -97,6 +109,10 @@ $border-color: $gray-500;
 
               &.edit-mode {
                 top: 12.35rem;
+              }
+
+              &.win-override {
+                top: 14.25rem;
               }
             }
           }
@@ -138,6 +154,14 @@ $border-color: $gray-500;
       border: 1px solid rgba($red, 0.75);
       border-radius: 0.25rem;
     }
+
+    .text-danger {
+      text-decoration: line-through;
+    }
+  }
+
+  .win-override {
+    margin: -1rem 0 0;
   }
 
   label {
@@ -224,4 +248,22 @@ $border-color: $gray-500;
 .success {
   border-color: $green;
   background-color: rgba($color: $green, $alpha: 0.025)
+}
+
+.toggle-buttons {
+  position: relative;
+  top: -3rem;
+}
+
+.score {
+  font-size: 0.9rem;
+  color: $secondary;
+  padding: 0.25rem 0;
+  border: 1px solid $secondary;
+  border-radius: 0.25rem;
+
+  @include media-breakpoint-down(sm) {
+    padding: 0.7rem 0 0.7rem 1.5rem;
+    border: none;
+  }
 }

@@ -9,13 +9,15 @@ import { BracketComponent } from './bracket/bracket.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { ScoreboardComponent } from './scoreboard/scoreboard.component';
+import { ToggleSwitchComponent } from './toggle-switch/toggle-switch.component';
 
 @NgModule({
   declarations: [
     BracketComponent,
     FooterComponent,
     HeaderComponent,
-    ScoreboardComponent
+    ScoreboardComponent,
+    ToggleSwitchComponent
   ],
   imports: [
     AppRoutingModule,

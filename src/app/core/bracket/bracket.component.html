@@ -1,19 +1,31 @@
 <div class="container-fluid">
   <form [formGroup]="bracketForm" (ngSubmit)="submitBracket()">
-    <div class="row" *ngIf="isDetailMode()">
-      <div class="col-6">
+    <div class="row justify-content-center" *ngIf="isDetailMode()">
+      <div class="col">
         <button type="button" class="btn btn-outline-secondary" routerLink="/">
           <span class="fa fa-reply pr-2"></span>
           <span class="d-inline-block d-sm-none">Return</span>
           <span class="d-none d-sm-inline-block">Return to Scoreboard</span>
         </button>
       </div>
-      <div class="col-6 text-right" *ngIf="canEdit">
-        <button type="button" class="btn btn-outline-primary" (click)="editBracket()">
+      <div class="col text-center score d-none d-md-block">
+        Score: {{ bracket?.score }}
+      </div>
+      <div class="col text-right">
+        <button type="button" *ngIf="canEdit" class="btn btn-outline-primary" (click)="editBracket()">
           <span class="fa fa-pencil-square-o pr-2"></span>
           <span class="d-inline-block d-sm-none">Edit</span>
           <span class="d-none d-sm-inline-block">Edit Bracket</span>
         </button>
+      </div>
+    </div>
+
+    <div class="row mt-4 justify-content-center d-flex d-md-none">
+      <div class="col-4 score text-center">
+        Score: {{ bracket?.score }}
+      </div>
+      <div class="col-8 pt-2 text-right">
+          <app-toggle-switch title="Results" inline="true" [isChecked]="showResults" (onToggle)="toggleResults($event)"></app-toggle-switch>
       </div>
     </div>
 
@@ -42,13 +54,19 @@
     </div>
 
     <div *ngIf="bracket">
-      <div class="row">
-        <div class="col-md"></div>
-        <div class="col-md text-center">
+      <div class="row justify-content-center">
+        <div class="col text-center">
           <div class="champions">
             <p>Stanley Cup Champions</p>
             <p [ngClass]="{ error : !bracket.winner.name }">
-              <span *ngIf="bracket.winner.name" [innerText]="bracket.winner.name"></span>
+              <span *ngIf="bracket.winner.name"
+                [innerText]="bracket.winner.name"
+                [ngClass]="getClassMatchingMaster()">
+              </span>
+            </p>
+            <p class="win-override text-success"
+              *ngIf="isDetailMode() && !isMasterMatch()">
+                {{ masterBracket?.winner.name }}
             </p>
             <span *ngIf="!isDetailMode()">
               <span class="final-input">
@@ -82,7 +100,6 @@
             </span>
           </div>
         </div>
-        <div class="col-md"></div>
       </div>
 
       <div class="row bracket">
@@ -141,12 +158,18 @@
 
             <div class="col bracket-round round-2">
               <div *ngFor="let division of bracket.conferences[0].divisions; let divisionIndex = index;">
-                <div class="row" *ngFor="let matchup of division.rounds[1].matchups">
+                <div class="row" *ngFor="let matchup of division.rounds[1].matchups; let matchupIndex = index;">
                   <div class="col bracket-matchup">
                     <div class="row">
                       <div class="col bracket-team bracket-team-top">
-                        <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.topSeed.name">
+                        <span class="bracket-team-name"
+                          *ngIf="isDetailMode() && matchup.topSeed.name"
+                          [ngClass]="getClassMatchingMaster(0, divisionIndex, 1, matchupIndex)">
                           {{ matchup.topSeed.name }}
+                        </span>
+                        <span class="bracket-team-name win-override text-success"
+                          *ngIf="isDetailMode() && !isMasterMatch(0, divisionIndex, 1, matchupIndex)">
+                          {{ masterBracket?.conferences[0].divisions[divisionIndex].rounds[1].matchups[matchupIndex].topSeed.name }}
                         </span>
                         <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && matchup.topSeed.name">
                           <button type="button" class="btn btn-link" (click)="pickTeam(0, divisionIndex, matchup.id, true)">
@@ -167,8 +190,14 @@
                         <span class="predictor detail-mode" *ngIf="isDetailMode()">
                           Games: {{ matchup.games }}
                         </span>
-                        <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.bottomSeed.name">
+                        <span class="bracket-team-name"
+                          *ngIf="isDetailMode() && matchup.bottomSeed.name"
+                          [ngClass]="getClassMatchingMaster(0, divisionIndex, 1, matchupIndex, false)">
                           {{ matchup.bottomSeed.name }}
+                        </span>
+                        <span class="bracket-team-name win-override text-success"
+                          *ngIf="isDetailMode() && !isMasterMatch(0, divisionIndex, 1, matchupIndex, false)">
+                          {{ masterBracket?.conferences[0].divisions[divisionIndex].rounds[1].matchups[matchupIndex].bottomSeed.name }}
                         </span>
                         <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && matchup.bottomSeed.name">
                           <button type="button" class="btn btn-link" (click)="pickTeam(0, divisionIndex, matchup.id)">
@@ -187,8 +216,14 @@
                 <div class="col bracket-matchup">
                   <div class="row">
                     <div class="col bracket-team bracket-team-top">
-                      <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[0].divisions[0].winner.name">
+                      <span class="bracket-team-name"
+                        *ngIf="isDetailMode() && bracket.conferences[0].divisions[0].winner.name"
+                        [ngClass]="getClassMatchingMaster(0, 0)">
                         {{ bracket.conferences[0].divisions[0].winner.name }}
+                      </span>
+                      <span class="bracket-team-name win-override text-success"
+                        *ngIf="isDetailMode() && !isMasterMatch(0, 0)">
+                        {{ masterBracket?.conferences[0].divisions[0].winner.name }}
                       </span>
                       <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[0].divisions[0].winner.name">
                         <button type="button" class="btn btn-link" (click)="pickTeam(0, null, 4, true)">
@@ -209,8 +244,14 @@
                       <span class="predictor detail-mode" *ngIf="isDetailMode()">
                         Games: {{ bracket.conferences[0].games }}
                       </span>
-                      <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[0].divisions[1].winner.name">
+                      <span class="bracket-team-name"
+                        *ngIf="isDetailMode() && bracket.conferences[0].divisions[1].winner.name"
+                        [ngClass]="getClassMatchingMaster(0, 1)">
                         {{ bracket.conferences[0].divisions[1].winner.name }}
+                      </span>
+                      <span class="bracket-team-name win-override text-success"
+                        *ngIf="isDetailMode() && !isMasterMatch(0, 1)">
+                        {{ masterBracket?.conferences[0].divisions[1].winner.name }}
                       </span>
                       <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[0].divisions[1].winner.name">
                         <button type="button" class="btn btn-link" (click)="pickTeam(0, null, 4)">
@@ -228,8 +269,14 @@
                 <div class="col bracket-matchup">
                   <div class="row">
                     <div class="col bracket-team bracket-team-top">
-                      <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[0].winner.name">
+                      <span class="bracket-team-name"
+                        *ngIf="isDetailMode() && bracket.conferences[0].winner.name"
+                        [ngClass]="getClassMatchingMaster(0)">
                         {{ bracket.conferences[0].winner.name }}
+                      </span>
+                      <span class="bracket-team-name win-override text-success"
+                        *ngIf="isDetailMode() && !isMasterMatch(0)">
+                        {{ masterBracket?.conferences[0].winner.name }}
                       </span>
                       <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[0].winner.name">
                         <button type="button" class="btn btn-link" (click)="pickTeam(null, null, null, true)">
@@ -259,8 +306,14 @@
                 <div class="col bracket-matchup">
                   <div class="row">
                     <div class="col bracket-team bracket-team-top">
-                      <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[1].winner.name">
+                      <span class="bracket-team-name"
+                        *ngIf="isDetailMode() && bracket.conferences[1].winner.name"
+                        [ngClass]="getClassMatchingMaster(1)">
                         {{ bracket.conferences[1].winner.name }}
+                      </span>
+                      <span class="bracket-team-name win-override text-success"
+                        *ngIf="isDetailMode() && !isMasterMatch(1)">
+                        {{ masterBracket?.conferences[1].winner.name }}
                       </span>
                       <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[1].winner.name">
                         <button type="button" class="btn btn-link" (click)="pickTeam()">
@@ -278,8 +331,14 @@
                 <div class="col bracket-matchup">
                   <div class="row">
                     <div class="col bracket-team bracket-team-top">
-                      <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[1].divisions[0].winner.name">
+                      <span class="bracket-team-name"
+                        *ngIf="isDetailMode() && bracket.conferences[1].divisions[0].winner.name"
+                        [ngClass]="getClassMatchingMaster(1, 0)">
                         {{ bracket.conferences[1].divisions[0].winner.name }}
+                      </span>
+                      <span class="bracket-team-name win-override text-success"
+                        *ngIf="isDetailMode() && !isMasterMatch(1, 0)">
+                        {{ masterBracket?.conferences[1].divisions[0].winner.name }}
                       </span>
                       <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[1].divisions[0].winner.name">
                         <button type="button" class="btn btn-link" (click)="pickTeam(1, null, 4, true)">
@@ -300,8 +359,14 @@
                       <span class="predictor detail-mode" *ngIf="isDetailMode()">
                         Games: {{ bracket.conferences[1].games }}
                       </span>
-                      <span class="bracket-team-name" *ngIf="isDetailMode() && bracket.conferences[1].divisions[1].winner.name">
+                      <span class="bracket-team-name"
+                        *ngIf="isDetailMode() && bracket.conferences[1].divisions[1].winner.name"
+                        [ngClass]="getClassMatchingMaster(1, 1)">
                         {{ bracket.conferences[1].divisions[1].winner.name }}
+                      </span>
+                      <span class="bracket-team-name win-override text-success"
+                        *ngIf="isDetailMode() && !isMasterMatch(1, 1)">
+                        {{ masterBracket?.conferences[1].divisions[1].winner.name }}
                       </span>
                       <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && bracket.conferences[1].divisions[1].winner.name">
                         <button type="button" class="btn btn-link" (click)="pickTeam(1, null, 4)">
@@ -316,12 +381,18 @@
 
             <div class="col bracket-round round-2">
               <div *ngFor="let division of bracket.conferences[1].divisions; let divisionIndex = index;">
-                <div class="row" *ngFor="let matchup of division.rounds[1].matchups">
+                <div class="row" *ngFor="let matchup of division.rounds[1].matchups; let matchupIndex = index;">
                   <div class="col bracket-matchup">
                     <div class="row">
                       <div class="col bracket-team bracket-team-top">
-                        <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.topSeed.name">
+                        <span class="bracket-team-name"
+                          *ngIf="isDetailMode() && matchup.topSeed.name"
+                          [ngClass]="getClassMatchingMaster(1, divisionIndex, 1, matchupIndex)">
                           {{ matchup.topSeed.name }}
+                        </span>
+                        <span class="bracket-team-name win-override text-success"
+                          *ngIf="isDetailMode() && !isMasterMatch(1, divisionIndex, 1, matchupIndex)">
+                          {{ masterBracket?.conferences[1].divisions[divisionIndex].rounds[1].matchups[matchupIndex].bottomSeed.name }}
                         </span>
                         <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && matchup.topSeed.name">
                           <button type="button" class="btn btn-link" (click)="pickTeam(1, divisionIndex, matchup.id, true)">
@@ -342,8 +413,14 @@
                         <span class="predictor detail-mode" *ngIf="isDetailMode()">
                           Games: {{ matchup.games }}
                         </span>
-                        <span class="bracket-team-name" *ngIf="isDetailMode() && matchup.bottomSeed.name">
+                        <span class="bracket-team-name"
+                          *ngIf="isDetailMode() && matchup.bottomSeed.name"
+                          [ngClass]="getClassMatchingMaster(1, divisionIndex, 1, matchupIndex, false)">
                           {{ matchup.bottomSeed.name }}
+                        </span>
+                        <span class="bracket-team-name win-override text-success"
+                          *ngIf="isDetailMode() && !isMasterMatch(1, divisionIndex, 1, matchupIndex, false)">
+                          {{ masterBracket?.conferences[1].divisions[divisionIndex].rounds[1].matchups[matchupIndex].bottomSeed.name }}
                         </span>
                         <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && matchup.bottomSeed.name">
                           <button type="button" class="btn btn-link" (click)="pickTeam(1, divisionIndex, matchup.id)">
@@ -403,6 +480,12 @@
           </div>
         </div>
 
+      </div>
+
+      <div class="row toggle-buttons d-none d-md-block">
+        <div class="col text-center">
+          <app-toggle-switch title="Show Results" [isChecked]="showResults" (onToggle)="toggleResults($event)"></app-toggle-switch>
+        </div>
       </div>
     </div>
   </form>

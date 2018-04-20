@@ -1,0 +1,16 @@
+<div class="title" [ngClass]="{ 'inline-label' : inline }" *ngIf="title" [innerText]="title"></div>
+
+<label class="tgl">
+  <input type="checkbox" [checked]="isChecked" (click)="toggle()" />
+  <span class="tgl_body">
+    <span class="tgl_switch"></span>
+    <span class="tgl_track">
+      <span class="tgl_bgd">
+        <span class="fa fa-check d-none d-md-inline-block"></span>
+      </span>
+      <span class="tgl_bgd tgl_bgd-negative">
+        <span class="fa fa-close d-none d-md-inline-block"></span>
+      </span>
+    </span>
+  </span>
+</label>
