@@ -8,13 +8,13 @@
           <span class="d-none d-sm-inline-block">Return to Scoreboard</span>
         </button>
       </div>
-      <div class="col-3 text-center score d-none d-md-block" *ngIf="!canEdit">
+      <div class="col-3 text-center score d-none d-md-block" *ngIf="!canEdit && !isMasterBracket()">
         Score: {{ bracket?.score }}
       </div>
-      <div class="col-6 pt-1 text-right d-block d-md-none">
+      <div class="col-6 pt-1 text-right d-block d-md-none" *ngIf="!isMasterBracket()">
           <app-toggle-switch title="Results" inline="true" [isChecked]="showResults" (onToggle)="toggleResults($event)"></app-toggle-switch>
       </div>
-      <div class="col text-right" *ngIf="canEdit">
+      <div class="col text-right" *ngIf="canEdit || isAdmin">
         <button type="button" class="btn btn-outline-primary" (click)="editBracket()">
           <span class="fa fa-pencil-square-o pr-2"></span>
           <span class="d-inline-block d-sm-none">Edit</span>
@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <div class="row mt-3 justify-content-center d-flex d-md-none">
+    <div class="row mt-3 justify-content-center d-flex d-md-none" *ngIf="!isMasterBracket()">
       <div class="col-4 score text-center">
         Score: {{ bracket?.score }}
       </div>
@@ -482,7 +482,7 @@
 
       </div>
 
-      <div class="row toggle-buttons d-none d-md-block">
+      <div class="row toggle-buttons d-none d-md-block" *ngIf="!isMasterBracket()">
         <div class="col text-center">
           <app-toggle-switch title="Show Results" [isChecked]="showResults" (onToggle)="toggleResults($event)"></app-toggle-switch>
         </div>

@@ -28,6 +28,7 @@ export class BracketComponent implements OnInit, OnDestroy {
   bracket: Bracket;
   bracketForm: FormGroup;
   canEdit: boolean;
+  isAdmin: boolean;
   key: string;
   masterBracket: Bracket;
   navigationSubscription: Subscription;
@@ -48,31 +49,33 @@ export class BracketComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.isAdmin = this.authService.getUsername() === 'smahony39@gmail.com';
+    this.canEdit = false;
+    this.pastDeadline = true;
+    this.viewMode = location.pathname.indexOf('/edit') !== -1 ? VIEW_MODES.EDIT : VIEW_MODES.DETAIL;
+
+    this.bracketForm = new FormGroup({
+      bracketName: new FormControl(null, [Validators.required, BracketNameValidator.checkBracketName]),
+      numberOfGames001: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGames002: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGames003: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGames004: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGames011: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGames012: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGames013: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGames101: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGames102: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGames103: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGames104: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGames111: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGames112: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGames113: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGamesFinal: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
+      numberOfGoalsFinal: new FormControl(null, [Validators.pattern(/\d+/), Validators.min(4)])
+    });
+
     this.route.params.subscribe((params: Params) => {
       this.key = params['key'];
-      this.canEdit = false;
-      this.pastDeadline = true;
-      this.viewMode = location.pathname.indexOf('/edit') !== -1 ? VIEW_MODES.EDIT : VIEW_MODES.DETAIL;
-
-      this.bracketForm = new FormGroup({
-        bracketName: new FormControl(null, [Validators.required, BracketNameValidator.checkBracketName]),
-        numberOfGames001: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGames002: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGames003: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGames004: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGames011: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGames012: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGames013: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGames101: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGames102: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGames103: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGames104: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGames111: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGames112: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGames113: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGamesFinal: new FormControl(null, [Validators.pattern(/\d/), Validators.min(4), Validators.max(7)]),
-        numberOfGoalsFinal: new FormControl(null, [Validators.pattern(/\d+/), Validators.min(4)])
-      });
 
       if (this.key) {
         // Load bracket data
@@ -80,11 +83,13 @@ export class BracketComponent implements OnInit, OnDestroy {
           this.bracket = _.cloneDeep(BracketMock);
           this.canEdit = true;
         } else {
-          if (this.key === 'master') {
-            // Master bracket key
-            this.key = KEYS.MASTER;
-          } else if (this.key === 'dummy') {
-            this.key = KEYS.DUMMY;
+          if (this.isAdmin) {
+            if (this.key === 'master') {
+              // Master bracket key
+              this.key = KEYS.MASTER;
+            } else if (this.key === 'dummy') {
+              this.key = KEYS.DUMMY;
+            }
           }
 
           this.db.object(`bracket/${this.key}`).snapshotChanges().take(1).subscribe(data => {
@@ -94,7 +99,7 @@ export class BracketComponent implements OnInit, OnDestroy {
               // Load bracket
               this.bracket = BracketMapper(bracket);
 
-              if (!this.pastDeadline && this.bracket.owner === this.authService.getUsername()) {
+              if (this.isAdmin || (!this.pastDeadline && this.bracket.owner === this.authService.getUsername())) {
                 this.canEdit = true;
               } else if (this.isEditMode()) {
                 this.router.navigate(['bracket', this.key]);
@@ -124,7 +129,7 @@ export class BracketComponent implements OnInit, OnDestroy {
             }
           });
 
-          if (this.key !== KEYS.MASTER) {
+          if (!this.isMasterBracket()) {
             // Load the master bracket
             this.db.object(`bracket/${KEYS.MASTER}`).snapshotChanges().take(1).subscribe(data => {
               const masterBracket = data.payload.val();
@@ -343,6 +348,10 @@ export class BracketComponent implements OnInit, OnDestroy {
 
   isEditMode() {
     return this.viewMode === VIEW_MODES.EDIT;
+  }
+
+  isMasterBracket() {
+    return this.key === KEYS.MASTER;
   }
 
   isMasterMatch(conference: number = -1, division: number = -1, round: number = -1, matchup: number = -1, isTopSeed: boolean = true) {
