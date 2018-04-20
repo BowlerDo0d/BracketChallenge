@@ -34,8 +34,13 @@ $off-background-color: $gray-200;
 
 .title {
   font-size: 0.9rem;
-  color: #495057;
+  color: $secondary;
   margin-bottom: 0.5rem;
+
+  &.inline-label {
+    display: inline-block;
+    vertical-align: text-bottom;
+  }
 }
 
 //   BASE

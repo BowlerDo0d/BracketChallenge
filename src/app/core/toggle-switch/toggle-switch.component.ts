@@ -6,11 +6,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./toggle-switch.component.scss']
 })
 export class ToggleSwitchComponent {
+  @Input() inline: boolean;
   @Input() isChecked: boolean;
   @Input() title: string;
   @Output() onToggle = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor() {
+    this.inline = false;
+  }
 
   toggle() {
     this.isChecked = !this.isChecked;

@@ -7,7 +7,7 @@ $border-color: $gray-500;
 
   .conference-name {
     font-size: initial;
-    color: $gray-700;
+    color: $danger;
     border-bottom: 1px solid $border-color;
   }
 
@@ -253,4 +253,17 @@ $border-color: $gray-500;
 .toggle-buttons {
   position: relative;
   top: -3rem;
+}
+
+.score {
+  font-size: 0.9rem;
+  color: $secondary;
+  padding: 0.25rem 0;
+  border: 1px solid $secondary;
+  border-radius: 0.25rem;
+
+  @include media-breakpoint-down(sm) {
+    padding: 0.7rem 0 0.7rem 1.5rem;
+    border: none;
+  }
 }

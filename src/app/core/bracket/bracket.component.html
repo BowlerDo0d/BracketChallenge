@@ -1,19 +1,31 @@
 <div class="container-fluid">
   <form [formGroup]="bracketForm" (ngSubmit)="submitBracket()">
-    <div class="row" *ngIf="isDetailMode()">
-      <div class="col-6">
+    <div class="row justify-content-center" *ngIf="isDetailMode()">
+      <div class="col">
         <button type="button" class="btn btn-outline-secondary" routerLink="/">
           <span class="fa fa-reply pr-2"></span>
           <span class="d-inline-block d-sm-none">Return</span>
           <span class="d-none d-sm-inline-block">Return to Scoreboard</span>
         </button>
       </div>
-      <div class="col-6 text-right" *ngIf="canEdit">
-        <button type="button" class="btn btn-outline-primary" (click)="editBracket()">
+      <div class="col text-center score d-none d-md-block">
+        Score: {{ bracket?.score }}
+      </div>
+      <div class="col text-right">
+        <button type="button" *ngIf="canEdit" class="btn btn-outline-primary" (click)="editBracket()">
           <span class="fa fa-pencil-square-o pr-2"></span>
           <span class="d-inline-block d-sm-none">Edit</span>
           <span class="d-none d-sm-inline-block">Edit Bracket</span>
         </button>
+      </div>
+    </div>
+
+    <div class="row mt-4 justify-content-center d-flex d-md-none">
+      <div class="col-4 score text-center">
+        Score: {{ bracket?.score }}
+      </div>
+      <div class="col-8 pt-2 text-right">
+          <app-toggle-switch title="Results" inline="true" [isChecked]="showResults" (onToggle)="toggleResults($event)"></app-toggle-switch>
       </div>
     </div>
 
@@ -42,8 +54,7 @@
     </div>
 
     <div *ngIf="bracket">
-      <div class="row">
-        <div class="col"></div>
+      <div class="row justify-content-center">
         <div class="col text-center">
           <div class="champions">
             <p>Stanley Cup Champions</p>
@@ -89,7 +100,6 @@
             </span>
           </div>
         </div>
-        <div class="col"></div>
       </div>
 
       <div class="row bracket">
@@ -472,7 +482,7 @@
 
       </div>
 
-      <div class="row toggle-buttons">
+      <div class="row toggle-buttons d-none d-md-block">
         <div class="col text-center">
           <app-toggle-switch title="Show Results" [isChecked]="showResults" (onToggle)="toggleResults($event)"></app-toggle-switch>
         </div>

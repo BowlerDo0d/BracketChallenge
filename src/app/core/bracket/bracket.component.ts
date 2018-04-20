@@ -12,6 +12,7 @@ import { Bracket } from '../../models/bracket.model';
 import { BracketMapper } from './data/bracket-mapper';
 import { BracketNameValidator } from './bracket-name-validator';
 import { BracketChecker } from './bracket-checker';
+import { KEYS } from '../../constants/global.constants';
 import { VIEW_MODES } from '../../constants/form.constants';
 
 // Bracket data
@@ -24,10 +25,6 @@ import { BlankNHLBracket } from './data/blank-nhl-bracket';
   styleUrls: ['./bracket.component.scss']
 })
 export class BracketComponent implements OnInit, OnDestroy {
-  private KEYS = {
-    DUMMY: '-LA-iP4kxzQ65R1x2ad6',
-    MASTER: '-LA-gCwWEEZxe5jUmj39'
-  };
   bracket: Bracket;
   bracketForm: FormGroup;
   canEdit: boolean;
@@ -83,9 +80,9 @@ export class BracketComponent implements OnInit, OnDestroy {
         } else {
           if (this.key === 'master') {
             // Master bracket key
-            this.key = this.KEYS.MASTER;
+            this.key = KEYS.MASTER;
           } else if (this.key === 'dummy') {
-            this.key = this.KEYS.DUMMY;
+            this.key = KEYS.DUMMY;
           }
 
           this.db.object(`bracket/${this.key}`).snapshotChanges().take(1).subscribe(data => {
@@ -125,9 +122,9 @@ export class BracketComponent implements OnInit, OnDestroy {
             }
           });
 
-          if (this.key !== this.KEYS.MASTER) {
+          if (this.key !== KEYS.MASTER) {
             // Load the master bracket
-            this.db.object(`bracket/${this.KEYS.MASTER}`).snapshotChanges().take(1).subscribe(data => {
+            this.db.object(`bracket/${KEYS.MASTER}`).snapshotChanges().take(1).subscribe(data => {
               const masterBracket = data.payload.val();
 
               if (masterBracket) {
@@ -183,57 +180,12 @@ export class BracketComponent implements OnInit, OnDestroy {
     this.router.navigate(['edit'], { relativeTo: this.route });
   }
 
-  isBracketNameTaken() {
-    return this.bracketForm.get('bracketName').errors && this.bracketForm.get('bracketName').errors.bracket_name_exists;
-  }
-
-  isMasterMatch(conference: number = -1, division: number = -1, round: number = -1, matchup: number = -1, isTopSeed: boolean = true) {
-    let isMatch = false;
-
-    if (this.showResults && this.key !== this.KEYS.MASTER && this.isDetailMode() && this.masterBracket) {
-      if (conference === -1) {
-        // Check overall winner
-        if (this.bracket.winner.name ===
-            _.get(this.masterBracket, `winner.name`)) {
-          isMatch = true;
-        }
-      } else if (division === -1) {
-        // Check conference winners
-        if (this.bracket.conferences[conference].winner.name ===
-            _.get(this.masterBracket, `conferences[${conference}].winner.name`)) {
-          isMatch = true;
-        }
-      } else if (round === -1) {
-        // Check division winners
-        if (this.bracket.conferences[conference].divisions[division].winner.name ===
-            _.get(this.masterBracket, `conferences[${conference}].divisions[${division}].winner.name`)) {
-          isMatch = true;
-        }
-      } else {
-        // Check round 2 winners
-        if (isTopSeed ?
-              _.get(this.masterBracket, `conferences[${conference}].divisions[${division}].rounds[${round}].matchups[${matchup}].topSeed.name`) !== null :
-              _.get(this.masterBracket, `conferences[${conference}].divisions[${division}].rounds[${round}].matchups[${matchup}].bottomSeed.name`) !== null) {
-          if (isTopSeed ?
-                this.bracket.conferences[conference].divisions[division].rounds[round].matchups[matchup].topSeed.name ===
-                _.get(this.masterBracket, `conferences[${conference}].divisions[${division}].rounds[${round}].matchups[${matchup}].topSeed.name`) :
-                this.bracket.conferences[conference].divisions[division].rounds[round].matchups[matchup].bottomSeed.name ===
-                _.get(this.masterBracket, `conferences[${conference}].divisions[${division}].rounds[${round}].matchups[${matchup}].bottomSeed.name`)) {
-            isMatch = true;
-          }
-        }
-      }
-    }
-
-    return this.showResults ? isMatch : true;
-  }
-
   getClassMatchingMaster(conference: number = -1, division: number = -1, round: number = -1, matchup: number = -1, isTopSeed: boolean = true) {
     const errorClass = 'text-danger',
       successClass = 'text-success';
     let cssClass: string = null;
 
-    if (this.showResults && this.key !== this.KEYS.MASTER && this.isDetailMode() && this.masterBracket) {
+    if (this.showResults && this.key !== KEYS.MASTER && this.isDetailMode() && this.masterBracket) {
       if (conference === -1) {
         // Check overall winner
         if (_.get(this.masterBracket, 'winner.name') !== null) {
@@ -375,12 +327,60 @@ export class BracketComponent implements OnInit, OnDestroy {
     return cssClass;
   }
 
+  isBracketNameTaken() {
+    return this.bracketForm.get('bracketName').errors && this.bracketForm.get('bracketName').errors.bracket_name_exists;
+  }
+
   isDetailMode() {
     return this.viewMode === VIEW_MODES.DETAIL;
   }
 
   isEditMode() {
     return this.viewMode === VIEW_MODES.EDIT;
+  }
+
+  isMasterMatch(conference: number = -1, division: number = -1, round: number = -1, matchup: number = -1, isTopSeed: boolean = true) {
+    let isMatch = false;
+
+    if (this.showResults && this.key !== KEYS.MASTER && this.isDetailMode() && this.masterBracket) {
+      if (conference === -1) {
+        // Check overall winner
+        if (_.get(this.masterBracket, 'winner.name') === null ||
+            this.bracket.winner.name ===
+            _.get(this.masterBracket, 'winner.name')) {
+          isMatch = true;
+        }
+      } else if (division === -1) {
+        // Check conference winners
+        if (_.get(this.masterBracket, `conferences[${conference}].winner.name`) === null ||
+            this.bracket.conferences[conference].winner.name ===
+            _.get(this.masterBracket, `conferences[${conference}].winner.name`)) {
+          isMatch = true;
+        }
+      } else if (round === -1) {
+        // Check division winners
+        if (_.get(this.masterBracket, `conferences[${conference}].divisions[${division}].winner.name`) === null ||
+            this.bracket.conferences[conference].divisions[division].winner.name ===
+            _.get(this.masterBracket, `conferences[${conference}].divisions[${division}].winner.name`)) {
+          isMatch = true;
+        }
+      } else {
+        // Check round 2 winners
+        if (isTopSeed ?
+              _.get(this.masterBracket, `conferences[${conference}].divisions[${division}].rounds[${round}].matchups[${matchup}].topSeed.name`) !== null :
+              _.get(this.masterBracket, `conferences[${conference}].divisions[${division}].rounds[${round}].matchups[${matchup}].bottomSeed.name`) !== null) {
+          if (isTopSeed ?
+                this.bracket.conferences[conference].divisions[division].rounds[round].matchups[matchup].topSeed.name ===
+                _.get(this.masterBracket, `conferences[${conference}].divisions[${division}].rounds[${round}].matchups[${matchup}].topSeed.name`) :
+                this.bracket.conferences[conference].divisions[division].rounds[round].matchups[matchup].bottomSeed.name ===
+                _.get(this.masterBracket, `conferences[${conference}].divisions[${division}].rounds[${round}].matchups[${matchup}].bottomSeed.name`)) {
+            isMatch = true;
+          }
+        }
+      }
+    }
+
+    return this.showResults ? isMatch : true;
   }
 
   pickTeam(conference, division, matchup, isTopSeed = false) {
@@ -521,7 +521,7 @@ export class BracketComponent implements OnInit, OnDestroy {
         },
         score: this.bracket.score
       },
-      updateScoreboard = this.key === '-LA-gCwWEEZxe5jUmj39' || this.key === '-LA-iP4kxzQ65R1x2ad6' ? false : true;
+      updateScoreboard = this.key === KEYS.MASTER || this.key === KEYS.DUMMY ? false : true;
 
     this.bracket.name = this.bracketForm.value['bracketName'];
     this.bracket.conferences[0].divisions[0].rounds[0].matchups[0].games = this.bracketForm.value['numberOfGames001'];
