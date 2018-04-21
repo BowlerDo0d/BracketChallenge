@@ -15,7 +15,7 @@ export class AdminGuard implements CanActivate {
     return this.authService.afAuth.authState
       .take(1)
       .map((authState) => {
-        if (!authState) {
+        if (!authState || !this.authService.isAdmin()) {
           this.router.navigate(['/']);
         }
 

@@ -5,11 +5,13 @@ import { AuthService } from '../auth/auth.service';
 import { AdminRoutingModule } from './admin-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReversePipe } from './reverse-pipe';
+import { ResultsComponent } from './results/results.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
-    ReversePipe
+    ReversePipe,
+    ResultsComponent
   ],
   imports: [
     AdminRoutingModule,

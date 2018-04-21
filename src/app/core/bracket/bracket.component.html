@@ -98,6 +98,9 @@
                 <span [innerText]="bracket.goals"></span>
               </span>
             </span>
+            <span class="results detail-mode mt-2" *ngIf="isDetailMode() && showResults">
+              {{ getResults() }}
+            </span>
           </div>
         </div>
       </div>
@@ -115,7 +118,7 @@
 
             <div class="col bracket-round round-1">
               <div *ngFor="let division of bracket.conferences[0].divisions; let divisionIndex = index;">
-                <div class="row" *ngFor="let matchup of division.rounds[0].matchups">
+                <div class="row" *ngFor="let matchup of division.rounds[0].matchups; let matchupIndex = index;">
                   <div class="col bracket-matchup">
                     <div class="row">
                       <div class="col bracket-team bracket-team-top">
@@ -138,8 +141,11 @@
                           [ngClass]="{ error: !bracketForm.controls['numberOfGames0' + divisionIndex + matchup.id].valid, success: bracketForm.controls['numberOfGames0' + divisionIndex + matchup.id].valid }"
                           placeholder="Games"
                           formControlName="{{ 'numberOfGames0' + divisionIndex + matchup.id }}" />
-                        <span class="predictor detail-mode" *ngIf="isDetailMode()">
+                        <span class="predictor detail-mode" *ngIf="isDetailMode() && !showResults">
                           Games: {{ matchup.games }}
+                        </span>
+                        <span class="results detail-mode" *ngIf="isDetailMode() && showResults">
+                          {{ getResults(0, divisionIndex, 0, matchupIndex) }}
                         </span>
                         <span class="bracket-team-name" *ngIf="isDetailMode()">
                           {{ matchup.bottomSeed.seed }} - {{ matchup.bottomSeed.name }}
@@ -187,8 +193,11 @@
                           [ngClass]="{ error: !bracketForm.controls['numberOfGames0' + divisionIndex + matchup.id].valid, success: bracketForm.controls['numberOfGames0' + divisionIndex + matchup.id].valid }"
                           placeholder="Games"
                           formControlName="{{ 'numberOfGames0' + divisionIndex + matchup.id }}" />
-                        <span class="predictor detail-mode" *ngIf="isDetailMode()">
+                        <span class="predictor detail-mode" *ngIf="isDetailMode() && !showResults">
                           Games: {{ matchup.games }}
+                        </span>
+                        <span class="results detail-mode" *ngIf="isDetailMode() && showResults">
+                          {{ getResults(0, divisionIndex, 1, matchupIndex) }}
                         </span>
                         <span class="bracket-team-name"
                           *ngIf="isDetailMode() && matchup.bottomSeed.name"
@@ -241,8 +250,11 @@
                         [ngClass]="{ error: !bracketForm.controls['numberOfGames004'].valid, success: bracketForm.controls['numberOfGames004'].valid }"
                         placeholder="Games"
                         formControlName="numberOfGames004" />
-                      <span class="predictor detail-mode" *ngIf="isDetailMode()">
+                      <span class="predictor detail-mode" *ngIf="isDetailMode() && !showResults">
                         Games: {{ bracket.conferences[0].games }}
+                      </span>
+                      <span class="results detail-mode" *ngIf="isDetailMode() && showResults">
+                        {{ getResults(0) }}
                       </span>
                       <span class="bracket-team-name"
                         *ngIf="isDetailMode() && bracket.conferences[0].divisions[1].winner.name"
@@ -356,8 +368,11 @@
                         [ngClass]="{ error: !bracketForm.controls['numberOfGames104'].valid, success: bracketForm.controls['numberOfGames104'].valid }"
                         placeholder="Games"
                         formControlName="numberOfGames104" />
-                      <span class="predictor detail-mode" *ngIf="isDetailMode()">
+                      <span class="predictor detail-mode" *ngIf="isDetailMode() && !showResults">
                         Games: {{ bracket.conferences[1].games }}
+                      </span>
+                      <span class="results detail-mode" *ngIf="isDetailMode() && showResults">
+                        {{ getResults(1) }}
                       </span>
                       <span class="bracket-team-name"
                         *ngIf="isDetailMode() && bracket.conferences[1].divisions[1].winner.name"
@@ -410,8 +425,11 @@
                           [ngClass]="{ error: !bracketForm.controls['numberOfGames1' + divisionIndex + matchup.id].valid, success: bracketForm.controls['numberOfGames1' + divisionIndex + matchup.id].valid }"
                           placeholder="Games"
                           formControlName="{{ 'numberOfGames1' + divisionIndex + matchup.id }}" />
-                        <span class="predictor detail-mode" *ngIf="isDetailMode()">
+                        <span class="predictor detail-mode" *ngIf="isDetailMode() && !showResults">
                           Games: {{ matchup.games }}
+                        </span>
+                        <span class="results detail-mode" *ngIf="isDetailMode() && showResults">
+                          {{ getResults(1, divisionIndex, 1, matchupIndex) }}
                         </span>
                         <span class="bracket-team-name"
                           *ngIf="isDetailMode() && matchup.bottomSeed.name"
@@ -436,7 +454,7 @@
 
             <div class="col bracket-round round-1">
               <div *ngFor="let division of bracket.conferences[1].divisions; let divisionIndex = index;">
-                <div class="row" *ngFor="let matchup of division.rounds[0].matchups">
+                <div class="row" *ngFor="let matchup of division.rounds[0].matchups; let matchupIndex = index;">
                   <div class="col bracket-matchup">
                     <div class="row">
                       <div class="col bracket-team bracket-team-top">
@@ -459,8 +477,11 @@
                           [ngClass]="{ error: !bracketForm.controls['numberOfGames1' + divisionIndex + matchup.id].valid, success: bracketForm.controls['numberOfGames1' + divisionIndex + matchup.id].valid }"
                           placeholder="Games"
                           formControlName="{{ 'numberOfGames1' + divisionIndex + matchup.id }}" />
-                        <span class="predictor detail-mode" *ngIf="isDetailMode()">
+                        <span class="predictor detail-mode" *ngIf="isDetailMode() && !showResults">
                           Games: {{ matchup.games }}
+                        </span>
+                        <span class="results detail-mode" *ngIf="isDetailMode() && showResults">
+                          {{ getResults(1, divisionIndex, 0, matchupIndex) }}
                         </span>
                         <span class="bracket-team-name" *ngIf="isDetailMode()">
                           {{ matchup.bottomSeed.name }} - {{ matchup.bottomSeed.seed }}

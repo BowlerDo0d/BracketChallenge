@@ -28,12 +28,12 @@ export class BracketComponent implements OnInit, OnDestroy {
   bracket: Bracket;
   bracketForm: FormGroup;
   canEdit: boolean;
-  isAdmin: boolean;
   key: string;
   masterBracket: Bracket;
   navigationSubscription: Subscription;
   pastDeadline: boolean;
-  showResults = false;
+  showResults = true;
+  results: object;
   viewMode: string;
 
   constructor(private authService: AuthService,
@@ -49,7 +49,6 @@ export class BracketComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.isAdmin = this.authService.getUsername() === 'smahony39@gmail.com';
     this.canEdit = false;
     this.pastDeadline = true;
     this.viewMode = location.pathname.indexOf('/edit') !== -1 ? VIEW_MODES.EDIT : VIEW_MODES.DETAIL;
@@ -83,7 +82,7 @@ export class BracketComponent implements OnInit, OnDestroy {
           this.bracket = _.cloneDeep(BracketMock);
           this.canEdit = true;
         } else {
-          if (this.isAdmin) {
+          if (this.authService.isAdmin()) {
             if (this.key === 'master') {
               // Master bracket key
               this.key = KEYS.MASTER;
@@ -99,7 +98,8 @@ export class BracketComponent implements OnInit, OnDestroy {
               // Load bracket
               this.bracket = BracketMapper(bracket);
 
-              if (this.isAdmin || (!this.pastDeadline && this.bracket.owner === this.authService.getUsername())) {
+              if ((!this.pastDeadline && (this.authService.isAdmin() || this.bracket.owner === this.authService.getUsername())) ||
+                  this.authService.isAdmin() && this.key === KEYS.MASTER) {
                 this.canEdit = true;
               } else if (this.isEditMode()) {
                 this.router.navigate(['bracket', this.key]);
@@ -151,6 +151,11 @@ export class BracketComponent implements OnInit, OnDestroy {
         }
       }
     });
+
+    // Get active results
+    this.db.object('results').snapshotChanges().take(1).subscribe(data => {
+      this.results = data.payload.val();
+    });
   }
 
   ngOnDestroy() {
@@ -189,6 +194,29 @@ export class BracketComponent implements OnInit, OnDestroy {
 
   editBracket() {
     this.router.navigate(['edit'], { relativeTo: this.route });
+  }
+
+  getAbbr(team) {
+    const abbreviations = {
+      Anaheim: 'ANA',
+      Boston: 'BOS',
+      Colorado: 'COL',
+      Columbus: 'CBJ',
+      'Los Angeles': 'LAK',
+      Minnesota: 'MIN',
+      Nashville: 'NSH',
+      'New Jersey': 'NJD',
+      Philadelphia: 'PHI',
+      Pittsburgh: 'PIT',
+      'San Jose': 'SJS',
+      'Tampa Bay': 'TBL',
+      Toronto: 'TOR',
+      Vegas: 'VGK',
+      Washington: 'WSH',
+      Winnipeg: 'WPG'
+    };
+
+    return abbreviations[team] || null;
   }
 
   getClassMatchingMaster(conference: number = -1, division: number = -1, round: number = -1, matchup: number = -1, isTopSeed: boolean = true) {
@@ -336,6 +364,55 @@ export class BracketComponent implements OnInit, OnDestroy {
     }
 
     return cssClass;
+  }
+
+  getResults(conference: number = -1, division: number = -1, round: number = -1, matchup: number = -1) {
+    let topSeed = null,
+      topSeedResult = null,
+      bottomSeed = null,
+      bottomSeedResult = null,
+      result = null;
+
+    if (this.results) {
+      if (conference === -1) {
+        // Check finals
+        topSeed = this.getAbbr(this.masterBracket.conferences[0].winner.name);
+        topSeedResult = +this.results['topSeed'];
+        bottomSeed = this.getAbbr(this.masterBracket.conferences[1].winner.name);
+        bottomSeedResult = +this.results['bottomSeed'];
+      } else if (division === -1) {
+        // Check conference finals
+        topSeed = this.getAbbr(this.masterBracket.conferences[conference].divisions[0].winner.name);
+        topSeedResult = +this.results[`topSeed${conference}0`];
+        bottomSeed = this.getAbbr(this.masterBracket.conferences[conference].divisions[1].winner.name);
+        bottomSeedResult = +this.results[`bottomSeed${conference}1`];
+      } else {
+        topSeed = this.getAbbr(this.masterBracket.conferences[conference].divisions[division].rounds[round].matchups[matchup].topSeed.name);
+        topSeedResult = +this.results[`topSeed${conference}${division}${round}${matchup}`];
+        bottomSeed = this.getAbbr(this.masterBracket.conferences[conference].divisions[division].rounds[round].matchups[matchup].bottomSeed.name);
+        bottomSeedResult = +this.results[`bottomSeed${conference}${division}${round}${matchup}`];
+      }
+
+      if (topSeed !== null && bottomSeed !== null) {
+        if (topSeedResult === bottomSeedResult) {
+          result = `Series tied ${topSeedResult}-${bottomSeedResult}`;
+        } else if (topSeedResult === 4) {
+          // Top seed won
+          result = `${topSeed} won ${topSeedResult}-${bottomSeedResult}`;
+        } else if (bottomSeedResult === 4) {
+          // Bottom seed won
+          result = `${bottomSeed} won ${bottomSeedResult}-${topSeedResult}`;
+        } else if (topSeedResult > bottomSeedResult) {
+          // Top seed leads
+          result = `${topSeed} leads ${topSeedResult}-${bottomSeedResult}`;
+        } else if (topSeedResult < bottomSeedResult) {
+          // Bottom seed leads
+          result = `${bottomSeed} leads ${bottomSeedResult}-${topSeedResult}`;
+        }
+      }
+    }
+
+    return result;
   }
 
   isBracketNameTaken() {

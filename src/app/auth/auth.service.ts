@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -6,12 +7,18 @@ import * as firebase from 'firebase/app';
 
 @Injectable()
 export class AuthService {
+  adminUsers: Array<string>;
+  isAdministrator: boolean;
   checkingForAuth = false;
   googleProvider = new firebase.auth.GoogleAuthProvider();
   user: firebase.User;
   userChanged = new Subject<string>();
 
   constructor(public afAuth: AngularFireAuth, private router: Router) {
+    this.adminUsers = [
+      'smahony22@gmail.com',
+      'smahony39@gmail.com'
+    ];
     this.checkingForAuth = true;
 
     afAuth.authState.subscribe((user) => {
@@ -19,6 +26,7 @@ export class AuthService {
 
       if (this.user && this.user.email) {
         this.userChanged.next(this.user.email);
+        this.setAdmin();
       }
 
       this.checkingForAuth = false;
@@ -27,6 +35,10 @@ export class AuthService {
 
   getUsername() {
     return this.user && this.user.email ? this.user.email : '';
+  }
+
+  isAdmin() {
+    return this.isAdministrator;
   }
 
   isAuthenticated() {
@@ -41,6 +53,7 @@ export class AuthService {
     return this.afAuth.auth.signInWithEmailAndPassword(username, password).then(() => {
       this.user = this.afAuth.auth.currentUser;
       this.userChanged.next(this.user.email);
+      this.setAdmin();
       this.router.navigate(['/']);
     });
   }
@@ -58,5 +71,9 @@ export class AuthService {
 
   registerUser(email: string, password: string) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+  }
+
+  setAdmin() {
+    this.isAdministrator = _.indexOf(this.adminUsers, this.getUsername()) !== -1;
   }
 }
