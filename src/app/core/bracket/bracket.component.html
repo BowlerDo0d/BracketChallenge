@@ -407,7 +407,7 @@
                         </span>
                         <span class="bracket-team-name win-override text-success"
                           *ngIf="isDetailMode() && !isMasterMatch(1, divisionIndex, 1, matchupIndex)">
-                          {{ masterBracket?.conferences[1].divisions[divisionIndex].rounds[1].matchups[matchupIndex].bottomSeed.name }}
+                          {{ masterBracket?.conferences[1].divisions[divisionIndex].rounds[1].matchups[matchupIndex].topSeed.name }}
                         </span>
                         <span class="bracket-team-name" [ngClass]="{ 'edit-mode' : !isDetailMode() }" *ngIf="!isDetailMode() && matchup.topSeed.name">
                           <button type="button" class="btn btn-link" (click)="pickTeam(1, divisionIndex, matchup.id, true)">
