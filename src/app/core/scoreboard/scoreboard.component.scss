@@ -17,3 +17,19 @@ div.row {
     }
   }
 }
+
+.cash-info {
+  .footnote {
+    display: block;
+    font-style: italic;
+    font-size: 0.5rem;
+  }
+}
+
+.cash-line {
+  border-bottom: 2px dotted $secondary;
+}
+
+.modal-footer {
+  display: block;
+}

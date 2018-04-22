@@ -2,6 +2,10 @@
   <div class="col">
     <h4>Scoreboard</h4>
   </div>
+  <div class="col cash-info text-right text-secondary my-auto">
+    Top 8 Cash (Ratio 1:5)
+    <span class="footnote">Tiebreakers not yet included</span>
+  </div>
   <div class="col text-right" *ngIf="!pastDeadline">
     <button type="button" class="btn btn-primary create-btn" routerLink="/bracket" [disabled]="!isAuthenticated()"><span class="fa fa-plus pr-2"></span>Create Bracket</button>
     <span class="loginMsg" *ngIf="!isAuthenticated()">Login to create a bracket</span>
@@ -19,7 +23,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="d-flex" *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;">
+        <tr class="d-flex" *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;" [ngClass]="{ 'cash-line' : idx === 7 }">
           <th class="col-1" scope="row" [innerText]="idx + 1"></th>
           <td class="col-5 text-truncate d-none d-md-flex"><a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a></td>
           <td class="col-5 text-truncate d-flex d-md-none"><a [innerText]="bracket.truncatedName" [routerLink]="['/bracket', bracket.key]"></a></td>
@@ -50,7 +54,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="d-flex" *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;">
+        <tr class="d-flex" *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;" [ngClass]="{ 'cash-line' : idx === 7 }">
           <th class="col-1" scope="row" [innerText]="idx + 1"></th>
           <td class="col-4 text-truncate"><a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a></td>
           <td class="col-3 text-truncate" [innerText]="bracket.owner.name"></td>
@@ -66,3 +70,69 @@
     </table>
   </div>
 </div>
+
+<div class="row mt-5">
+  <div class="col text-center">
+    <a href="" data-toggle="modal" data-target="#pointsModal">How do I earn points?</a>
+  </div>
+</div>
+
+<div class="modal fade" id="pointsModal" tabindex="-1" role="dialog" aria-labelledby="pointsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="pointsModalLabel">Points Legend</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <thead class="thead-light">
+              <tr class="d-flex">
+                <th scope="col" class="col-8">Correct Prediction</th>
+                <th scope="col" class="col-4 text-center">Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="d-flex">
+                <td class="col-8">
+                  Stanley Cup Champions
+                </td>
+                <td class="col-4 text-center">
+                  16
+                </td>
+              </tr>
+              <tr class="d-flex">
+                <td class="col-8">
+                  Conference Winner
+                </td>
+                <td class="col-4 text-center">
+                  8
+                </td>
+              </tr>
+              <tr class="d-flex">
+                <td class="col-8">
+                  Division Winner
+                </td>
+                <td class="col-4 text-center">
+                  4
+                </td>
+              </tr>
+              <tr class="d-flex">
+                <td class="col-8">
+                  Round 1
+                </td>
+                <td class="col-4 text-center">
+                  2
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
