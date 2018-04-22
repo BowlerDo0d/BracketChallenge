@@ -190,6 +190,10 @@ $border-color: $gray-500;
       margin: 0 1.5rem;
     }
 
+    .results {
+      min-width: 3rem;
+    }
+
     .predictor,
     .results {
       position: initial;
