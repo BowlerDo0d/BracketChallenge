@@ -634,8 +634,28 @@ export class BracketComponent implements OnInit, OnDestroy {
     this.bracket.games = this.bracketForm.value['numberOfGamesFinal'];
     this.bracket.goals = this.bracketForm.value['numberOfGoalsFinal'];
 
-    scoreboard.isComplete = BracketChecker.isBracketComplete(this.bracket, false);
-    scoreboard.isTiebreakerComplete = BracketChecker.isBracketComplete(this.bracket);
+    if (this.isMasterBracket()) {
+      // Loop through all brackets and update score
+      this.db.list('bracket').snapshotChanges().take(1).subscribe(brackets => {
+        brackets.forEach(bracketData => {
+          if (bracketData.key !== KEYS.MASTER && bracketData.key !== KEYS.DUMMY) {
+            const bracket = BracketMapper(bracketData.payload.val()),
+              score = BracketChecker.getBracketScore(bracket, this.bracket);
+
+            if (score) {
+              // Update bracket
+              this.db.object(`bracket/${bracketData.key}`).update({ _score: score });
+              // Update scoreboard
+              this.db.object(`scoreboard/${bracketData.key}`).update({ score });
+            }
+          }
+        });
+      });
+    } else {
+      // Update bracket scoreboard
+      scoreboard.isComplete = BracketChecker.isBracketComplete(this.bracket, false);
+      scoreboard.isTiebreakerComplete = BracketChecker.isBracketComplete(this.bracket);
+    }
 
     if (this.viewMode === VIEW_MODES.CREATE) {
       this.db.list('bracket').push(this.bracket)
