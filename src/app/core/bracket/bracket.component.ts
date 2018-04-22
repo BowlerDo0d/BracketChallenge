@@ -32,7 +32,7 @@ export class BracketComponent implements OnInit, OnDestroy {
   masterBracket: Bracket;
   navigationSubscription: Subscription;
   pastDeadline: boolean;
-  showResults = true;
+  showResults: boolean;
   results: object;
   viewMode: string;
 
@@ -51,6 +51,7 @@ export class BracketComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.canEdit = false;
     this.pastDeadline = true;
+    this.showResults = !this.isMasterBracket();
     this.viewMode = location.pathname.indexOf('/edit') !== -1 ? VIEW_MODES.EDIT : VIEW_MODES.DETAIL;
 
     this.bracketForm = new FormGroup({
@@ -99,7 +100,7 @@ export class BracketComponent implements OnInit, OnDestroy {
               this.bracket = BracketMapper(bracket);
 
               if ((!this.pastDeadline && (this.authService.isAdmin() || this.bracket.owner === this.authService.getUsername())) ||
-                  this.authService.isAdmin() && this.key === KEYS.MASTER) {
+                  this.authService.isAdmin() && this.isMasterBracket()) {
                 this.canEdit = true;
               } else if (this.isEditMode()) {
                 this.router.navigate(['bracket', this.key]);
@@ -224,7 +225,7 @@ export class BracketComponent implements OnInit, OnDestroy {
       successClass = 'text-success';
     let cssClass: string = null;
 
-    if (this.showResults && this.key !== KEYS.MASTER && this.isDetailMode() && this.masterBracket) {
+    if (this.showResults && !this.isMasterBracket() && this.isDetailMode() && this.masterBracket) {
       if (conference === -1) {
         // Check overall winner
         if (_.get(this.masterBracket, 'winner.name') !== null) {
@@ -373,7 +374,7 @@ export class BracketComponent implements OnInit, OnDestroy {
       bottomSeedResult = null,
       result = null;
 
-    if (this.results) {
+    if (!this.isMasterBracket() && this.results) {
       if (conference === -1) {
         // Check finals
         topSeed = this.getAbbr(this.masterBracket.conferences[0].winner.name);
@@ -434,7 +435,7 @@ export class BracketComponent implements OnInit, OnDestroy {
   isMasterMatch(conference: number = -1, division: number = -1, round: number = -1, matchup: number = -1, isTopSeed: boolean = true) {
     let isMatch = false;
 
-    if (this.showResults && this.key !== KEYS.MASTER && this.isDetailMode() && this.masterBracket) {
+    if (this.showResults && !this.isMasterBracket() && this.isDetailMode() && this.masterBracket) {
       if (conference === -1) {
         // Check overall winner
         if (_.get(this.masterBracket, 'winner.name') === null ||
@@ -613,7 +614,7 @@ export class BracketComponent implements OnInit, OnDestroy {
         },
         score: this.bracket.score
       },
-      updateScoreboard = this.key === KEYS.MASTER || this.key === KEYS.DUMMY ? false : true;
+      updateScoreboard = this.isMasterBracket() || this.key === KEYS.DUMMY ? false : true;
 
     this.bracket.name = this.bracketForm.value['bracketName'];
     this.bracket.conferences[0].divisions[0].rounds[0].matchups[0].games = this.bracketForm.value['numberOfGames001'];
