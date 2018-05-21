@@ -1,0 +1,49 @@
+<div class="row mt-3">
+  <div class="col-6">
+    <h4>Tiebreaker Ranks</h4>
+  </div>
+  <div class="col-6 text-right">
+    <button class="btn btn-outline-primary" routerLink="/admin/tiebreakers">
+      <span class="fa fa-refresh"></span> Refresh
+    </button>
+  </div>
+</div>
+<div class="row no-gutters mt-4">
+  <div class="col">
+    <form [formGroup]="tiesForm">
+      <table class="table">
+        <thead class="thead-light">
+          <tr class="d-flex">
+            <th scope="col" class="col-1">#</th>
+            <th scope="col" class="col-4 col-md-6">Bracket Name</th>
+            <th scope="col" class="col-3 text-center">Score</th>
+            <th scope="col" class="col-4 col-md-2 text-center">Tie Rank</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="d-flex" *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;">
+            <th class="col-1" scope="row" [innerText]="idx + 1"></th>
+            <td class="col-4 col-md-6 text-truncate d-none d-md-flex"><a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a></td>
+            <td class="col-4 col-md-6 text-truncate d-flex d-md-none"><a [innerText]="bracket.truncatedName" [routerLink]="['/bracket', bracket.key]"></a></td>
+            <td class="col-3 text-center" [innerText]="bracket.score"></td>
+            <td class="col-4 col-md-2 text-center tie-rank">
+              <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                  <button class="btn btn-outline-success no-pad" type="button" (click)="incrementRank(bracket.key)">
+                    +
+                  </button>
+                </div>
+                <input type="text" class="form-control" formControlName="{{ 'tieRank' + bracket.key }}" />
+                <div class="input-group-append">
+                  <button class="btn btn-outline-danger no-pad" type="button" (click)="decrementRank(bracket.key)">
+                    -
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>

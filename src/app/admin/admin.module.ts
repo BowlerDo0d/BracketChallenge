@@ -6,12 +6,14 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ReversePipe } from './reverse-pipe';
 import { ResultsComponent } from './results/results.component';
+import { TiebreakersComponent } from './tiebreakers/tiebreakers.component';
 
 @NgModule({
   declarations: [
     AdminComponent,
     ReversePipe,
-    ResultsComponent
+    ResultsComponent,
+    TiebreakersComponent
   ],
   imports: [
     AdminRoutingModule,
