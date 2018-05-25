@@ -199,9 +199,16 @@ $border-color: $gray-500;
       position: initial;
 
       &.detail-mode {
-        display: inline-block;
         margin: 0 1.5rem;
       }
+    }
+
+    .results.detail-mode {
+      display: block;
+    }
+
+    .predictor.detail-mode {
+        display: inline-block;
     }
   }
 
