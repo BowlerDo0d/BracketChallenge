@@ -4,7 +4,6 @@
   </div>
   <div class="col cash-info text-right text-secondary my-auto">
     Top 8 Cash (Ratio 1:5)
-    <span class="footnote">Tiebreakers not yet included</span>
   </div>
   <div class="col text-right" *ngIf="!pastDeadline">
     <button type="button" class="btn btn-primary create-btn" routerLink="/bracket" [disabled]="!isAuthenticated()"><span class="fa fa-plus pr-2"></span>Create Bracket</button>
