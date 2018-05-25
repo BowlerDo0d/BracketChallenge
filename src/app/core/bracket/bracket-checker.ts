@@ -69,5 +69,12 @@ export const BracketChecker = {
       );
 
     return picks && (includeTiebreakers ? tiebreakers : true);
+  },
+  sortBrackets: (a, b) => {
+    if (a.score === b.score) {
+      return a.tieRank - b.tieRank;
+    } else {
+      return a.score - b.score;
+    }
   }
 };

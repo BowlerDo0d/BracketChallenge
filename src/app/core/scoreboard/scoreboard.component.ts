@@ -3,6 +3,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from '../../auth/auth.service';
+import { BracketChecker } from '../bracket/bracket-checker';
 
 @Component({
   selector: 'app-scoreboard',
@@ -18,14 +19,14 @@ export class ScoreboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.brackets$ = this.db.list('scoreboard', ref => ref.orderByChild('score')).snapshotChanges().map(changes => {
+    this.brackets$ = this.db.list('scoreboard').snapshotChanges().map(changes => {
       return changes.map(c => {
         const bracket = c.payload.val(),
           max = 13,
           truncatedName = bracket.name.length > max ? `${bracket.name.substr(0, max)}...` : bracket.name;
 
         return { key: c.payload.key, truncatedName, ...bracket };
-      });
+      }).sort(BracketChecker.sortBrackets);
     });
   }
 

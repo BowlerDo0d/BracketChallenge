@@ -5,6 +5,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
+import { BracketChecker } from '../../core/bracket/bracket-checker';
+
 @Component({
   selector: 'app-tiebreakers',
   templateUrl: './tiebreakers.component.html',
@@ -25,7 +27,7 @@ export class TiebreakersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.brackets$ = this.db.list('scoreboard-test', ref => ref.orderByChild('score')).snapshotChanges().take(1).map(changes => {
+    this.brackets$ = this.db.list('scoreboard').snapshotChanges().take(1).map(changes => {
       return changes.map(c => {
         const bracket = c.payload.val(),
           max = 13,
@@ -34,7 +36,7 @@ export class TiebreakersComponent implements OnInit {
         this.formControls[`tieRank${c.payload.key}`] = new FormControl(bracket.tieRank ? bracket.tieRank : 0);
 
         return { key: c.payload.key, truncatedName, ...bracket };
-      }).sort(((a, b) => a.tieRank - b.tieRank));
+      }).sort(BracketChecker.sortBrackets);
     });
 
     this.tiesForm = new FormGroup(this.formControls);
@@ -67,6 +69,6 @@ export class TiebreakersComponent implements OnInit {
   }
 
   updateRank(key, rank) {
-    this.db.object(`scoreboard-test/${key}`).update({ tieRank: rank });
+    this.db.object(`scoreboard/${key}`).update({ tieRank: rank });
   }
 }
