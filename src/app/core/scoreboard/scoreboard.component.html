@@ -6,7 +6,8 @@
     Cash Ratio 1:5
   </div>
   <div class="col text-right" *ngIf="!isPastDeadline()">
-    <button type="button" class="btn btn-primary create-btn" routerLink="/bracket" [disabled]="!isAuthenticated()"><span class="fa fa-plus pr-2"></span>Create Bracket</button>
+    <!-- <button type="button" class="btn btn-primary create-btn" routerLink="/bracket" [disabled]="!isAuthenticated()"><span class="fa fa-plus pr-2"></span>Create Bracket</button> -->
+    <button type="button" class="btn btn-primary create-btn" routerLink="/bracket" disabled><span class="fa fa-plus pr-2"></span>Create Bracket</button>
     <span class="loginMsg" *ngIf="!isAuthenticated()">Login to create a bracket</span>
   </div>
 </div>
