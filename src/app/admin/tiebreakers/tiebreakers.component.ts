@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router, NavigationEnd } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 import { BracketChecker } from '../../core/bracket/bracket-checker';
+import { Bracket } from '../../models/bracket.model';
 
 @Component({
   selector: 'app-tiebreakers',
@@ -27,9 +28,9 @@ export class TiebreakersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.brackets$ = this.db.list('scoreboard').snapshotChanges().take(1).map(changes => {
+    this.brackets$ = this.db.list('scoreboard').snapshotChanges().pipe(take(1)).pipe(map(changes => {
       return changes.map(c => {
-        const bracket = c.payload.val(),
+        const bracket: Partial<Bracket> = c.payload.val(),
           max = 13,
           truncatedName = bracket.name.length > max ? `${bracket.name.substr(0, max)}...` : bracket.name;
 
@@ -37,7 +38,7 @@ export class TiebreakersComponent implements OnInit {
 
         return { key: c.payload.key, truncatedName, ...bracket };
       }).sort(BracketChecker.sortBrackets);
-    });
+    }));
 
     this.tiesForm = new FormGroup(this.formControls);
   }

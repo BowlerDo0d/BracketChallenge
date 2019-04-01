@@ -1,8 +1,5 @@
 import { Conference } from './conference.model';
 import { Team } from './team.model';
-import { Division } from './division.model';
-import { Round } from './round.model';
-import { Matchup } from './matchup.model';
 
 export class Bracket {
   private _conferences: Array<Conference>;
@@ -11,6 +8,7 @@ export class Bracket {
   private _name: string;
   private _owner: string;
   private _score: number;
+  private _tieRank: number;
   private _winner: Team;
 
   constructor(name: string = null,
@@ -53,6 +51,10 @@ export class Bracket {
     return this._score;
   }
 
+  get tieRank(): number {
+    return this._tieRank;
+  }
+
   get winner(): Team {
     return this._winner;
   }
@@ -79,6 +81,10 @@ export class Bracket {
 
   set score(score: number) {
     this._score = score;
+  }
+
+  set tieRank(tieRank: number) {
+    this._tieRank = tieRank;
   }
 
   set winner(winner: Team) {

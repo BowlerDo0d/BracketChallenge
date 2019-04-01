@@ -2,11 +2,12 @@ import * as _ from 'lodash';
 import { Location } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/take';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
+import { DEADLINE } from '../../constants/global.constants';
 import { AuthService } from '../../auth/auth.service';
 import { Bracket } from '../../models/bracket.model';
 import { BracketMapper } from './data/bracket-mapper';
@@ -31,7 +32,6 @@ export class BracketComponent implements OnInit, OnDestroy {
   key: string;
   masterBracket: Bracket;
   navigationSubscription: Subscription;
-  pastDeadline: boolean;
   showResults: boolean;
   results: object;
   viewMode: string;
@@ -50,7 +50,6 @@ export class BracketComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.canEdit = false;
-    this.pastDeadline = true;
     this.showResults = !this.isMasterBracket();
     this.viewMode = location.pathname.indexOf('/edit') !== -1 ? VIEW_MODES.EDIT : VIEW_MODES.DETAIL;
 
@@ -92,14 +91,14 @@ export class BracketComponent implements OnInit, OnDestroy {
             }
           }
 
-          this.db.object(`bracket/${this.key}`).snapshotChanges().take(1).subscribe(data => {
+          this.db.object(`bracket/${this.key}`).snapshotChanges().pipe(take(1)).subscribe(data => {
             const bracket = data.payload.val();
 
             if (bracket) {
               // Load bracket
               this.bracket = BracketMapper(bracket);
 
-              if ((!this.pastDeadline && (this.authService.isAdmin() || this.bracket.owner === this.authService.getUsername())) ||
+              if ((!this.isPastDeadline() && (this.authService.isAdmin() || this.bracket.owner === this.authService.getUsername())) ||
                   this.authService.isAdmin() && this.isMasterBracket()) {
                 this.canEdit = true;
               } else if (this.isEditMode()) {
@@ -132,7 +131,7 @@ export class BracketComponent implements OnInit, OnDestroy {
 
           if (!this.isMasterBracket()) {
             // Load the master bracket
-            this.db.object(`bracket/${KEYS.MASTER}`).snapshotChanges().take(1).subscribe(data => {
+            this.db.object(`bracket/${KEYS.MASTER}`).snapshotChanges().pipe(take(1)).subscribe(data => {
               const masterBracket = data.payload.val();
 
               if (masterBracket) {
@@ -143,7 +142,7 @@ export class BracketComponent implements OnInit, OnDestroy {
         }
       } else {
         // Create mode
-        if (this.pastDeadline) {
+        if (this.isPastDeadline()) {
           this.router.navigate(['/']);
         } else {
           this.viewMode = VIEW_MODES.CREATE;
@@ -154,7 +153,7 @@ export class BracketComponent implements OnInit, OnDestroy {
     });
 
     // Get active results
-    this.db.object('results').snapshotChanges().take(1).subscribe(data => {
+    this.db.object('results').snapshotChanges().pipe(take(1)).subscribe(data => {
       this.results = data.payload.val();
     });
   }
@@ -476,6 +475,12 @@ export class BracketComponent implements OnInit, OnDestroy {
     return this.showResults ? isMatch : true;
   }
 
+  isPastDeadline(): boolean {
+    const today = new Date();
+
+    return today.getTime() > DEADLINE.getTime();
+  }
+
   pickTeam(conference, division, matchup, isTopSeed = false) {
     switch (matchup) {
       case 1:
@@ -636,7 +641,7 @@ export class BracketComponent implements OnInit, OnDestroy {
 
     if (this.isMasterBracket()) {
       // Loop through all brackets and update score
-      this.db.list('bracket').snapshotChanges().take(1).subscribe(brackets => {
+      this.db.list('bracket').snapshotChanges().pipe(take(1)).subscribe(brackets => {
         brackets.forEach(bracketData => {
           if (bracketData.key !== KEYS.MASTER && bracketData.key !== KEYS.DUMMY) {
             const bracket = BracketMapper(bracketData.payload.val()),

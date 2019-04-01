@@ -8,8 +8,11 @@ import { AuthService } from '../../auth/auth.service';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
+  public currentYear: number;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+    this.currentYear = (new Date()).getFullYear();
+  }
 
   isAdmin() {
     return this.authService.isAdmin();

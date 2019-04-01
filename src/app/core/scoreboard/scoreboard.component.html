@@ -2,10 +2,10 @@
   <div class="col">
     <h4>Scoreboard</h4>
   </div>
-  <div class="col cash-info text-right text-secondary my-auto">
-    Top 8 Cash (Ratio 1:5)
+  <div class="col cash-info text-right text-secondary my-auto" [ngClass]="{ 'text-center d-none d-md-block' : !isPastDeadline() }">
+    Cash Ratio 1:5
   </div>
-  <div class="col text-right" *ngIf="!pastDeadline">
+  <div class="col text-right" *ngIf="!isPastDeadline()">
     <button type="button" class="btn btn-primary create-btn" routerLink="/bracket" [disabled]="!isAuthenticated()"><span class="fa fa-plus pr-2"></span>Create Bracket</button>
     <span class="loginMsg" *ngIf="!isAuthenticated()">Login to create a bracket</span>
   </div>
@@ -47,7 +47,7 @@
               <span class="fa fa-check"></span>
           </th>
           <th scope="col" class="col-1 text-center">
-              <span class="fa fa-handshake-o"></span>
+              <span class="fa fa-check-square-o"></span>
           </th>
           <th scope="col" class="col-2 text-center">Score</th>
         </tr>
@@ -61,7 +61,7 @@
             <span class="fa fa-check text-success" *ngIf="bracket.isComplete"></span>
           </td>
           <td class="col-1 text-center">
-              <span class="fa fa-handshake-o text-success" *ngIf="bracket.isTiebreakerComplete"></span>
+              <span class="fa fa-check-square-o text-success" *ngIf="bracket.isTiebreakerComplete"></span>
           </td>
           <td class="col-2 text-center" [innerText]="bracket.score"></td>
         </tr>
@@ -126,9 +126,17 @@
                   2
                 </td>
               </tr>
+              <tr class="d-flex">
+                <td class="col-8">
+                  Games Per Series
+                </td>
+                <td class="col-4 text-center">
+                  1
+                </td>
+              </tr>
             </tbody>
           </table>
-          <p class="modal-text">Points are awarded per each correct prediction.<br />A perfect bracket for Round 1 would be 8 correct predictions and 16 total points.</p>
+          <p class="modal-text">Points are awarded per each correct prediction.<br />A perfect bracket for Round 1 would be 8 correct predictions and 16 total points.<br /><br />Bonus point awarded for every correct total games per series prediction.</p>
         </div>
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

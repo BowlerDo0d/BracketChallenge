@@ -1,8 +1,8 @@
 import * as _ from 'lodash';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { Subject } from 'rxjs/Subject';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Subject } from 'rxjs';
 import * as firebase from 'firebase/app';
 
 @Injectable()

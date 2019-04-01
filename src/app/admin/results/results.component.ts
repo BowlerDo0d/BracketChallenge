@@ -1,8 +1,9 @@
 import * as _ from 'lodash';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase } from '@angular/fire/database';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { take } from 'rxjs/operators';
 
 import { Bracket } from '../../models/bracket.model';
 import { BracketMapper } from '../../core/bracket/data/bracket-mapper';
@@ -20,7 +21,7 @@ export class ResultsComponent implements OnInit {
   constructor(private db: AngularFireDatabase, private router: Router) { }
 
   ngOnInit() {
-    this.db.object(`bracket/${KEYS.MASTER}`).snapshotChanges().take(1).subscribe(data => {
+    this.db.object(`bracket/${KEYS.MASTER}`).snapshotChanges().pipe(take(1)).subscribe(data => {
       const bracket = data.payload.val();
 
       this.masterBracket = BracketMapper(bracket);
@@ -64,7 +65,7 @@ export class ResultsComponent implements OnInit {
       totalGoals: new FormControl(0, [Validators.pattern(/\d/), Validators.min(0)])
     });
 
-    this.db.object('results').snapshotChanges().take(1).subscribe(data => {
+    this.db.object('results').snapshotChanges().pipe(take(1)).subscribe(data => {
       const results = data.payload.val();
 
       _.keys(results).forEach(result => {
