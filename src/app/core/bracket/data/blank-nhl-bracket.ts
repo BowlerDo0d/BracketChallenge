@@ -11,8 +11,8 @@ export const BlankNHLBracket: Bracket = new Bracket(
   [new Conference('Western Conference', [
     new Division('Central Division', [
       new Round('Round 1', [
-        new Matchup(1, new Team(1, 'Nashville'), new Team(4, 'Colorado')),
-        new Matchup(2, new Team(2, 'Winnipeg'), new Team(3, 'Minnesota'))
+        new Matchup(1, new Team(1, 'Nashville'), new Team(4, 'Dallas')),
+        new Matchup(2, new Team(2, 'Winnipeg'), new Team(3, 'St. Louis'))
       ]),
       new Round('Quarterfinals', [
         new Matchup(3, new Team(), new Team())
@@ -20,8 +20,8 @@ export const BlankNHLBracket: Bracket = new Bracket(
     ]),
     new Division('Pacific Division', [
       new Round('Round 1', [
-        new Matchup(1, new Team(1, 'Vegas'), new Team(4, 'Los Angeles')),
-        new Matchup(2, new Team(2, 'Anaheim'), new Team(3, 'San Jose'))
+        new Matchup(1, new Team(1, 'Calgary'), new Team(4, 'Colorado')),
+        new Matchup(2, new Team(2, 'San Jose'), new Team(3, 'Vegas'))
       ]),
       new Round('Quarterfinals', [
         new Matchup(3, new Team(), new Team())
@@ -31,7 +31,7 @@ export const BlankNHLBracket: Bracket = new Bracket(
   new Conference('Eastern Conference', [
     new Division('Atlantic Division', [
       new Round('Round 1', [
-        new Matchup(1, new Team(1, 'Tampa Bay'), new Team(4, 'New Jersey')),
+        new Matchup(1, new Team(1, 'Tampa Bay'), new Team(4, 'Columbus')),
         new Matchup(2, new Team(2, 'Boston'), new Team(3, 'Toronto'))
       ]),
       new Round('Quarterfinals', [
@@ -40,8 +40,8 @@ export const BlankNHLBracket: Bracket = new Bracket(
     ]),
     new Division('Metropolitan Division', [
       new Round('Round 1', [
-        new Matchup(1, new Team(1, 'Washington'), new Team(4, 'Columbus')),
-        new Matchup(2, new Team(2, 'Pittsburgh'), new Team(3, 'Philadelphia'))
+        new Matchup(1, new Team(1, 'Washington'), new Team(4, 'Carolina')),
+        new Matchup(2, new Team(2, 'NY Islanders'), new Team(3, 'Pittsburgh'))
       ]),
       new Round('Quarterfinals', [
         new Matchup(3, new Team(), new Team())
