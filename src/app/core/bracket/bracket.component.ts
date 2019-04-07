@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-import { Location } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router, NavigationEnd } from '@angular/router';
 import { AngularFireDatabase } from '@angular/fire/database';
@@ -39,8 +38,7 @@ export class BracketComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService,
     private db: AngularFireDatabase,
     private router: Router,
-    private route: ActivatedRoute,
-    private location: Location) {
+    private route: ActivatedRoute) {
     this.navigationSubscription = this.router.events.subscribe((evt: any) => {
       if (evt instanceof NavigationEnd) {
         this.ngOnInit();
