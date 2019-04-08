@@ -6,7 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-import { DEADLINE } from '../../constants/global.constants';
+import { DEADLINE, TEAM_ABBREVIATIONS } from '../../constants/global.constants';
 import { AuthService } from '../../auth/auth.service';
 import { Bracket } from '../../models/bracket.model';
 import { BracketMapper } from './data/bracket-mapper';
@@ -48,7 +48,7 @@ export class BracketComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.canEdit = false;
-    this.showResults = !this.isMasterBracket();
+    this.showResults = !this.isMasterBracket() && this.isPastDeadline();
     this.viewMode = location.pathname.indexOf('/edit') !== -1 ? VIEW_MODES.EDIT : VIEW_MODES.DETAIL;
 
     this.bracketForm = new FormGroup({
@@ -195,26 +195,7 @@ export class BracketComponent implements OnInit, OnDestroy {
   }
 
   getAbbr(team) {
-    const abbreviations = {
-      Anaheim: 'ANA',
-      Boston: 'BOS',
-      Colorado: 'COL',
-      Columbus: 'CBJ',
-      'Los Angeles': 'LAK',
-      Minnesota: 'MIN',
-      Nashville: 'NSH',
-      'New Jersey': 'NJD',
-      Philadelphia: 'PHI',
-      Pittsburgh: 'PIT',
-      'San Jose': 'SJS',
-      'Tampa Bay': 'TBL',
-      Toronto: 'TOR',
-      Vegas: 'VGK',
-      Washington: 'WSH',
-      Winnipeg: 'WPG'
-    };
-
-    return abbreviations[team] || null;
+    return TEAM_ABBREVIATIONS[team] || null;
   }
 
   getClassMatchingMaster(conference: number = -1, division: number = -1, round: number = -1, matchup: number = -1, isTopSeed: boolean = true) {
