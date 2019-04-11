@@ -22,7 +22,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="d-flex" *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;" [ngClass]="{ 'cash-line' : idx === 7 }">
+        <tr class="d-flex" *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;" [ngClass]="{ 'cash-line' : idx === cashLine }">
           <th class="col-1" scope="row" [innerText]="idx + 1"></th>
           <td class="col-5 text-truncate d-none d-md-flex"><a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a></td>
           <td class="col-5 text-truncate d-flex d-md-none"><a [innerText]="bracket.truncatedName" [routerLink]="['/bracket', bracket.key]"></a></td>
@@ -56,7 +56,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="d-flex" *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;" [ngClass]="{ 'cash-line' : idx === 7 }">
+        <tr class="d-flex" *ngFor="let bracket of (brackets$ | async)?.slice().reverse(); let idx = index;" [ngClass]="{ 'cash-line' : idx === cashLine }">
           <th class="col-1" scope="row" [innerText]="idx + 1"></th>
           <td class="col-3 text-truncate"><a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a></td>
           <td class="col-3 text-truncate" [innerText]="bracket.owner.name"></td>

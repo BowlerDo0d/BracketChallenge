@@ -15,11 +15,13 @@ import { Bracket } from '../../models/bracket.model';
 })
 export class ScoreboardComponent implements OnInit {
   brackets$: Observable<any>;
+  cashLine: number;
 
   constructor(private authService: AuthService, private db: AngularFireDatabase) {}
 
   ngOnInit() {
     this.brackets$ = this.db.list('scoreboard').snapshotChanges().pipe(map(changes => {
+      this.cashLine = Math.floor(changes.length / 5) - 1;
       return changes.map(c => {
         const bracket: Partial<Bracket> = c.payload.val(),
           max = 13,
