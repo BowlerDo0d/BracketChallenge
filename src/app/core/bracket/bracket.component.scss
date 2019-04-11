@@ -291,6 +291,7 @@ $border-color: $gray-500;
 .toggle-buttons {
   position: relative;
   top: -3rem;
+  z-index: -1;
 }
 
 .score {
