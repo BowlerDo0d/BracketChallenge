@@ -288,12 +288,6 @@ $border-color: $gray-500;
   background-color: rgba($color: $green, $alpha: 0.025)
 }
 
-.toggle-buttons {
-  position: relative;
-  top: -3rem;
-  z-index: -1;
-}
-
 .score {
   font-size: 0.9rem;
   color: $secondary;
