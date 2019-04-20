@@ -626,12 +626,10 @@ export class BracketComponent implements OnInit, OnDestroy {
             const bracket = BracketMapper(bracketData.payload.val()),
               score = BracketChecker.getBracketScore(bracket, this.bracket);
 
-            if (score) {
-              // Update bracket
-              this.db.object(`bracket/${bracketData.key}`).update({ _score: score });
-              // Update scoreboard
-              this.db.object(`scoreboard/${bracketData.key}`).update({ score });
-            }
+            // Update bracket
+            this.db.object(`bracket/${bracketData.key}`).update({ _score: score });
+            // Update scoreboard
+            this.db.object(`scoreboard/${bracketData.key}`).update({ score });
           }
         });
       });
