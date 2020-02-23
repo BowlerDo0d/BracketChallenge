@@ -1,5 +1,7 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { NgModule } from '@angular/core';
 
 import { CoreRoutingModule } from './core-routing.module';
 import { ScoreboardComponent } from './scoreboard/scoreboard.component';
@@ -8,6 +10,8 @@ import { ScoreboardComponent } from './scoreboard/scoreboard.component';
   declarations: [ScoreboardComponent],
   imports: [
     CommonModule,
+    MatIconModule,
+    MatTableModule,
     CoreRoutingModule
   ]
 })

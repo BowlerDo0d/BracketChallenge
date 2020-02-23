@@ -1,0 +1,47 @@
+@import 'src/styles/partials/variables';
+
+table {
+  width: 100%;
+}
+
+tr.mat-header-row {
+  th {
+    color: black;
+  }
+
+  background-color: lightgray;
+}
+
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type,
+th.mat-header-cell:last-of-type, td.mat-cell:last-of-type {
+  padding: 0;
+}
+
+.mat-column-position {
+  width: 4%;
+  min-width: 50px;
+}
+
+td.mat-column-position {
+  font-size: 0.75rem;
+}
+
+.mat-column-bracketName,
+.mat-column-champs,
+.mat-column-owner {
+  width: 28%;
+}
+
+.mat-column-score {
+  width: 12%;
+}
+
+td.mat-column-score {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.cash-line {
+  border-bottom-style: dashed;
+  border-bottom-color: $warn-light;
+}

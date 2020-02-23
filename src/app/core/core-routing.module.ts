@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 
 const routes: Routes = [
-  { path: '', component: ScoreboardComponent }
+  { path: 'scoreboard', component: ScoreboardComponent }
 ];
 
 @NgModule({
