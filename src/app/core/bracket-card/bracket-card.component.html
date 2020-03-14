@@ -1,0 +1,14 @@
+<div class="bracket-card container-fluid my-1 mat-elevation-z2">
+  <div class="row align-items-center p-1">
+    <div class="position col text-center p-0 mr-2">{{ position }}</div>
+    <div class="content col-10 p-0">
+      <div class="bracket-name col p-0">{{ bracket.name }}</div>
+      <div class="w-100"></div>
+      <div class="bracket-owner col p-0">{{ bracket.owner.name }}</div>
+    </div>
+    <div class="cup-champs col-6 text-center">
+      <svg-icon [name]="bracket.winner"></svg-icon>
+    </div>
+    <div class="score col text-center p-0">{{ bracket.score }}</div>
+  </div>
+</div>

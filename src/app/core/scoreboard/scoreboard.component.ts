@@ -4,21 +4,20 @@ import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-scoreboard',
+  selector: 'scoreboard',
   templateUrl: './scoreboard.component.html',
   styleUrls: ['./scoreboard.component.scss']
 })
 export class ScoreboardComponent implements OnInit {
   brackets$: Observable<any[]>;
   cashLine: number;
-  displayedColumns: string[];
 
   constructor(private db: AngularFireDatabase) { }
 
   ngOnInit(): void {
-    this.displayedColumns = ['position', 'bracketName', 'owner', 'champs', 'score'];
+    const currentYear = (new Date()).getFullYear();
 
-    this.brackets$ = this.db.list('scoreboard').snapshotChanges()
+    this.brackets$ = this.db.list(`${currentYear}/scoreboard`).snapshotChanges()
       .pipe(
         tap(changes => this.cashLine = Math.floor(changes.length / 5) - 1),
         map(changes =>

@@ -1,0 +1,24 @@
+@import 'src/styles/partials/variables';
+
+.bracket-card {
+  font-size: 0.75rem;
+
+  .position {
+    font-size: 1.25em;
+  }
+
+  .score {
+    font-size: 1.75em;
+  }
+
+  .content {
+    .bracket-name {
+      font-size: 1.25em;
+    }
+
+    .bracket-owner {
+      font-style: italic;
+      color: $primary;
+    }
+  }
+}
