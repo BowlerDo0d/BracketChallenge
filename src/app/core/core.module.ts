@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { BracketCardComponent } from './bracket-card/bracket-card.component';
 import { CoreRoutingModule } from './core-routing.module';
-import { ScoreboardComponent } from './scoreboard/scoreboard.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
 import { SvgDefinitionsComponent } from './svg/svg-definitions/svg-definitions.component';
 import { SvgIconComponent } from './svg/svg-icon/svg-icon.component';
 
 @NgModule({
   declarations: [
-    BracketCardComponent,
-    ScoreboardComponent,
+    FooterComponent,
+    HeaderComponent,
     SvgDefinitionsComponent,
     SvgIconComponent
   ],
@@ -18,6 +18,6 @@ import { SvgIconComponent } from './svg/svg-icon/svg-icon.component';
     CommonModule,
     CoreRoutingModule
   ],
-  exports: [SvgDefinitionsComponent]
+  exports: [SvgDefinitionsComponent, SvgIconComponent]
 })
 export class CoreModule { }

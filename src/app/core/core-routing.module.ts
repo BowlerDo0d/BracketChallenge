@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ScoreboardComponent } from './scoreboard/scoreboard.component';
-
-const routes: Routes = [
-  { path: 'scoreboard', component: ScoreboardComponent }
-];
+const routes: Routes = [];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

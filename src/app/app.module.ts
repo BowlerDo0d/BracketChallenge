@@ -9,14 +9,11 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+import { ScoreboardModule } from './modules/scoreboard/scoreboard.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +23,7 @@ import { FooterComponent } from './footer/footer.component';
     AngularFireDatabaseModule,
     AppRoutingModule,
     CoreModule,
+    ScoreboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
