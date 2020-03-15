@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./scoreboard.component.scss']
 })
 export class ScoreboardComponent implements OnInit {
-  brackets$: Observable<any[]>;
+  brackets$: Observable<IBracket[]>;
   cashLine: number;
 
   constructor(private db: AngularFireDatabase) { }
@@ -17,14 +17,14 @@ export class ScoreboardComponent implements OnInit {
   ngOnInit(): void {
     const currentYear = (new Date()).getFullYear();
 
-    this.brackets$ = this.db.list(`${currentYear}/scoreboard`).snapshotChanges()
+    this.brackets$ = this.db.list<IBracket>(`${currentYear}/scoreboard`).snapshotChanges()
       .pipe(
         tap(changes => this.cashLine = Math.floor(changes.length / 5) - 1),
         map(changes =>
           changes.map(c => {
-            const bracket: any = c.payload.val(), // Change type to Bracket or Partial<Bracket>
+            const bracket: IBracket = c.payload.val() as IBracket,
               max = 13,
-              truncatedName = bracket.name.length > max ? `${bracket.name.substr(0, max)}...` : bracket.name;
+              truncatedName: string = bracket.name.length > max ? `${bracket.name.substr(0, max)}...` : bracket.name;
 
             return { key: c.payload.key, truncatedName, ...bracket };
           })
@@ -32,7 +32,7 @@ export class ScoreboardComponent implements OnInit {
       );
   }
 
-  trackByKey(index, item) {
+  trackByKey(index: number, item: IBracket) {
     return item.key;
   }
 }
