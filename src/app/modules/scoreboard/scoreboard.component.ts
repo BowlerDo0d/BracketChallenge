@@ -2,6 +2,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { Component, OnInit } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { sortBracketsByScore } from 'src/app/core/helpers/sort-brackets-by-score.helper';
 
 @Component({
   selector: 'scoreboard',
@@ -27,8 +28,8 @@ export class ScoreboardComponent implements OnInit {
               truncatedName: string = bracket.name.length > max ? `${bracket.name.substr(0, max)}...` : bracket.name;
 
             return { key: c.payload.key, truncatedName, ...bracket };
-          })
-        ) // .sort(BracketChecker.sortBrackets);
+          }).sort(sortBracketsByScore)
+        )
       );
   }
 

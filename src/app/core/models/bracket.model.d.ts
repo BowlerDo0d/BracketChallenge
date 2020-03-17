@@ -9,5 +9,6 @@ interface IBracket {
   name: string;
   owner: string;
   score: number;
+  tieRank: number;
   winner: ITeam;
 }
