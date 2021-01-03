@@ -5,7 +5,42 @@
 @import '~bootstrap/scss/reboot';
 @import '~bootstrap/scss/grid';
 @import '~bootstrap/scss/utilities';
+
 @import 'partials/reset';
+@import 'partials/form-fields';
+@import 'partials/snackbars';
+
+@import '~@angular/material/theming';
+
+$bkc-typography: mat-typography-config(
+  $font-family: "Roboto Condensed"
+);
+
+@include angular-material-typography($bkc-typography);
+@include mat-core($bkc-typography);
+
+// @import './themes/bkc-default-theme';
+// @import './themes/bkc-light-theme';
+@import './themes/bkc-dark-theme';
+
+@mixin custom-components-theme($theme) {
+  // @include bkc-styles-reset-theme($theme);
+}
+
+// .default-theme {
+//   @include angular-material-theme($bkc-theme);
+//   @include custom-components-theme($bkc-theme);
+// }
+
+// .light-theme {
+//   @include angular-material-theme($bkc-light-theme);
+//   @include custom-components-theme($bkc-light-theme);
+// }
+
+.dark-theme {
+  @include angular-material-theme($bkc-dark-theme);
+  @include custom-components-theme($bkc-dark-theme);
+}
 
 html, body {
   height: 100%;
@@ -13,6 +48,5 @@ html, body {
 
 body {
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: whitesmoke;
+  font-family: 'Roboto Condensed', sans-serif;
 }

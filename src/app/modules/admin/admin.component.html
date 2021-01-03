@@ -1,0 +1,10 @@
+<nav mat-tab-nav-bar mat-stretch-tabs>
+  <a mat-tab-link *ngFor="let item of menuItems"
+     (click)="activeLink = item"
+     [active]="activeLink == item"
+     [routerLink]="item.link">
+     {{ item.label }}
+  </a>
+</nav>
+
+<router-outlet></router-outlet>

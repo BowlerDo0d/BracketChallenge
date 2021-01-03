@@ -1,0 +1,19 @@
+.bc-snackbar {
+  &.bc-center {
+    .mat-simple-snackbar {
+      justify-content: center;
+    }
+  }
+
+  &.bc-error {
+    background-color: red;
+  }
+
+  &.bc-success {
+    background-color: green;
+  }
+
+  &.bc-warning {
+    background-color: orange;
+  }
+}

@@ -1,0 +1,51 @@
+.team-manager{
+  .mat-tab-labels {
+    .mat-tab-label-active {
+      .mat-tab-label-content {
+        // border: 1px solid;
+      }
+    }
+  }
+
+  .mat-ink-bar {
+    display: none;
+  }
+
+  .abbreviation {
+    grid-area: abbreviation;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .edit-button {
+    grid-area: edit-button;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .location {
+    grid-area: location;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .logo {
+    grid-area: logo;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .team-name {
+    grid-area: team-name;
+    align-self: center;
+    justify-self: center;
+  }
+
+  .team {
+    display: grid;
+    grid-template-columns: 16% 16% 27% 27% 14%;
+    grid-template-rows: auto;
+    grid-template-areas: "logo abbreviation location team-name edit-button";
+    padding: 0.5rem 0;
+  }
+}

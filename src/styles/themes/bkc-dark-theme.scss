@@ -1,0 +1,12 @@
+@import '../palettes/bkc-blue';
+@import '../palettes/bkc-gold';
+
+$bkc-dark-primary: mat-palette($bkc-blue);
+$bkc-dark-accent:  mat-palette($bkc-gold);
+$bkc-dark-warn:    mat-palette($mat-deep-orange);
+
+$bkc-dark-theme: mat-dark-theme(
+  $bkc-dark-primary,
+  $bkc-dark-accent,
+  $bkc-dark-warn
+);

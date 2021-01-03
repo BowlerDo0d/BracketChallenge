@@ -6,10 +6,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { NgModule } from '@angular/core';
 
+import { AdminModule } from './modules/admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { ScoreboardModule } from './modules/scoreboard/scoreboard.module';
+import { SharedModule } from './shared/shared.module';
+
+import { MatButtonModule, MatButton } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -22,8 +28,14 @@ import { ScoreboardModule } from './modules/scoreboard/scoreboard.module';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AppRoutingModule,
+    AdminModule,
     CoreModule,
-    ScoreboardModule
+    SharedModule,
+    ScoreboardModule,
+    // Delete these
+    MatButtonModule,
+    MatSidenavModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

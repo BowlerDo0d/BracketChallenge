@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BracketCardComponent } from './bracket-card/bracket-card.component';
 import { ScoreboardComponent } from './scoreboard.component';
-import { CoreModule } from 'src/app/core/core.module';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   ],
   imports: [
     CommonModule,
-    CoreModule
+    SharedModule
   ],
   providers: [],
   exports: [ScoreboardComponent]

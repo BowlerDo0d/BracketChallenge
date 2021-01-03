@@ -1,5 +1,5 @@
 interface IConference {
-  divisions: any;
+  divisions: IDivision[];
   games: number;
   name: string;
   winner: ITeam;
