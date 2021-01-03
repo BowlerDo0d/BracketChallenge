@@ -5,6 +5,7 @@ import { TeamManagerComponent } from './team-manager/team-manager.component';
 
 const routes: Routes = [
   { path: 'admin', component: AdminComponent, children: [
+    { path: '', pathMatch: 'full', redirectTo: 'team-manager' },
     { path: 'team-manager', component: TeamManagerComponent }
   ] }
 ];
