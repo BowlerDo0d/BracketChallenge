@@ -8,7 +8,7 @@ div {
   margin: 0 auto;
 }
 
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(m) {
   div {
     width: 100%;
   }
