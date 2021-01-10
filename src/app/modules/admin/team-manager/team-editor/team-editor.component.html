@@ -1,50 +1,52 @@
-<form [formGroup]="teamFormGroup" (ngSubmit)="save()">
-  <div>
-    <div class="form-field logo">
-      <div class="edit-wrapper">
-        <svg-icon [name]="logo" [iconSize]="45"></svg-icon>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="teamFormGroup" (ngSubmit)="save()">
+    <div>
+      <div class="form-field logo">
+        <div class="edit-wrapper">
+          <svg-icon [name]="logo" [iconSize]="45"></svg-icon>
+        </div>
+      </div>
+      <div class="form-field division">
+        <mat-form-field appearance="outline">
+          <mat-label>Division</mat-label>
+          <mat-select formControlName="division" [disableOptionCentering]="true">
+            <mat-optgroup *ngFor="let conference of conferences" [label]="conference.name">
+              <mat-option *ngFor="let division of conference.divisions" [value]="division.name">
+                {{division.name}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-field location">
+        <mat-form-field appearance="outline">
+          <mat-label>City/Location</mat-label>
+          <input matInput formControlName="location" placeholder="Ex. Pittsburgh" autocomplete="off" />
+        </mat-form-field>
+      </div>
+      <div class="form-field name">
+        <mat-form-field appearance="outline">
+          <mat-label>Team Name</mat-label>
+          <input matInput formControlName="name" placeholder="Ex. Penguins" autocomplete="off" />
+        </mat-form-field>
+      </div>
+      <div class="form-field abbreviation">
+        <mat-form-field appearance="outline">
+          <mat-label>Abbreviation</mat-label>
+          <input matInput formControlName="abbreviation" placeholder="Ex. PIT" maxlength="3" autocomplete="off" />
+        </mat-form-field>
+      </div>
+      <div class="form-field nickname">
+        <mat-form-field appearance="outline">
+          <mat-label>Nickname</mat-label>
+          <input matInput formControlName="nickname" placeholder="Ex. Pens" autocomplete="off" />
+        </mat-form-field>
       </div>
     </div>
-    <div class="form-field division">
-      <mat-form-field appearance="outline">
-        <mat-label>Division</mat-label>
-        <mat-select formControlName="division" [disableOptionCentering]="true">
-          <mat-optgroup *ngFor="let conference of conferences" [label]="conference.name">
-            <mat-option *ngFor="let division of conference.divisions" [value]="division.name">
-              {{division.name}}
-            </mat-option>
-          </mat-optgroup>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="form-field location">
-      <mat-form-field appearance="outline">
-        <mat-label>City/Location</mat-label>
-        <input matInput formControlName="location" placeholder="Ex. Pittsburgh" autocomplete="off" />
-      </mat-form-field>
-    </div>
-    <div class="form-field name">
-      <mat-form-field appearance="outline">
-        <mat-label>Team Name</mat-label>
-        <input matInput formControlName="name" placeholder="Ex. Penguins" autocomplete="off" />
-      </mat-form-field>
-    </div>
-    <div class="form-field abbreviation">
-      <mat-form-field appearance="outline">
-        <mat-label>Abbreviation</mat-label>
-        <input matInput formControlName="abbreviation" placeholder="Ex. PIT" maxlength="3" autocomplete="off" />
-      </mat-form-field>
-    </div>
-    <div class="form-field nickname">
-      <mat-form-field appearance="outline">
-        <mat-label>Nickname</mat-label>
-        <input matInput formControlName="nickname" placeholder="Ex. Pens" autocomplete="off" />
-      </mat-form-field>
-    </div>
-  </div>
 
-  <div class="buttons">
-    <button mat-raised-button type="button" (click)="dialogRef.close()">Cancel</button>
-    <button mat-raised-button type="submit" color="primary">Save</button>
-  </div>
-</form>
+    <div class="buttons">
+      <button mat-raised-button type="button" (click)="dialogRef.close()">Cancel</button>
+      <button mat-raised-button type="submit" color="primary">Save</button>
+    </div>
+  </form>
+</mat-dialog-content>

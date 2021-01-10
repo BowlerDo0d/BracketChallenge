@@ -1,4 +1,3 @@
-import { forEach, groupBy } from 'lodash';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { map, switchMap } from 'rxjs/operators';
@@ -68,6 +67,8 @@ export class TeamManagerComponent implements OnInit {
       data: {
         ...team
       }
+    }).beforeClosed().subscribe(() => {
+      this.field$.next(this.field$.value);
     });
   }
 

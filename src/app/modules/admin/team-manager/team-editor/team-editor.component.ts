@@ -22,7 +22,7 @@ export class TeamEditorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.db.list<IConference>('lookups/conferences')
+    this.db.list<IConference>('lookups/conferences', ref => ref.orderByChild('name'))
       .snapshotChanges()
       .pipe(
         take(1),
@@ -109,6 +109,7 @@ export class TeamEditorComponent implements OnInit {
               if (this.dialogData && this.dialogData.key) {
                 this.db.object(`lookups/teams/${this.dialogData.key}`).update({
                   abbreviation: this.teamFormGroup.value.abbreviation || null,
+                  conference: this.teamFormGroup.value.conference || null,
                   conference_division_full_name: confDivFullName,
                   conference_full_name: confFullName,
                   division: this.teamFormGroup.value.division || null,
