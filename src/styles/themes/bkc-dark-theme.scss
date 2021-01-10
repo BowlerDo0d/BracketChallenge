@@ -5,8 +5,10 @@ $bkc-dark-primary: mat-palette($bkc-blue);
 $bkc-dark-accent:  mat-palette($bkc-gold);
 $bkc-dark-warn:    mat-palette($mat-deep-orange);
 
-$bkc-dark-theme: mat-dark-theme(
-  $bkc-dark-primary,
-  $bkc-dark-accent,
-  $bkc-dark-warn
-);
+$bkc-dark-theme: mat-dark-theme((
+  color: (
+    primary: $bkc-dark-primary,
+    accent: $bkc-dark-accent,
+    warn: $bkc-dark-warn
+  )
+));

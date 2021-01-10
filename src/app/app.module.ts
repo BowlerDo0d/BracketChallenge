@@ -13,7 +13,7 @@ import { CoreModule } from './core/core.module';
 import { ScoreboardModule } from './modules/scoreboard/scoreboard.module';
 import { SharedModule } from './shared/shared.module';
 
-import { MatButtonModule, MatButton } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 

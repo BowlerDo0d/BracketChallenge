@@ -19,27 +19,20 @@ $bkc-typography: mat-typography-config(
 @include angular-material-typography($bkc-typography);
 @include mat-core($bkc-typography);
 
-// @import './themes/bkc-default-theme';
-// @import './themes/bkc-light-theme';
-@import './themes/bkc-dark-theme';
-
-@mixin custom-components-theme($theme) {
+@mixin custom-components-color($theme) {
   // @include bkc-styles-reset-theme($theme);
 }
 
-// .default-theme {
-//   @include angular-material-theme($bkc-theme);
-//   @include custom-components-theme($bkc-theme);
-// }
+@import './themes/bkc-dark-theme';
 
-// .light-theme {
-//   @include angular-material-theme($bkc-light-theme);
-//   @include custom-components-theme($bkc-light-theme);
-// }
+@include angular-material-theme($bkc-dark-theme);
+@include custom-components-color($bkc-dark-theme);
 
-.dark-theme {
-  @include angular-material-theme($bkc-dark-theme);
-  @include custom-components-theme($bkc-dark-theme);
+@import './themes/bkc-light-theme';
+
+.light-theme {
+  @include angular-material-color($bkc-light-theme);
+  @include custom-components-color($bkc-light-theme);
 }
 
 html, body {
