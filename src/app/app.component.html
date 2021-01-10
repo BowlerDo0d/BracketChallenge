@@ -1,23 +1,20 @@
 <div>
 
-  <mat-toolbar class="example-header">Header</mat-toolbar>
+  <bkc-header></bkc-header>
 
-  <mat-sidenav-container class="example-container">
-    <mat-sidenav #sidenav mode="side" opened class="example-sidenav">
-      <a href="" routerLink="/admin">Admin</a>
-    </mat-sidenav>
+  <mat-sidenav-container>
 
     <mat-sidenav-content>
-      <button mat-button (click)="sidenav.toggle()">Toggle</button>
 
       <div class="mat-elevation-z2">
         <router-outlet></router-outlet>
       </div>
 
     </mat-sidenav-content>
+
   </mat-sidenav-container>
 
-  <mat-toolbar class="example-footer">Footer</mat-toolbar>
+  <bkc-footer></bkc-footer>
 
 </div>
 

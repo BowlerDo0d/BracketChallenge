@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { CoreRoutingModule } from './core-routing.module';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
@@ -12,8 +12,12 @@ import { HeaderComponent } from './header/header.component';
   ],
   imports: [
     CommonModule,
-    CoreRoutingModule
+    CoreRoutingModule,
+    MatToolbarModule
   ],
-  exports: []
+  exports: [
+    FooterComponent,
+    HeaderComponent
+  ]
 })
 export class CoreModule { }

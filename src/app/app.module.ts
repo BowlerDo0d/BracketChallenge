@@ -14,7 +14,6 @@ import { ScoreboardModule } from './modules/scoreboard/scoreboard.module';
 import { SharedModule } from './shared/shared.module';
 
 import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
@@ -34,8 +33,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     ScoreboardModule,
     // Delete these
     MatButtonModule,
-    MatSidenavModule,
-    MatToolbarModule
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]
