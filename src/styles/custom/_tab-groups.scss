@@ -1,0 +1,24 @@
+@import '~@angular/material/theming';
+
+@mixin bkc-material-tab-groups($theme) {
+
+  // $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+
+  .mat-tab-nav-bar.mat-primary,
+  mat-tab-group {
+    border-bottom: 1px solid mat-color($background, background);
+
+    .mat-tab-link,
+    .mat-tab-label {
+      background-color: mat-color($mat-grey, 700);
+
+      &.mat-tab-label-active {
+        background-color: initial;
+        color: mat-color($accent, A400);
+        opacity: 1;
+      }
+    }
+  }
+}

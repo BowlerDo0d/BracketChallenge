@@ -1,20 +1,20 @@
 <div>
 
-  <bkc-header></bkc-header>
+  <mat-sidenav-container fullscreen>
 
-  <mat-sidenav-container>
+    <mat-sidenav-content class="screen-wrapper">
 
-    <mat-sidenav-content>
+      <bkc-header class="header"></bkc-header>
 
-      <div class="mat-elevation-z2">
+      <div class="content">
         <router-outlet></router-outlet>
       </div>
+
+      <bkc-footer class="footer"></bkc-footer>
 
     </mat-sidenav-content>
 
   </mat-sidenav-container>
-
-  <bkc-footer></bkc-footer>
 
 </div>
 

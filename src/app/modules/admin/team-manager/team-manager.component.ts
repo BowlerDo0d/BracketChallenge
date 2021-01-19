@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { map, switchMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { SORT_TYPES } from './team-manager.constants';
 import { TeamEditorComponent } from './team-editor/team-editor.component';
-import { MatTabChangeEvent } from '@angular/material/tabs';
 
 enum Fields {
   Conference = 'conference_full_name',
@@ -20,7 +20,9 @@ enum Fields {
 })
 export class TeamManagerComponent implements OnInit {
   readonly Fields = Fields;
+  readonly SORT_TYPES = SORT_TYPES;
 
+  activeSort: number = SORT_TYPES.DIVISION;
   field$: BehaviorSubject<Fields>;
   teams$: Observable<ITeam[]>;
 
@@ -48,12 +50,14 @@ export class TeamManagerComponent implements OnInit {
     });
   }
 
-  changeView(evt: MatTabChangeEvent): void {
-    switch (evt.index) {
-      case 0:
+  changeSort(newSort: number): void {
+    this.activeSort = newSort;
+
+    switch (newSort) {
+      case SORT_TYPES.DIVISION:
         this.field$.next(Fields.Division);
         break;
-      case 1:
+      case SORT_TYPES.CONFERENCE:
         this.field$.next(Fields.Conference);
         break;
       default:
@@ -76,6 +80,17 @@ export class TeamManagerComponent implements OnInit {
     return (team.location && team.name) ?
       `${team.location.replace(/\s/g, '-').toLowerCase()}-${team.name.replace(/\s/g, '-').toLowerCase()}` :
       null;
+  }
+
+  showDivider(team: ITeam, nextTeam: ITeam, last: boolean): boolean {
+    switch (this.field$.value) {
+      case Fields.Division:
+        return team && nextTeam && team.division === nextTeam.division;
+      case Fields.Conference:
+        return team && nextTeam && team.conference === nextTeam.conference;
+      default:
+        return !last;
+    }
   }
 
   trackByKey(index: number, item: ITeam) {

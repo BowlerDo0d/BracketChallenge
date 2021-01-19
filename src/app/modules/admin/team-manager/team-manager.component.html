@@ -1,16 +1,21 @@
 <div class="team-manager">
-  <!-- <button mat-mini-fab type="button" color="primary" (click)="addTeam()"><mat-icon>add</mat-icon></button> -->
 
-  <mat-tab-group mat-stretch-tabs dynamicHeight (selectedTabChange)="changeView($event)">
-    <mat-tab label="Division"></mat-tab>
-    <mat-tab label="Conference"></mat-tab>
-    <mat-tab label="Overall"></mat-tab>
-  </mat-tab-group>
+  <div class="button-group">
+    <button mat-flat-button color="accent" *ngIf="activeSort === SORT_TYPES.DIVISION">Division</button>
+    <button mat-stroked-button color="accent" *ngIf="activeSort !== SORT_TYPES.DIVISION" (click)="changeSort(SORT_TYPES.DIVISION)">Division</button>
+    <button mat-flat-button color="accent" *ngIf="activeSort === SORT_TYPES.CONFERENCE">Conference</button>
+    <button mat-stroked-button color="accent" *ngIf="activeSort !== SORT_TYPES.CONFERENCE" (click)="changeSort(SORT_TYPES.CONFERENCE)">Conference</button>
+    <button mat-flat-button color="accent" *ngIf="activeSort === SORT_TYPES.OVERALL">Overall</button>
+    <button mat-stroked-button color="accent" *ngIf="activeSort !== SORT_TYPES.OVERALL" (click)="changeSort(SORT_TYPES.OVERALL)">Overall</button>
+  </div>
 
-  <div *ngFor="let team of (teams$ | async) as teams; let index = index; trackBy: trackByKey">
-    <div *ngIf="(field$ | async) !== Fields.Overall && (index === 0 || teams[index-1].conference !== team.conference)">{{ team.conference }}</div>
-    <div *ngIf="(field$ | async) === Fields.Division && (index === 0 || teams[index-1].division !== team.division)">{{ team.division }}</div>
-    <div class="team mat-elevation-z1">
+  <button mat-icon-button color="primary" class="add-button" (click)="addTeam()"><mat-icon>playlist_add</mat-icon></button>
+
+  <div *ngFor="let team of (teams$ | async) as teams; let index = index; let last = last; trackBy: trackByKey">
+    <div class="section-label conference" [ngClass]="{'min-height' : (field$ | async) !== Fields.Division}" *ngIf="(field$ | async) !== Fields.Overall && (index === 0 || teams[index-1].conference !== team.conference)">{{ team.conference }} Conference</div>
+    <div class="section-label" *ngIf="(field$ | async) === Fields.Division && (index === 0 || teams[index-1].division !== team.division)">{{ team.division }} Division</div>
+    <div class="section-label overall" [ngClass]="{'min-height' : (field$ | async) !== Fields.Division}" *ngIf="(field$ | async) === Fields.Overall && index === 0">All Teams</div>
+    <div class="team" [ngClass]="{'team-divider': showDivider(team, teams[index+1], last)}">
       <div class="logo">
         <svg-icon [name]="logoName(team)" [iconSize]="40"></svg-icon>
       </div>

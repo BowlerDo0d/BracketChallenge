@@ -1,14 +1,33 @@
 .team-manager{
-  .mat-tab-labels {
-    .mat-tab-label-active {
-      .mat-tab-label-content {
-        // border: 1px solid;
+
+  .button-group {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem 0;
+
+    button {
+      flex: 1;
+      margin: 0 0.5rem;
+    }
+  }
+
+  .section-label {
+    padding: 0.25rem;
+
+    &.conference,
+    &.overall {
+      font-size: 1rem;
+
+      &.min-height {
+        line-height: 2.5rem;
       }
     }
   }
 
-  .mat-ink-bar {
-    display: none;
+  .add-button {
+    position: absolute;
+    right: 0.5rem;
+    font-weight: 700;
   }
 
   .abbreviation {
@@ -47,5 +66,10 @@
     grid-template-rows: auto;
     grid-template-areas: "logo abbreviation location team-name edit-button";
     padding: 0.5rem 0;
+    background-color: #353535;
+
+    &.team-divider {
+      border-bottom: 1px dotted #606060;
+    }
   }
 }
