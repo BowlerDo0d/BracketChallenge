@@ -1,1 +1,30 @@
-<mat-toolbar>Header <a href="" routerLink="/admin">Admin</a></mat-toolbar>
+<mat-toolbar class="bkc-header">
+  <span class="title" routerLink="/">
+    Bracket<span>Challenge</span>
+  </span>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button [matMenuTriggerFor]="userMenu">
+    <mat-icon>perm_identity</mat-icon>
+  </button>
+  <mat-menu #userMenu="matMenu">
+    <span mat-menu-item [disableRipple]="true" (click)="$event.stopPropagation()">longer_username@email.com</span>
+    <button mat-menu-item>
+      <mat-icon svgIcon="bracket"></mat-icon>
+      <span>My Brackets</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>settings</mat-icon>
+      <span>Preferences</span>
+    </button>
+    <button mat-menu-item routerLink="/admin">
+      <mat-icon>construction</mat-icon>
+      <span>Admin</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>logout</mat-icon>
+      <span>Sign Out</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>

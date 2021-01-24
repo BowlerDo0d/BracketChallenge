@@ -10,6 +10,7 @@
 @import 'partials/form-fields';
 @import 'partials/snackbars';
 
+@import 'custom/bkc-header';
 @import 'custom/tab-groups';
 
 @import '~@angular/material/theming';
@@ -23,6 +24,7 @@ $bkc-typography: mat-typography-config(
 
 @mixin custom-components-color($theme) {
   @include bkc-material-tab-groups($theme);
+  @include bkc-header($theme);
 }
 
 @import './themes/bkc-dark-theme';

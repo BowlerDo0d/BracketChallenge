@@ -1,0 +1,14 @@
+@import '~@angular/material/theming';
+
+@mixin bkc-header($theme) {
+
+  $primary: map-get($theme, primary);
+
+  .bkc-header {
+    .title {
+      span {
+        color: mat-color($primary);
+      }
+    }
+  }
+}
