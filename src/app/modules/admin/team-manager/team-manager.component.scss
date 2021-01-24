@@ -14,9 +14,14 @@
   .section-label {
     padding: 0.25rem;
 
+    &.division {
+      padding-left: 15px;
+    }
+
     &.conference,
     &.overall {
       font-size: 1rem;
+      padding-left: 10px;
 
       &.min-height {
         line-height: 2.5rem;

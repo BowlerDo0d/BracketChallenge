@@ -13,7 +13,7 @@
 
   <div *ngFor="let team of (teams$ | async) as teams; let index = index; let last = last; trackBy: trackByKey">
     <div class="section-label conference" [ngClass]="{'min-height' : (field$ | async) !== Fields.Division}" *ngIf="(field$ | async) !== Fields.Overall && (index === 0 || teams[index-1].conference !== team.conference)">{{ team.conference }} Conference</div>
-    <div class="section-label" *ngIf="(field$ | async) === Fields.Division && (index === 0 || teams[index-1].division !== team.division)">{{ team.division }} Division</div>
+    <div class="section-label division" *ngIf="(field$ | async) === Fields.Division && (index === 0 || teams[index-1].division !== team.division)">{{ team.division }} Division</div>
     <div class="section-label overall" [ngClass]="{'min-height' : (field$ | async) !== Fields.Division}" *ngIf="(field$ | async) === Fields.Overall && index === 0">All Teams</div>
     <div class="team" [ngClass]="{'team-divider': showDivider(team, teams[index+1], last)}">
       <div class="logo">

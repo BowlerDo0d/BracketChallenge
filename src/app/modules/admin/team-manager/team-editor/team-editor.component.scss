@@ -3,6 +3,10 @@
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
 
+mat-dialog-content {
+  max-height: initial;
+}
+
 .form-field {
   &.logo {
     text-align: center;
