@@ -39,7 +39,7 @@ export class TeamEditorComponent implements OnInit {
       location: new FormControl(null, Validators.required),
       name: new FormControl(null, Validators.required),
       nickname: new FormControl()
-    });
+    }, { updateOn: 'blur' });
 
     this.teamFormGroup.get('division').valueChanges.subscribe((newValue) => {
       const conferenceField = this.teamFormGroup.get('conference');
@@ -58,8 +58,20 @@ export class TeamEditorComponent implements OnInit {
       });
     });
 
+    this.teamFormGroup.get('location').valueChanges.subscribe((newValue) => {
+      this.teamFormGroup.get('location').setValue(newValue.trim(), { emitEvent: false });
+    });
+
+    this.teamFormGroup.get('name').valueChanges.subscribe((newValue) => {
+      this.teamFormGroup.get('name').setValue(newValue.trim(), { emitEvent: false });
+    });
+
+    this.teamFormGroup.get('nickname').valueChanges.subscribe((newValue) => {
+      this.teamFormGroup.get('nickname').setValue(newValue.trim(), { emitEvent: false });
+    });
+
     this.teamFormGroup.get('abbreviation').valueChanges.subscribe((newValue) => {
-      this.teamFormGroup.get('abbreviation').setValue(newValue.toUpperCase(), { emitEvent: false });
+      this.teamFormGroup.get('abbreviation').setValue(newValue.trim().toUpperCase(), { emitEvent: false });
     });
 
     if (this.dialogData) {
