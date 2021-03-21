@@ -5,26 +5,34 @@
 
   <span class="spacer"></span>
 
-  <button mat-icon-button [matMenuTriggerFor]="userMenu">
-    <mat-icon>perm_identity</mat-icon>
-  </button>
-  <mat-menu #userMenu="matMenu">
-    <span mat-menu-item [disableRipple]="true" (click)="$event.stopPropagation()">longer_username@email.com</span>
-    <button mat-menu-item>
-      <mat-icon svgIcon="bracket"></mat-icon>
-      <span>My Brackets</span>
+  <ng-container *ngIf="isAuthenticated()">
+    <button mat-icon-button [matMenuTriggerFor]="userMenu">
+      <mat-icon>perm_identity</mat-icon>
     </button>
-    <button mat-menu-item>
-      <mat-icon>settings</mat-icon>
-      <span>Preferences</span>
+    <mat-menu #userMenu="matMenu">
+      <span mat-menu-item [disableRipple]="true" (click)="$event.stopPropagation()">{{ username }}</span>
+      <button mat-menu-item>
+        <mat-icon svgIcon="bracket"></mat-icon>
+        <span>My Brackets</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>Preferences</span>
+      </button>
+      <button *ngIf="isAdmin()" mat-menu-item routerLink="/admin">
+        <mat-icon>construction</mat-icon>
+        <span>Admin</span>
+      </button>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Sign Out</span>
+      </button>
+    </mat-menu>
+  </ng-container>
+
+  <ng-container *ngIf="!isAuthenticated() && !isCheckingForAuth()">
+    <button mat-stroked-button routerLink="/login">
+      Sign In
     </button>
-    <button mat-menu-item routerLink="/admin">
-      <mat-icon>construction</mat-icon>
-      <span>Admin</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>logout</mat-icon>
-      <span>Sign Out</span>
-    </button>
-  </mat-menu>
+  </ng-container>
 </mat-toolbar>

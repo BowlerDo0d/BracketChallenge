@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminComponent } from './admin.component';
+import { AdminGuard } from './admin-guard.service';
 import { AdminRoutingModule } from './admin-routing.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -28,6 +29,7 @@ import { TeamEditorComponent } from './team-manager/team-editor/team-editor.comp
     MatTabsModule,
     SharedModule,
     AdminRoutingModule
-  ]
+  ],
+  providers: [AdminGuard]
 })
 export class AdminModule { }

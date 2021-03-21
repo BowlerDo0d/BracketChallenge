@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 import { AdminModule } from './modules/admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AuthModule } from './modules/auth/auth.module';
 import { CoreModule } from './core/core.module';
 import { ScoreboardModule } from './modules/scoreboard/scoreboard.module';
 import { SharedModule } from './shared/shared.module';
@@ -28,6 +29,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     AngularFireDatabaseModule,
     AppRoutingModule,
     AdminModule,
+    AuthModule,
     CoreModule,
     SharedModule,
     ScoreboardModule,

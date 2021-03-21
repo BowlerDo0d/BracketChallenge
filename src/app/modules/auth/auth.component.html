@@ -1,0 +1,50 @@
+<div class="bkc-alert" [ngClass]="formError.type" *ngIf="formError.show" role="alert">
+  <div>
+    <mat-icon>{{ formError.icon }}</mat-icon>
+    <span>{{ formError.message }}</span>
+  </div>
+  <button mat-icon-button class="close" (click)="dismissAlert()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div class="login-form">
+  <form [formGroup]="authForm" (ngSubmit)="submitAuthForm()">
+    <div class="username">
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput type="email" formControlName="username" placeholder="Ex. name@example.com" autocomplete="off" spellcheck="false" autocorrect="off" />
+      </mat-form-field>
+    </div>
+
+    <div class="password">
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" autocomplete="off" spellcheck="false" autocorrect="off" />
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="showRegistration">
+      <mat-form-field appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput type="password" formControlName="passwordConfirm" autocomplete="off" spellcheck="false" autocorrect="off" />
+      </mat-form-field>
+    </div>
+
+    <div class="buttons">
+      <button mat-raised-button type="button" (click)="cancel()">Cancel</button>
+      <button mat-raised-button type="submit" color="primary" [disabled]="!authForm.valid">{{ showRegistration ? 'Register' : 'Login' }}</button>
+    </div>
+
+    <div class="new-user-toggle">
+      <button mat-button type="button" (click)="toggleRegistration()">{{ showRegistration ? 'Already Registered?' : 'New User?' }}</button>
+    </div>
+
+    <div class="google-login">
+      <button mat-button type="button" class="google" (click)="loginWithGoogle()">
+        <span class="google-logo"></span>
+        <span class="google-text">Sign in with Google</span>
+      </button>
+    </div>
+  </form>
+</div>

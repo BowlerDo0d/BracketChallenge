@@ -1,13 +1,15 @@
-export class FormError {
+export class FormMessage {
   private _icon: string;
   private _message: string;
   private _show: boolean;
   private _type: string;
 
-  constructor(icon: string = 'fa-exclamation-triangle',
+  constructor(
+    icon: string = 'error',
     message: string = 'Oh snap!',
     show: boolean = false,
-    type: string = 'alert-danger') {
+    type: string = 'error'
+  ) {
     this._icon = icon;
     this._message = message;
     this._show = show;
@@ -18,28 +20,28 @@ export class FormError {
     return this._icon;
   }
 
-  get message(): string {
-    return this._message;
-  }
-
-  get show(): boolean {
-    return this._show;
-  }
-
-  get type(): string {
-    return this._type;
-  }
-
   set icon(icon: string) {
     this._icon = icon;
+  }
+
+  get message(): string {
+    return this._message;
   }
 
   set message(message: string) {
     this._message = message;
   }
 
+  get show(): boolean {
+    return this._show;
+  }
+
   set show(show: boolean) {
     this._show = show;
+  }
+
+  get type(): string {
+    return this._type;
   }
 
   set type(type: string) {

@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AuthService } from 'src/app/modules/auth/auth.service';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'bkc-header',
@@ -8,9 +10,15 @@ import { MatIconRegistry } from '@angular/material/icon';
   styleUrls: ['./header.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  username: string;
+  userSubscription: Subscription;
 
-  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
+  constructor(
+    private authService: AuthService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
     this.matIconRegistry.addSvgIcon(
       'bracket',
       this.domSanitizer.bypassSecurityTrustResourceUrl('../../../assets/bracket.svg')
@@ -18,6 +26,30 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userSubscription = this.authService.userChanged.subscribe((user: string) => {
+      this.username = user;
+    });
+
+    this.username = this.authService.getUsername();
   }
 
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+  }
+
+  isAdmin() {
+    return this.authService.isAdmin();
+  }
+
+  isAuthenticated() {
+    return this.authService.isAuthenticated();
+  }
+
+  isCheckingForAuth() {
+    return this.authService.isCheckingForAuth();
+  }
+
+  logout() {
+    this.authService.logout();
+  }
 }
