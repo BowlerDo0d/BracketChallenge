@@ -1,0 +1,22 @@
+@import '~@angular/material/theming';
+@import '../palettes/bkc-gray';
+
+@mixin bkc-scoreboard($theme) {
+
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+
+  .bkc-scoreboard {
+    .header-row {
+      font-size: 0.65rem;
+      background-color: mat-color($bkc-gray, 800);
+      color: white;
+    }
+
+    .cash-line {
+      border-bottom-style: dashed;
+      border-bottom-color: mat-color($warn);
+    }
+  }
+}

@@ -1,0 +1,29 @@
+@import '~@angular/material/theming';
+
+@mixin bkc-bracket-card($theme) {
+
+  $primary: map-get($theme, primary);
+
+  .bkc-bracket-card {
+    font-size: 0.75rem;
+
+    .rank {
+      font-size: 1.25em;
+    }
+
+    .score {
+      font-size: 1.75em;
+    }
+
+    .content {
+      .bracket-name {
+        font-size: 1.25em;
+      }
+
+      .bracket-owner {
+        font-style: italic;
+        color: mat-color($primary, 300);
+      }
+    }
+  }
+}

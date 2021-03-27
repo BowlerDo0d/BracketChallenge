@@ -3,6 +3,7 @@ import { BracketCardComponent } from './bracket-card/bracket-card.component';
 import { ScoreboardComponent } from './scoreboard.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { StickyDirectiveModule } from 'ngx-sticky-directive';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    StickyDirectiveModule
   ],
   providers: [],
   exports: [ScoreboardComponent]

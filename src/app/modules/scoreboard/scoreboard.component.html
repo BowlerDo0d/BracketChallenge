@@ -1,27 +1,20 @@
-<div class="scoreboard">
+<div class="bkc-scoreboard" #scContainer>
 
-  <div class="header-row container-fluid">
+  <div class="header-row container-fluid" ngxSticky [triggerOn]="brackets" [scrollContainer]="scContainer">
     <div class="row align-items-center">
-      <div class="col text-center p-0">Pos.</div>
-      <div class="col-10 p-0 pl-2">
-        <div class="col p-0">Bracket Name</div>
-        <div class="w-100"></div>
-        <div class="col p-0">Owner</div>
-      </div>
-      <div class="col-6 text-center">Cup Champs</div>
+      <div class="col text-center p-0">Rank</div>
+      <div class="col-10 p-0 pl-2">Bracket</div>
+      <div class="col-6 text-center">Champs</div>
       <div class="col text-center p-0">Score</div>
     </div>
   </div>
 
-  <div *ngFor="let bracket of brackets$ | async; let index = index; trackBy: trackByKey">
-    <bracket-card
-      [bracket]="bracket"
-      [position]="index + 1">
-    </bracket-card>
-    <div class="cash-line my-2" *ngIf="index === cashLine"></div>
+  <div #brackets>
+    <div *ngFor="let bracket of brackets$ | async; let index = index; trackBy: trackByKey" [ngClass]="{'cash-line': index === cashLine}">
+      <bracket-card
+        [bracket]="bracket"
+        [rank]="index + 1">
+      </bracket-card>
+    </div>
   </div>
-</div>
-
-<div>
-  <a href="" data-toggle="modal" data-target="#pointsModal">How do I earn points?</a>
 </div>

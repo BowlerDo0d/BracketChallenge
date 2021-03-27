@@ -5,9 +5,17 @@
   $primary: map-get($theme, primary);
 
   .bkc-header {
+    .spacer {
+      flex: 1 1 auto;
+    }
+
+    .mat-menu-item[disabled] {
+      color: default;
+    }
+
     .title {
       span {
-        color: mat-color($primary);
+        color: mat-color($primary, 400);
       }
     }
   }

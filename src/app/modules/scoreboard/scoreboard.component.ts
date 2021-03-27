@@ -6,8 +6,7 @@ import { sortBracketsByScore } from 'src/app/core/helpers/sort-brackets-by-score
 
 @Component({
   selector: 'scoreboard',
-  templateUrl: './scoreboard.component.html',
-  styleUrls: ['./scoreboard.component.scss']
+  templateUrl: './scoreboard.component.html'
 })
 export class ScoreboardComponent implements OnInit {
   brackets$: Observable<IBracket[]>;
@@ -16,7 +15,7 @@ export class ScoreboardComponent implements OnInit {
   constructor(private db: AngularFireDatabase) { }
 
   ngOnInit(): void {
-    const currentYear = (new Date()).getFullYear();
+    const currentYear = '2020'; // (new Date()).getFullYear();
 
     this.brackets$ = this.db.list<IBracket>(`${currentYear}/scoreboard`).snapshotChanges()
       .pipe(

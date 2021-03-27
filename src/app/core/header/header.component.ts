@@ -6,9 +6,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'bkc-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   username: string;
