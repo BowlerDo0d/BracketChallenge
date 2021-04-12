@@ -1,1 +1,11 @@
-<mat-toolbar>Footer</mat-toolbar>
+<mat-toolbar class="bkc-footer">
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link *ngFor="let item of menuItems"
+       (click)="activeLink = item"
+       [active]="activeLink == item"
+       [routerLink]="item.link">
+       <mat-icon>{{ item.icon }}</mat-icon>
+       <span>{{ item.label }}</span>
+    </a>
+  </nav>
+</mat-toolbar>

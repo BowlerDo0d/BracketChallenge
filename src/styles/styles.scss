@@ -12,6 +12,7 @@
 
 @import 'custom/bkc-alert';
 @import 'custom/bkc-bracket-card';
+@import 'custom/bkc-footer';
 @import 'custom/bkc-header';
 @import 'custom/bkc-scoreboard';
 @import 'custom/tab-groups';
@@ -28,6 +29,7 @@ $bkc-typography: mat-typography-config(
 @mixin custom-components-color($theme) {
   @include bkc-alert($theme);
   @include bkc-bracket-card($theme);
+  @include bkc-footer($theme);
   @include bkc-header($theme);
   @include bkc-scoreboard($theme);
   @include bkc-material-tab-groups($theme);

@@ -1,0 +1,43 @@
+@import '~@angular/material/theming';
+@import '../palettes/bkc-gray';
+
+@mixin bkc-footer($theme) {
+
+  $primary: map-get($theme, primary);
+
+  .bkc-footer {
+    &.mat-toolbar {
+      padding: 0;
+    }
+
+    nav {
+      width: 100%;
+      height: auto;
+
+      a {
+        background-color: initial !important;
+        display: block;
+        flex: 1;
+        text-align: center;
+        font-size: 0.75rem;
+        border-right: 1px solid mat-color($bkc-gray, 700);
+
+        &:last-of-type {
+          border-right: none;
+        }
+
+        mat-icon {
+          display: block;
+          padding-top: 8px;
+          font-size: 16px;
+          width: auto;
+          height: 16px;
+        }
+
+        span {
+          display: block;
+        }
+      }
+    }
+  }
+}
