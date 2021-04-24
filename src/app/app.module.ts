@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { NgModule } from '@angular/core';
 
+import { AboutModule } from './modules/about/about.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,6 +36,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     SharedModule,
     ScoreboardModule,
     HelpModule,
+    AboutModule,
     // Delete these
     MatButtonModule,
     MatSidenavModule
