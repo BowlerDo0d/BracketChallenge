@@ -6,7 +6,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { CoreRoutingModule } from './core-routing.module';
+import { RouterModule } from '@angular/router';
+
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 
@@ -17,7 +18,7 @@ import { HeaderComponent } from './header/header.component';
   ],
   imports: [
     CommonModule,
-    CoreRoutingModule,
+    RouterModule,
     HttpClientModule,
     MatButtonModule,
     MatIconModule,
