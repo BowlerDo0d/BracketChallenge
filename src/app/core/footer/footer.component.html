@@ -4,7 +4,8 @@
        (click)="activeLink = item"
        [active]="activeLink == item"
        [routerLink]="item.link">
-       <mat-icon>{{ item.icon }}</mat-icon>
+       <mat-icon *ngIf="!item.custom">{{ item.icon }}</mat-icon>
+       <mat-icon *ngIf="item.custom" class="custom" [svgIcon]="item.icon"></mat-icon>
        <span>{{ item.label }}</span>
     </a>
   </nav>

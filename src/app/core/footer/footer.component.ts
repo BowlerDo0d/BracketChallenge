@@ -4,9 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'bkc-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  templateUrl: './footer.component.html'
 })
 export class FooterComponent implements OnInit {
   activeLink: IMenuItem;
@@ -20,13 +18,14 @@ export class FooterComponent implements OnInit {
       label: 'Scores',
       link: '/scoreboard'
     }, {
+      custom: true,
+      icon: 'bracket',
+      label: 'Brackets',
+      link: '/mybrackets'
+    }, {
       icon: 'help_center',
       label: 'Help',
       link: '/help'
-    }, {
-      icon: 'fingerprint',
-      label: 'Scan',
-      link: '/scan'
     }, {
       icon: 'info',
       label: 'About',
