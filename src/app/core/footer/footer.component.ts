@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { filter } from 'rxjs/operators';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'bkc-footer',
@@ -10,7 +12,7 @@ export class FooterComponent implements OnInit {
   activeLink: IMenuItem;
   menuItems: IMenuItem[];
 
-  constructor() { }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.menuItems = [{
@@ -20,17 +22,25 @@ export class FooterComponent implements OnInit {
     }, {
       icon: 'help_center',
       label: 'Help',
-      link: ''
+      link: '/help'
     }, {
       icon: 'fingerprint',
       label: 'Scan',
-      link: ''
+      link: '/scan'
     }, {
       icon: 'info',
       label: 'About',
-      link: ''
+      link: '/about'
     }];
 
-    this.activeLink = this.menuItems[0];
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe({
+      next: (event: NavigationEnd) => {
+        this.menuItems.forEach((item) => {
+          if (event.url.indexOf(item.link) !== -1) {
+            this.activeLink = item;
+          }
+        });
+      }
+    });
   }
 }

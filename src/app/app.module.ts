@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { CoreModule } from './core/core.module';
+import { HelpModule } from './modules/help/help.module';
 import { ScoreboardModule } from './modules/scoreboard/scoreboard.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -33,6 +34,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     CoreModule,
     SharedModule,
     ScoreboardModule,
+    HelpModule,
     // Delete these
     MatButtonModule,
     MatSidenavModule
