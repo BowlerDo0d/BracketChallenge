@@ -23,16 +23,14 @@ module.exports = {
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
+        "project": "./tsconfig.json",
         "sourceType": "module"
     },
     "plugins": [
         "eslint-plugin-import",
         "@angular-eslint/eslint-plugin",
         "eslint-plugin-jsdoc",
-        "@angular-eslint/eslint-plugin-template",
-        "eslint-plugin-prefer-arrow",
-        "@typescript-eslint",
-        "@typescript-eslint/tslint"
+        "eslint-plugin-prefer-arrow"
     ],
     "rules": {
         "@angular-eslint/component-class-suffix": "error",
@@ -62,8 +60,6 @@ module.exports = {
         "@angular-eslint/no-output-on-prefix": "error",
         "@angular-eslint/no-output-rename": "error",
         "@angular-eslint/no-outputs-metadata-property": "error",
-        "@angular-eslint/template/banana-in-box": "error",
-        "@angular-eslint/template/no-negated-async": "error",
         "@angular-eslint/use-lifecycle-interface": "error",
         "@angular-eslint/use-pipe-transform-interface": "error",
         "@typescript-eslint/adjacent-overload-signatures": "error",
@@ -95,6 +91,12 @@ module.exports = {
         ],
         "@typescript-eslint/consistent-type-assertions": "error",
         "@typescript-eslint/dot-notation": "error",
+        "@typescript-eslint/explicit-function-return-type": [
+            "error",
+            {
+                "allowExpressions": true
+            }
+        ],
         "@typescript-eslint/explicit-member-accessibility": [
             "off",
             {
@@ -103,7 +105,7 @@ module.exports = {
         ],
         "@typescript-eslint/indent": [
             "error",
-            4,
+            2,
             {
                 "FunctionDeclaration": {
                     "parameters": "first"
@@ -130,13 +132,9 @@ module.exports = {
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-empty-interface": "error",
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/no-inferrable-types": [
-            "error",
-            {
-                "ignoreParameters": true
-            }
-        ],
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-misused-new": "error",
         "@typescript-eslint/no-namespace": "error",
         "@typescript-eslint/no-non-null-assertion": "error",
@@ -170,6 +168,7 @@ module.exports = {
             }
         ],
         "@typescript-eslint/type-annotation-spacing": "error",
+        "@typescript-eslint/unbound-method": "off",
         "@typescript-eslint/unified-signatures": "error",
         "arrow-body-style": "error",
         "arrow-parens": [
@@ -290,23 +289,6 @@ module.exports = {
             }
         ],
         "use-isnan": "error",
-        "valid-typeof": "off",
-        "@typescript-eslint/tslint/config": [
-            "error",
-            {
-                "rules": {
-                    "import-spacing": true,
-                    "whitespace": [
-                        true,
-                        "check-branch",
-                        "check-decl",
-                        "check-operator",
-                        "check-separator",
-                        "check-type",
-                        "check-typecast"
-                    ]
-                }
-            }
-        ]
+        "valid-typeof": "off"
     }
 };
