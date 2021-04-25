@@ -21,7 +21,7 @@ export class FooterComponent implements OnInit {
       custom: true,
       icon: 'bracket',
       label: 'Brackets',
-      link: '/mybrackets'
+      link: '/profile/my-brackets'
     }, {
       icon: 'help_center',
       label: 'Help',
@@ -34,8 +34,10 @@ export class FooterComponent implements OnInit {
 
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe({
       next: (event: NavigationEnd) => {
+        this.activeLink = null;
+
         this.menuItems.forEach((item) => {
-          if (event.url.indexOf(item.link) !== -1) {
+          if (event.url.indexOf(item.link) !== -1 || event.urlAfterRedirects.indexOf(item.link) !== -1) {
             this.activeLink = item;
           }
         });

@@ -11,11 +11,11 @@
     </button>
     <mat-menu #userMenu="matMenu">
       <span mat-menu-item [disableRipple]="true" (click)="$event.stopPropagation()">{{ username }}</span>
-      <button mat-menu-item>
+      <button mat-menu-item routerLink="/profile/my-brackets">
         <mat-icon svgIcon="bracket"></mat-icon>
         <span>My Brackets</span>
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item routerLink="/profile/preferences">
         <mat-icon>settings</mat-icon>
         <span>Preferences</span>
       </button>
