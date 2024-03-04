@@ -1,0 +1,25 @@
+nav {
+    .user-info {
+      color: white;
+      font-size: 0.75rem;
+  
+      .username {
+        display: block;
+      }
+  
+      button {
+       color: cornflowerblue;
+      }
+    }
+  
+    // @include media-breakpoint-only(xs) {
+    //   .container {
+    //     padding: 0;
+    //   }
+  
+    //   .navbar-brand {
+    //     font-size: 1rem;
+    //   }
+    // }
+  }
+  
