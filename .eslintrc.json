@@ -31,7 +31,8 @@
             "style": "kebab-case"
           }
         ],
-        "comma-dangle": ["error", "never"]
+        "comma-dangle": ["error", "never"],
+        "@typescript-eslint/no-explicit-any": ["warn"]
       }
     },
     {
