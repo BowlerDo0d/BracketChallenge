@@ -13,6 +13,10 @@ export class AuthService {
     return 'fake';
   }
 
+  isAdmin(): boolean {
+    return true;
+  }
+
   isAuthenticated(): boolean {
     return true;
   }
