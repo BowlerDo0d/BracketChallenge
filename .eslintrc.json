@@ -14,6 +14,9 @@
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
+      "plugins": [
+        "sort-imports-es6-autofix"
+      ],
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",
@@ -32,6 +35,14 @@
           }
         ],
         "comma-dangle": ["error", "never"],
+        "sort-imports-es6-autofix/sort-imports-es6": [
+          "error",
+          {
+              "ignoreCase": true,
+              "ignoreMemberSort": false,
+              "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+          }
+        ],
         "@typescript-eslint/no-explicit-any": ["warn"]
       }
     },
