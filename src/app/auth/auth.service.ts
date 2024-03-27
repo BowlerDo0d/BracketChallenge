@@ -1,29 +1,91 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithRedirect,
+  User,
+  user
+} from '@angular/fire/auth';
+import { inject, Injectable, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthService {
-  userChanged: Subject<string> = new Subject<string>();
+@Injectable()
+export class AuthService implements OnDestroy {
+  private afAuth: Auth = inject(Auth);
+  private router: Router = inject(Router);
+  private _username: string | null = null;
 
-  constructor() {}
+  adminUsers: Array<string>;
+  isAdministrator: boolean = false;
+  checkingForAuth = false;
+  googleProvider = new GoogleAuthProvider();
+  user$ = user(this.afAuth);
+  userSubscription: Subscription;
 
-  getUsername(): string {
-    return 'fake';
+  constructor() {
+    this.adminUsers = [
+      'smahony22@gmail.com',
+      'smahony39@gmail.com'
+    ];
+    this.checkingForAuth = true;
+
+    this.userSubscription = this.user$.subscribe((authUser: User | null) => {
+      console.log(authUser);
+
+      if (authUser?.email) {
+        this._username = authUser.email;
+        this.setAdmin();
+      }
+
+      this.checkingForAuth = false;
+    });
   }
 
-  isAdmin(): boolean {
-    return true;
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
   }
 
-  isAuthenticated(): boolean {
-    return true;
+  get username() {
+    return this._username;
   }
 
-  isCheckingForAuth(): boolean {
-    return false;
+  isAdmin() {
+    return this.isAdministrator;
   }
 
-  logout(): void {}
+  isAuthenticated() {
+    return this._username != null;
+  }
+
+  isCheckingForAuth() {
+    return this.checkingForAuth;
+  }
+
+  login(username: string, password: string) {
+    return signInWithEmailAndPassword(this.afAuth, username, password).then((userCredentials) => {
+      this._username = userCredentials.user.email;
+      this.setAdmin();
+      this.router.navigate(['/']);
+    });
+  }
+
+  loginWithGoogle() {
+    signInWithRedirect(this.afAuth, this.googleProvider);
+  }
+
+  logout() {
+    this.afAuth.signOut();
+    this._username = null;
+    this.router.navigate(['/']);
+  }
+
+  registerUser(email: string, password: string) {
+    return createUserWithEmailAndPassword(this.afAuth, email, password);
+  }
+
+  setAdmin() {
+    this.isAdministrator = this._username ? this.adminUsers.includes(this._username) : false;
+  }
 }
