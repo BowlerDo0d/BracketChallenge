@@ -11,7 +11,7 @@ import { inject, Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService implements OnDestroy {
   private afAuth: Auth = inject(Auth);
   private router: Router = inject(Router);
