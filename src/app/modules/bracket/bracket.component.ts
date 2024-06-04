@@ -8,6 +8,12 @@ import { take } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { KEYS } from 'src/app/constants/global.constants';
 
+declare enum ViewModes {
+  Create = 'CREATE',
+  Detail = 'DETAIL',
+  Edit = 'EDIT'
+}
+
 @Component({
   selector: 'app-bracket',
   templateUrl: './bracket.component.html',
