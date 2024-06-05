@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { authRoutes, routes } from './app.routes';
 import { FIREBASE_CONFIG } from './constants/firebase.constants';
 import { getAuth, provideAuth } from '@angular/fire/auth';
@@ -14,12 +14,8 @@ export const appConfig: ApplicationConfig = {
         onSameUrlNavigation: 'reload'
       })
     ),
-    importProvidersFrom(
-      provideFirebaseApp(
-        () => initializeApp(FIREBASE_CONFIG)
-      )
-    ),
-    importProvidersFrom(provideAuth(() => getAuth())),
-    importProvidersFrom(provideFirestore(() => getFirestore()))
+    provideFirebaseApp(() => initializeApp(FIREBASE_CONFIG)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore())
   ]
 };
