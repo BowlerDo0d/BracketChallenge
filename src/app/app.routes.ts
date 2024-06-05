@@ -5,6 +5,10 @@ import { ScoreboardComponent } from './components/scoreboard/scoreboard.componen
 
 export const routes: Routes = [
   { path: '', component: ScoreboardComponent }
+  // { path: 'bracket', component: BracketComponent },
+  // { path: 'bracket/:key', component: BracketComponent, children: [
+  //   { path: 'edit', component: BracketComponent }
+  // ], runGuardsAndResolvers: 'always' }
 ];
 
 export const authRoutes: Routes = [
