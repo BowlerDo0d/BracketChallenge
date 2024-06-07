@@ -1,6 +1,5 @@
 import { AuthService } from '../../../services/auth/auth.service';
 import { Component, inject } from '@angular/core';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormError } from '../../../models/formError.model';
@@ -28,7 +27,6 @@ export class AuthComponent {
     username: ['', [Validators.required]]
   });
 
-  faExclamationTriangle = faExclamationTriangle;
   formError: FormError = new FormError();
   showRegistration: boolean = false;
 

@@ -4,7 +4,7 @@
       @if (formError.show) {
         <div class="alert alert-dismissible" [ngClass]="formError.type" role="alert">
           <div>
-            <fa-icon class="me-2" [icon]="faExclamationTriangle"></fa-icon>
+            <fa-icon class="me-2" icon="exclamation-triangle"></fa-icon>
             <span>{{ formError.message }}</span>
           </div>
           <button type="button" class="btn-close" aria-label="Close" (click)="hideAlert()"></button>
