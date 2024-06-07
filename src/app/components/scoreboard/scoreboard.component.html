@@ -1,4 +1,170 @@
-@for (bracket of brackets$ | async; track bracket) {
-    <p>{{ bracket.name }}</p>
-}
-<p>Cash line: {{ cashLine }}</p>
+<div class="row mt-3">
+    <div class="col">
+        <h4>Scoreboard</h4>
+    </div>
+    <div class="col cash-info text-end text-secondary my-auto" [ngClass]="{ 'text-center d-none d-md-block' : !isPastDeadline() }">
+        Cash Ratio 1:5
+    </div>
+    @if (!isPastDeadline()) {
+        <div class="col text-end">
+            <button type="button" class="btn btn-primary create-btn" routerLink="/bracket" [disabled]="!isAuthenticated()">
+                <fa-icon class="pe-2" icon="plus" />Create Bracket
+            </button>
+            @if (!isAuthenticated()) {
+                <span class="loginMsg">Login to create a bracket</span>
+            }
+        </div>
+    }
+</div>
+<div class="row g-0 mt-4 d-md-none">
+    <div class="col">
+        <table class="table">
+            <thead class="table-secondary">
+                <tr class="d-flex">
+                    <th scope="col" class="col-1">#</th>
+                    <th scope="col" class="col-5">Bracket Name</th>
+                    <th scope="col" class="col-4">Owner</th>
+                    <th scope="col" class="col-2 text-center">Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (bracket of (brackets$ | async); track bracket) {
+                    <tr class="d-flex" [ngClass]="{ 'cash-line' : $index + 1 === cashLine }">
+                        <th class="col-1" scope="row" [innerText]="$index + 1"></th>
+                        <td class="col-5 text-truncate d-none d-md-flex">
+                            <a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a>
+                        </td>
+                        <td class="col-5 text-truncate d-flex d-md-none">
+                            <a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a>
+                        </td>
+                        <td class="col-4 text-truncate" [innerText]="bracket.owner.name"></td>
+                        <td class="col-2 text-center" [innerText]="bracket.score"></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Larger displays / more columns -->
+<div class="row g-0 mt-4 d-none d-md-block">
+    <div class="col">
+        <table class="table">
+            <thead class="table-secondary">
+                <tr class="d-flex">
+                    <th scope="col" class="col-1">#</th>
+                    <th scope="col" class="col-3">Bracket Name</th>
+                    <th scope="col" class="col-3">Owner</th>
+                    <th scope="col" class="col-1 text-center">Done</th>
+                    <th scope="col" class="col-1 text-center">Ties</th>
+                    <th scope="col" class="col-1 text-center">Paid</th>
+                    <th scope="col" class="col-2 text-center">Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (bracket of (brackets$ | async); track bracket) {
+                    <tr class="d-flex" [ngClass]="{ 'cash-line' : $index + 1 === cashLine }">
+                        <th class="col-1" scope="row" [innerText]="$index + 1"></th>
+                        <td class="col-3 text-truncate">
+                            <a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a>
+                        </td>
+                        <td class="col-3 text-truncate" [innerText]="bracket.owner.name"></td>
+                        <td class="col-1 text-center">
+                            @if (bracket.isComplete) {
+                                <fa-icon class="text-success" icon="check" />
+                            }
+                        </td>
+                        <td class="col-1 text-center">
+                            @if (bracket.isTiebreakerComplete) {
+                                <fa-icon class="text-success" [icon]="['far', 'square-check']" />
+                            }
+                        </td>
+                        <td class="col-1 text-center">
+                            @if (bracket.isPaid) {
+                                <fa-icon class="text-success" icon="dollar" />
+                            }
+                        </td>
+                        <td class="col-2 text-center" [innerText]="bracket.score"></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col text-center">
+        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#pointsModal">
+            How do I earn points?
+        </button>
+    </div>
+</div>
+
+<div class="modal fade" id="pointsModal" tabindex="-1" role="dialog" aria-labelledby="pointsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pointsModalLabel">Points Legend</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead class="table-secondary">
+                        <tr class="d-flex">
+                            <th scope="col" class="col-8">Correct Prediction</th>
+                            <th scope="col" class="col-4 text-center">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="d-flex">
+                            <td class="col-8">
+                                Stanley Cup Champions
+                            </td>
+                            <td class="col-4 text-center">
+                                16
+                            </td>
+                        </tr>
+                        <tr class="d-flex">
+                            <td class="col-8">
+                                Conference Winner
+                            </td>
+                            <td class="col-4 text-center">
+                                8
+                            </td>
+                        </tr>
+                        <tr class="d-flex">
+                            <td class="col-8">
+                                Division Winner
+                            </td>
+                            <td class="col-4 text-center">
+                                4
+                            </td>
+                        </tr>
+                        <tr class="d-flex">
+                            <td class="col-8">
+                                Round 1
+                            </td>
+                            <td class="col-4 text-center">
+                                2
+                            </td>
+                        </tr>
+                        <tr class="d-flex">
+                            <td class="col-8">
+                                Games Per Series
+                            </td>
+                            <td class="col-4 text-center">
+                                1
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="modal-text">Points are awarded per each correct prediction.<br />A perfect bracket for Round 1 would be 8 correct predictions and 16 total points.<br /><br />Bonus point awarded for every correct total games per series prediction.</p>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

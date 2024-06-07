@@ -1,16 +1,23 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { AuthService } from '../../services/auth/auth.service';
 import { Bracket } from '../../models/bracket.model';
 import { collection, collectionData, Firestore, FirestoreDataConverter, QueryDocumentSnapshot } from '@angular/fire/firestore';
 import { Component, inject } from '@angular/core';
 import { DEADLINE } from '../../constants/global.constants';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { map, Observable } from 'rxjs';
+import { RouterLink } from '@angular/router';
 import { sortBrackets } from '../../helpers/bracket.helpers';
 
 @Component({
   selector: 'app-scoreboard',
   standalone: true,
-  imports: [AsyncPipe],
+  imports: [
+    AsyncPipe,
+    FontAwesomeModule,
+    NgClass,
+    RouterLink
+  ],
   templateUrl: './scoreboard.component.html',
   styleUrl: './scoreboard.component.scss'
 })
@@ -25,7 +32,7 @@ export class ScoreboardComponent {
     const convert: FirestoreDataConverter<Bracket, any> = {
       toFirestore: () => {},
       fromFirestore: (snapshot: QueryDocumentSnapshot) => {
-        return snapshot.data() as Bracket;
+        return { key: snapshot.id, ...snapshot.data() } as Bracket;
       }
     };
     const scoreboard = collection(this.firestore, 'scoreboard').withConverter(convert);
@@ -33,7 +40,7 @@ export class ScoreboardComponent {
     this.brackets$ = collectionData(scoreboard).pipe(map((brackets) => {
       this.cashLine = brackets.length > 5 ? Math.floor(brackets.length / 5) : 1;
 
-      return brackets.sort(sortBrackets);
+      return brackets.sort(sortBrackets).reverse();
     }));
   }
 
