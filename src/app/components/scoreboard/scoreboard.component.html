@@ -16,42 +16,13 @@
         </div>
     }
 </div>
-<div class="row g-0 mt-4 d-md-none">
-    <div class="col">
-        <table class="table">
-            <thead class="table-secondary">
-                <tr class="d-flex">
-                    <th scope="col" class="col-1">#</th>
-                    <th scope="col" class="col-5">Bracket Name</th>
-                    <th scope="col" class="col-4">Owner</th>
-                    <th scope="col" class="col-2 text-center">Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (bracket of (brackets$ | async); track bracket) {
-                    <tr class="d-flex" [ngClass]="{ 'cash-line' : $index + 1 === cashLine }">
-                        <th class="col-1" scope="row" [innerText]="$index + 1"></th>
-                        <td class="col-5 text-truncate d-none d-md-flex">
-                            <a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a>
-                        </td>
-                        <td class="col-5 text-truncate d-flex d-md-none">
-                            <a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a>
-                        </td>
-                        <td class="col-4 text-truncate" [innerText]="bracket.owner.name"></td>
-                        <td class="col-2 text-center" [innerText]="bracket.score"></td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
 
-<!-- Larger displays / more columns -->
-<div class="row g-0 mt-4 d-none d-md-block">
+<div class="row g-0 mt-4">
     <div class="col">
         <table class="table">
             <thead class="table-secondary">
-                <tr class="d-flex">
+                <tr class="d-md-flex d-none">
+                    <!-- Larger displays / more columns -->
                     <th scope="col" class="col-1">#</th>
                     <th scope="col" class="col-3">Bracket Name</th>
                     <th scope="col" class="col-3">Owner</th>
@@ -60,10 +31,18 @@
                     <th scope="col" class="col-1 text-center">Paid</th>
                     <th scope="col" class="col-2 text-center">Score</th>
                 </tr>
+                <tr class="d-flex d-md-none">
+                    <!-- Smaller displays / less columns -->
+                    <th scope="col" class="col-1">#</th>
+                    <th scope="col" class="col-5">Bracket Name</th>
+                    <th scope="col" class="col-4">Owner</th>
+                    <th scope="col" class="col-2 text-center">Score</th>
+                </tr>
             </thead>
             <tbody>
                 @for (bracket of (brackets$ | async); track bracket) {
-                    <tr class="d-flex" [ngClass]="{ 'cash-line' : $index + 1 === cashLine }">
+                    <!-- Larger displays / more columns -->
+                    <tr class="d-md-flex d-none" [ngClass]="{ 'cash-line' : $index + 1 === cashLine }">
                         <th class="col-1" scope="row" [innerText]="$index + 1"></th>
                         <td class="col-3 text-truncate">
                             <a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a>
@@ -84,6 +63,15 @@
                                 <fa-icon class="text-success" icon="dollar" />
                             }
                         </td>
+                        <td class="col-2 text-center" [innerText]="bracket.score"></td>
+                    </tr>
+                    <!-- Smaller displays / less columns -->
+                    <tr class="d-flex d-md-none" [ngClass]="{ 'cash-line' : $index + 1 === cashLine }">
+                        <th class="col-1" scope="row" [innerText]="$index + 1"></th>
+                        <td class="col-5 text-truncate">
+                            <a [innerText]="bracket.name" [routerLink]="['/bracket', bracket.key]"></a>
+                        </td>
+                        <td class="col-4 text-truncate" [innerText]="bracket.owner.name"></td>
                         <td class="col-2 text-center" [innerText]="bracket.score"></td>
                     </tr>
                 }

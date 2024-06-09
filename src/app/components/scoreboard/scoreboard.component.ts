@@ -1,7 +1,7 @@
 import { AsyncPipe, NgClass } from '@angular/common';
 import { AuthService } from '../../services/auth/auth.service';
 import { Bracket } from '../../models/bracket.model';
-import { collection, collectionData, Firestore, FirestoreDataConverter, QueryDocumentSnapshot } from '@angular/fire/firestore';
+import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 import { Component, inject } from '@angular/core';
 import { DEADLINE } from '../../constants/global.constants';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -29,15 +29,9 @@ export class ScoreboardComponent {
   cashLine: number = 1;
 
   constructor() {
-    const convert: FirestoreDataConverter<Bracket, any> = {
-      toFirestore: () => {},
-      fromFirestore: (snapshot: QueryDocumentSnapshot) => {
-        return { key: snapshot.id, ...snapshot.data() } as Bracket;
-      }
-    };
-    const scoreboard = collection(this.firestore, 'scoreboard').withConverter(convert);
+    const scoreboard = collection(this.firestore, 'scoreboard');
 
-    this.brackets$ = collectionData(scoreboard).pipe(map((brackets) => {
+    this.brackets$ = (collectionData(scoreboard, { idField: 'key' }) as Observable<Bracket[]>).pipe(map((brackets) => {
       this.cashLine = brackets.length > 5 ? Math.floor(brackets.length / 5) : 1;
 
       return brackets.sort(sortBrackets).reverse();
