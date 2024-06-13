@@ -18,15 +18,15 @@ import { Router } from '@angular/router';
 export class AuthService implements OnDestroy {
   private afAuth: Auth = inject(Auth);
   private router: Router = inject(Router);
-  private _username: string = '';
 
-  authState$ = authState(this.afAuth);
-  adminUsers: Array<string>;
-  isAdministrator: boolean = false;
-  checkingForAuth = false;
-  googleProvider = new GoogleAuthProvider();
-  user$ = user(this.afAuth);
-  userSubscription: Subscription;
+  private _username: string = '';
+  private authState$$ = authState(this.afAuth);
+  private adminUsers: Array<string>;
+  private isAdministrator: boolean = false;
+  private checkingForAuth = false;
+  private googleProvider = new GoogleAuthProvider();
+  private user$ = user(this.afAuth);
+  private userSubscription: Subscription;
 
   constructor() {
     this.adminUsers = [
@@ -49,8 +49,8 @@ export class AuthService implements OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
-  get authState(): Observable<User | null> {
-    return this.authState$;
+  get authState$(): Observable<User | null> {
+    return this.authState$$;
   }
 
   isAdmin(): boolean {
