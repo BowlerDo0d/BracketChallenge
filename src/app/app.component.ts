@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { faCheck, faDollar, faExclamationTriangle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faDollar, faExclamationTriangle, faPenToSquare, faPlus, faReply } from '@fortawesome/free-solid-svg-icons';
 import { faSquareCheck } from '@fortawesome/free-regular-svg-icons';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './components/footer/footer.component';
@@ -21,6 +21,14 @@ export class AppComponent {
   constructor() {
     const library = inject(FaIconLibrary);
 
-    library.addIcons(faCheck, faDollar, faExclamationTriangle, faPlus, faSquareCheck);
+    library.addIcons(
+      faCheck,
+      faDollar,
+      faExclamationTriangle,
+      faPenToSquare,
+      faPlus,
+      faReply,
+      faSquareCheck
+    );
   }
 }

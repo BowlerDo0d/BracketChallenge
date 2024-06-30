@@ -4,7 +4,7 @@ import { Bracket } from '../../models/bracket.model';
 import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 import { Component, inject } from '@angular/core';
 import { DEADLINE } from '../../constants/global.constants';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { map, Observable } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { sortBrackets } from '../../helpers/bracket.helpers';
@@ -14,7 +14,7 @@ import { sortBrackets } from '../../helpers/bracket.helpers';
   standalone: true,
   imports: [
     AsyncPipe,
-    FontAwesomeModule,
+    FaIconComponent,
     NgClass,
     RouterLink
   ],

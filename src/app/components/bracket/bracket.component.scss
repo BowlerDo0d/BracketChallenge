@@ -1,0 +1,151 @@
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
+.bracket-name {
+  color: $blue;
+  border-bottom: 1px solid $gray-500;
+  border-radius: 0.25rem;
+  padding-bottom: 0.25rem
+}
+
+.champions {
+  color: $gray-700;
+
+  p:nth-child(2) {
+    color: rgba(var(--bs-primary-rgb), 0.75);
+    min-height: 1.6rem;
+
+    &.error {
+      border: 1px solid rgba(var(--bs-danger-rgb), 0.75);
+      border-radius: 0.25rem;
+    }
+
+    .text-danger {
+      text-decoration: line-through;
+    }
+  }
+
+  .win-override {
+    margin: -1rem 0 0;
+  }
+
+  label {
+    font-size: 0.75rem;
+    margin: 0;
+  }
+
+  .results {
+    font-size: 0.75rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    position: absolute;
+    top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    z-index: 1;
+
+    .final-input {
+      text-align: center;
+      display: inline-block;
+      margin: 0 1.5rem;
+    }
+
+    .results {
+      min-width: 3rem;
+    }
+
+    .predictor,
+    .results {
+      position: initial;
+
+      &.detail-mode {
+        margin: 0 1.5rem;
+      }
+    }
+
+    .results.detail-mode {
+      display: block;
+    }
+
+    .predictor.detail-mode {
+        display: inline-block;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    .final-input {
+      display: inline-block;
+      margin: 0 1rem;
+
+      label {
+        display: block;
+      }
+    }
+
+    // .predictor,
+    // .results {
+    //   position: relative;
+    //   top: 0;
+    //   display: inline-block;
+    // }
+
+    .results {
+      display: block;
+      font-size: 0.9rem;
+    }
+  }
+
+  @include media-breakpoint-down(sm) {
+    .final-input {
+      margin: 0 2rem;
+    }
+  }
+}
+
+.predictor {
+  // position: absolute;
+  // top: 0.6rem;
+  display: inline-block;
+  font-size: 0.5rem;
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
+  width: 3.5rem;
+  margin: 0 auto;
+
+  &.detail-mode {
+    font-size: 0.7rem;
+    color: rgba($gray-600, 0.9);
+    font-style: italic;
+
+    span:nth-child(2) {
+      display: block;
+    }
+  }
+}
+
+.error {
+  border-color: var(--bs-danger-border-subtle);
+  background-color: rgba(var(--bs-danger-rgb), 0.01)
+}
+
+.success {
+  border-color: var(--bs-success-border-subtle);
+  background-color: rgba(var(--bs-success-rgb), 0.025)
+}
+
+.score {
+  font-size: 0.9rem;
+  color: var(--bs-secondary-color);
+  padding: 0.25rem 0;
+  border: 1px solid var(--bs-secondary-color);
+  border-radius: 0.25rem;
+
+  @include media-breakpoint-down(sm) {
+    padding: 0;
+    border: none;
+  }
+}
