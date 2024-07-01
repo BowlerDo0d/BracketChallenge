@@ -1,0 +1,44 @@
+@import 'src/styles/partials/variables';
+
+.scoreboard {
+  .header-row {
+    font-size: 0.65rem;
+    background-color: dimgray;
+    color: white;
+  }
+
+  .cash-line {
+    border-bottom-style: dashed;
+    border-bottom-color: $warn-light;
+  }
+}
+
+<div class="scoreboard">
+
+  <div class="header-row container-fluid">
+    <div class="row align-items-center">
+      <div class="col text-center p-0">Pos.</div>
+      <div class="col-10 p-0 pl-2">
+        <div class="col p-0">Bracket Name</div>
+        <div class="w-100"></div>
+        <div class="col p-0">Owner</div>
+      </div>
+      <div class="col-6 text-center">Cup Champs</div>
+      <div class="col text-center p-0">Score</div>
+    </div>
+  </div>
+
+  <div *ngFor="let bracket of brackets$ | async; let index = index; trackBy: trackByKey">
+    <bracket-card
+      [bracket]="bracket"
+      [position]="index + 1">
+    </bracket-card>
+    <div class="cash-line my-2" *ngIf="index === cashLine"></div>
+  </div>
+</div>
+
+<div>
+  <a href="" data-toggle="modal" data-target="#pointsModal">How do I earn points?</a>
+</div>
+
+
